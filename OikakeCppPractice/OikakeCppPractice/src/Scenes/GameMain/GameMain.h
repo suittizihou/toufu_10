@@ -74,6 +74,9 @@ private:
 	*/
 	void HandleMessage(EventMessage message, void* param);
 
+	// 豆腐を追加する関数
+	void AddToufu();
+
 private:
 	//!ワールドポインタ
 	WorldPtr world;
@@ -83,7 +86,6 @@ private:
 	Renderer& renderer;
 	//!シーンが終了したか判定用
 	bool isEnd;
-	// ランダムクラス
 
 	int objNumber = 0;
 

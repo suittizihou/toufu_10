@@ -133,7 +133,7 @@ int GameMain::RandomJudge(int value1, int value2) {
 	}
 }
 
-void GameMain::Update(float deltaTime) {
+void GameMain::AddToufu() {
 
 	if (random_toufu_time > toufu_spone_limit && 20 > MapGenerater::get_toufu_value())
 	{
@@ -150,23 +150,23 @@ void GameMain::Update(float deltaTime) {
 		else if (random_toufu_time % 5 == 0) {
 			x = rand.Range(1, 6);
 			y = rand.Range(1, 6);
-		}		
+		}
 
 		// 0と7の配列番号の時確率をいじる
 		if (x == 0 || y == 0 || x == 7 || y == 7) {
 			// 70%の確立でリセット
-			if (rand.Range(0, 10) <= 7) { goto end; }
+			if (rand.Range(0, 10) <= 7) { return; }
 		}
 		// xとyどちらも0の場合豆腐は落ちない || xとyどちらも7の場合豆腐は落ちない
-		if (x == 0 && y == 0 || x == 7 && y == 7) { goto end; }
+		if (x == 0 && y == 0 || x == 7 && y == 7) { return; }
 		// 豆腐が無かったら生成
-		if (mapGenerater.check_toufu(x, y)) { goto end; }
+		if (mapGenerater.check_toufu(x, y)) { return; }
 		if (rand.Range(0, 10) == 0) {
 			world->AddActor_Back(ActorGroup::MetalToufu,
-			std::make_shared<MetalToufu>(world.get(),
-			mapGenerater.up_left_get_pos(x, y) + Vector2(1.0f, -57.0f),
-			objNumber,
-			TRUE));
+				std::make_shared<MetalToufu>(world.get(),
+					mapGenerater.up_left_get_pos(x, y) + Vector2(1.0f, -57.0f),
+					objNumber,
+					TRUE));
 		}
 		else {
 			world->AddActor_Back(ActorGroup::NormalToufu,
@@ -174,21 +174,21 @@ void GameMain::Update(float deltaTime) {
 					mapGenerater.up_left_get_pos(x, y) + Vector2(1.0f, -57.0f),
 					objNumber));
 		}
-			objNumber++;
+		objNumber++;
 
-			toufu_spone_limit += 300;
+		toufu_spone_limit += 300;
 
-			if (toufu_spone_limit >= 900) {
-				toufu_spone_limit = 300; 
-				random_toufu_time = 0;
-			}
+		if (toufu_spone_limit >= 900) {
+			toufu_spone_limit = 300;
+			random_toufu_time = 0;
+		}
 	}
+}
 
-	// gotoはここに飛ぶよ =========================================================== 
-	
-	end:
+void GameMain::Update(float deltaTime) {
 
-	// ==============================================================================
+	// 豆腐追加するよー
+	AddToufu();
 
 	random_toufu_time++;
 	Input::GetInstance().Update();
