@@ -58,8 +58,48 @@ void Title::Update(float deltaTime)
  		isEnd = true;
 	}
 
+	TitleAnimation();
+
+
+}
+
+void Title::Draw() const
+{
+	//最初に使用する画像全部を描画
+	renderer.DrawTexture(Assets::Texture::Title1,t1_pos);
+	renderer.DrawTexture(Assets::Texture::Title2,t2_pos);
+	renderer.DrawTexture(Assets::Texture::Title3, t3_pos);
+	renderer.DrawTexture(Assets::Texture::Title4,t4_pos);
+	renderer.DrawTexture(Assets::Texture::White, Vector2::Zero, Vector2(0,0), Vector2(1,1), NULL, Color(1.0f, 1.0f, 1.0f, alpha));
+	
+
+}
+
+bool Title::IsEnd() const
+{
+	return isEnd;
+}
+
+Scene Title::Next() const
+{
+	return Scene::Description;
+}
+
+void Title::Finalize()
+{
+	renderer.Clear();
+}
+
+void Title::HandleMessage(EventMessage message, void * param)
+{
+}
+
+
+
+
+void Title::TitleAnimation() {
 	//カウントに応じて画像を移動
-	//タイトル１枚め
+//タイトル１枚め
 	if (animeCount == 0) {
 		if (t1_pos.x > 0) {
 			t1_pos.x -= 19.2f;
@@ -117,7 +157,7 @@ void Title::Update(float deltaTime)
 			t4_pos.y -= 14.4f;
 		}
 
-		if (t4_pos.x > 0 ) {
+		if (t4_pos.x > 0) {
 			t4_pos.x = 0;
 		}
 		if (t4_pos.y < 0) {
@@ -132,8 +172,8 @@ void Title::Update(float deltaTime)
 	//フラッシュ終わり（２周め）
 	if (!flashStart) {
 		if (alpha != 0.0f) {
-				alpha -= 0.1f;
-				Draw();
+			alpha -= 0.1f;
+			Draw();
 		}
 		if (alpha <= 0.0f) {
 			alpha = 0.0f;
@@ -143,13 +183,13 @@ void Title::Update(float deltaTime)
 
 
 	//フラッシュ始まり
-	if(animeCount == 4 && flashStart) {
+	if (animeCount == 4 && flashStart) {
 
 		if (alpha != 1.0f) {
 
 			alpha += 0.1f;
-				count = 0;
-				Draw();
+			count = 0;
+			Draw();
 
 		}
 		if (alpha >= 1.0f) {
@@ -158,10 +198,12 @@ void Title::Update(float deltaTime)
 		}
 	}
 
-	
+
 
 	//スペースキーですべての画像を一気に表示
-	if (animeCount < 4 && Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_SPACE) || Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::Start)) {
+	if (animeCount < 4 && Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_SPACE) 
+		|| Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::Start)
+		|| Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::A)) {
 		t1_pos.x = 0.0f;
 		t1_pos.y = 0.0f;
 		t2_pos.x = 0.0f;
@@ -173,36 +215,4 @@ void Title::Update(float deltaTime)
 		animeCount = 4;
 	}
 
-
-}
-
-void Title::Draw() const
-{
-	//最初に使用する画像全部を描画
-	renderer.DrawTexture(Assets::Texture::Title1,t1_pos);
-	renderer.DrawTexture(Assets::Texture::Title2,t2_pos);
-	renderer.DrawTexture(Assets::Texture::Title3, t3_pos);
-	renderer.DrawTexture(Assets::Texture::Title4,t4_pos);
-	renderer.DrawTexture(Assets::Texture::White, Vector2::Zero, Vector2(0,0), Vector2(1,1), NULL, Color(1.0f, 1.0f, 1.0f, alpha));
-	
-
-}
-
-bool Title::IsEnd() const
-{
-	return isEnd;
-}
-
-Scene Title::Next() const
-{
-	return Scene::Description;
-}
-
-void Title::Finalize()
-{
-	renderer.Clear();
-}
-
-void Title::HandleMessage(EventMessage message, void * param)
-{
 }
