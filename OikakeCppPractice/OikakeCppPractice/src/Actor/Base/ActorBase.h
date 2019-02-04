@@ -1,0 +1,88 @@
+#pragma once
+
+class Renderer;
+class HitInfo;
+#include "ActorPtr.h"
+#include "Status.h"
+#include"EventMessage.h"
+#include"ActorGroup.h"
+#include"World/IWorld.h"
+#include<string>
+#include<functional>
+#include<list>
+#include"Math/Vector2/Vector2.h"
+#include"Scenes/CharacterSelect/CharacterManager.h"
+
+class ActorBase {
+public:
+	ActorBase();
+	ActorBase(IWorld* world, const std::string& name, const Vector2& position, const Vector2& center_pos, const int& _number, const float _speed, const int input_type, const Character chara = Character::None);
+	explicit ActorBase(const std::string& name);
+	virtual ~ActorBase();
+public:
+
+	void Initialize();
+	void FirstUpdate(float deltaTime);
+	void Update(float deltaTime);
+	void Draw(Renderer& renderer);
+	void DrawShadow(Renderer& renderer);
+	void Finalize();
+	void HandleMessage(EventMessage message, void* param);
+
+	void Collide(ActorBase& other);
+	void CollideChildren(ActorBase& other);
+	void CollideSibling();
+
+
+	void AddChild_Front(const ActorPtr& actor);
+	void AddChild_Front(ActorGroup group, const ActorPtr& actor);
+	void AddChild_Back(const ActorPtr& actor);
+	void AddChild_Back(ActorGroup group, const ActorPtr& actor);
+	void EachChildren(std::function<void(ActorBase&)> func);
+	void EachChildren(std::function<void(const ActorBase&)> func) const;
+	void RemoveChildren(std::function<bool(ActorBase& actor)> func);
+	void RemoveChildren();
+	ActorPtr FindChildren(std::function<bool(const ActorBase&)> func);
+	ActorPtr FindChildren(const std::string& name);
+	void ChangeStatus(Status status);
+	Status GetStatus() const;
+	std::string GetName() const;
+	int GetControllerType() const;
+	Character GetCharacter() const;
+	void ClearChildren();
+	std::list<ActorPtr>& GetChildren();
+	int GetChildNum() const;
+	Vector2 GetVec2Position();
+	Vector2 GetCenterPosition();
+	int GetNumber();
+	Vector2 GetMovement();
+	float GetSpeed();
+protected:
+	virtual void OnInitialize();
+	virtual void OnFirstUpdate(float deltaTime);
+	virtual void OnUpdate(float deltaTime);
+	virtual void OnDraw(Renderer& renderer);
+	virtual void OnDrawShadow(Renderer& renderer);
+	virtual void OnFinalize();
+	virtual void OnMessage(EventMessage message, void* param);
+	virtual bool IsCollide(const ActorBase& other, HitInfo& hitInfo);
+	virtual void OnCollide(const HitInfo& hitInfo);
+
+protected:
+	IWorld* world;
+	std::string name;
+	int input_type;
+	Character chara;
+	Status	status;
+	Vector2 position;
+	Vector2 center_pos;
+	Vector2 movement = Vector2::Zero;
+	float speed{};
+	int number = 0;
+private:
+	std::list<ActorPtr> children;
+private:
+	//ÉRÉsÅ[ã÷é~
+	ActorBase(const ActorBase& other) = delete;
+	ActorBase& operator = (const ActorBase& other) = delete;
+};
