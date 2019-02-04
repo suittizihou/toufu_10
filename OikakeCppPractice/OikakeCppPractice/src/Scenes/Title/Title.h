@@ -60,6 +60,8 @@ public:
 	*/
 	virtual void Finalize() override;
 
+	virtual void TitleAnimation();
+
 private:
 	/**
 	* @brief イベントメッセージを受け取る
