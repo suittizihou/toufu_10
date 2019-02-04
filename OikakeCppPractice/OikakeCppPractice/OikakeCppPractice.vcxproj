@@ -70,20 +70,20 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>E:\OneDrive\デスクトップ\授業配布ファイル\チーム制作後期10班\真豆腐\OikakeCppPractice\OikakeCppPractice\DxLib_VC;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\OneDrive\デスクトップ\授業配布ファイル\チーム制作後期10班\真豆腐\OikakeCppPractice\OikakeCppPractice\DxLib_VC;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\DxLib_VC;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\DxLib_VC;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>E:\OneDrive\デスクトップ\授業配布ファイル\チーム制作後期10班\真豆腐\OikakeCppPractice\OikakeCppPractice\DxLib_VC;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\OneDrive\デスクトップ\授業配布ファイル\チーム制作後期10班\真豆腐\OikakeCppPractice\OikakeCppPractice\DxLib_VC;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\DxLib_VC;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\DxLib_VC;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>E:\OneDrive\デスクトップ\授業配布ファイル\チーム制作後期10班\真豆腐\OikakeCppPractice\OikakeCppPractice\DxLib_VC;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\OneDrive\デスクトップ\授業配布ファイル\チーム制作後期10班\真豆腐\OikakeCppPractice\OikakeCppPractice\DxLib_VC;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\DxLib_VC;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\DxLib_VC;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>E:\OneDrive\デスクトップ\授業配布ファイル\チーム制作後期10班\真豆腐\OikakeCppPractice\OikakeCppPractice\DxLib_VC;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\OneDrive\デスクトップ\授業配布ファイル\チーム制作後期10班\真豆腐\OikakeCppPractice\OikakeCppPractice\DxLib_VC;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\DxLib_VC;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\DxLib_VC;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

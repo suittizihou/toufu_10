@@ -27,8 +27,8 @@ void Player::OnUpdate(float deltaTime)
 {
 	// 止まっているとき && 豆腐に押されてない時動く
 	if (Input::GetInstance().move_state == MoveState::Stop && !toufu_hit) {
+		target_position = Input::GetInstance().GetMapDistanceMove_WASD(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y) - Vector2(0.0f, 80.0f);
 		//target_position = Input::GetInstance().GetMapDistanceMove_Pad1(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y) - Vector2(0.0f, 80.0f);
-		target_position = Input::GetInstance().GetMapDistanceMove_Pad1(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y) - Vector2(0.0f, 80.0f);
 	
 	}
 
@@ -129,6 +129,7 @@ void Player::OnCollide(const HitInfo & hitInfo)
 	//Vector2(182,3), Vector2(1016,509)P kabe
 	//Vector2(0,80), Vector2(110,120)　豆腐のサイズ
 	//Vector2(187, 31), Vector2(1013, 509) T kabe
+	toufu_hit = false;
 	if (hitInfo.collideActor->GetName() == "SponeNormalToufu") {
 		Damage();
 	}
