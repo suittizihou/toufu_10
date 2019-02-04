@@ -292,6 +292,7 @@
     <ClInclude Include="src\World\WorldPtr.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".gitignore" />
     <None Include="map.csv" />
     <None Include="setting.csv" />
   </ItemGroup>
