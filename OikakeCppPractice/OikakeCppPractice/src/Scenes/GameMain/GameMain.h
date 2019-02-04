@@ -86,6 +86,7 @@ private:
 	Renderer& renderer;
 	//!シーンが終了したか判定用
 	bool isEnd;
+	// ランダムクラス
 
 	int objNumber = 0;
 

@@ -47,6 +47,15 @@ void Actor2D::OnCollide(const HitInfo & hitInfo)
 bool Actor2D::IsCollide(const ActorBase & other, HitInfo & hitInfo)
 {
 	const Actor2D* otherActor = static_cast<const Actor2D*>(&other);
+
+	// Ž©•ª‚Æ‘ŠŽè‚ªƒm[ƒ}ƒ‹“¤•…‚Å‚ ‚èA‚©‚ÂMovement‚ª‚O‚ÌŽž“–‚½‚è”»’è‚ð‚µ‚È‚¢
+	if (GetActorGroup() == ActorGroup::NormalToufu &&
+		otherActor->GetActorGroup() == ActorGroup::NormalToufu &&
+		GetMovement().Length() == 0 &&
+		otherActor->GetMovement().Length() == 0) { 
+		return false; 
+	}
+
 	if (otherActor == nullptr)
 		return false;
 	if (body == nullptr || otherActor->body == nullptr)
@@ -56,5 +65,4 @@ bool Actor2D::IsCollide(const ActorBase & other, HitInfo & hitInfo)
 
 	return body->Translate(position)->Intersect(
 		*(otherActor->body->Translate(otherActor->position)), hitInfo);
-
 }

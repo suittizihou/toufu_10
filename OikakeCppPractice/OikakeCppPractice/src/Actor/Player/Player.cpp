@@ -10,6 +10,7 @@ Player::Player(IWorld * world, const Vector2 & position, const int& _number, con
 	: Actor2D(world, "player", position, std::make_shared<Box>(Vector2(-5, 75), Vector2(117, 149)), _number, _speed, input_pad, chara)//Vector2(5, 76), Vector2(108, 118)
 	, speed(_speed)
 {
+	actor_group = ActorGroup::Player;
 }
 
 Player::~Player()
@@ -27,9 +28,8 @@ void Player::OnUpdate(float deltaTime)
 {
 	// 止まっているとき && 豆腐に押されてない時動く
 	if (Input::GetInstance().move_state == MoveState::Stop && !toufu_hit) {
-		target_position = Input::GetInstance().GetMapDistanceMove_WASD(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y) - Vector2(0.0f, 80.0f);
-		//target_position = Input::GetInstance().GetMapDistanceMove_Pad1(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y) - Vector2(0.0f, 80.0f);
-	
+		target_position = Input::GetInstance().GetMapDistanceMove_Pad1(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y) - Vector2(0.0f, 80.0f);
+		//target_position = Input::GetInstance().GetMapDistanceMove_Pad1(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y) - Vector2(0.0f, 80.0f);	
 	}
 
 	//if (Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::A)) {
@@ -95,7 +95,6 @@ void Player::OnDraw(Renderer & renderer)
 	//DrawBox(position.x, position.y, position.x + 117, position.y + 149, GetColor(255, 0, 0), TRUE);
 	//DrawPixel(Average_Position().x, Average_Position().y, GetColor(0, 255, 0));
 #endif
-
 }
 
 // 二点間の平均値から中心座標を割り出す

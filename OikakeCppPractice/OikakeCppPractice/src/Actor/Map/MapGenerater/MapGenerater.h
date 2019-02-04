@@ -23,8 +23,26 @@ public:
 	static Assets::Texture get_mapChip(const Vector2& position);
 	static Vector3 get_posAndChip(int x, int y);
 	static Vector2 get_near_pos(const Vector2 & position);
-	static Vector2 up_left_get_pos(int x, int y);
-	static Vector2 up_left_get_pos(const Vector2& position);
+	static inline Vector2 up_left_get_pos(int x, int y) {
+
+		float tempX = (112.0f + map_chip_space) * x;
+		float tempY = (64.0f + map_chip_space) * y;
+
+		tempX += map_spaceX;
+		tempY += map_spaceY;
+
+		return Vector2(tempX, tempY);
+	};
+	static inline Vector2 up_left_get_pos(const Vector2& position) {
+
+		float tempX = (112.0f + map_chip_space) * get_pos_numver(position).x;
+		float tempY = (64.0f + map_chip_space) * get_pos_numver(position).y;
+
+		tempX += map_spaceX;
+		tempY += map_spaceY;
+
+		return Vector2(tempX, tempY);
+	};
 	static Vector2 up_left_get_localpos(int x, int y);
 	static Vector2 down_right_get_pos(int x, int y);
 	static Vector2 down_right_get_localpos(int x, int y);

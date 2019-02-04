@@ -11,6 +11,7 @@ Player2::Player2(IWorld * world, const Vector2 & position, const int& _number, c
 	: Actor2D(world, "player", position, std::make_shared<Box>(Vector2(-5, 75), Vector2(117, 149)), _number, _speed, input_pad, chara)
 	, speed(_speed)
 {
+	actor_group = ActorGroup::Player2;
 }
 
 Player2::~Player2()

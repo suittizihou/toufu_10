@@ -44,18 +44,19 @@ public:
 	void RemoveChildren();
 	ActorPtr FindChildren(std::function<bool(const ActorBase&)> func);
 	ActorPtr FindChildren(const std::string& name);
-	void ChangeStatus(Status status);
+	ActorGroup GetActorGroup() const;
 	Status GetStatus() const;
-	std::string GetName() const;
-	int GetControllerType() const;
 	Character GetCharacter() const;
-	void ClearChildren();
+	std::string GetName() const;
 	std::list<ActorPtr>& GetChildren();
-	int GetChildNum() const;
+	void ClearChildren();
+	void ChangeStatus(Status status);
 	Vector2 GetVec2Position();
 	Vector2 GetCenterPosition();
+	Vector2 GetMovement() const;
+	int GetControllerType() const;
+	int GetChildNum() const;
 	int GetNumber();
-	Vector2 GetMovement();
 	float GetSpeed();
 protected:
 	virtual void OnInitialize();
@@ -71,6 +72,7 @@ protected:
 protected:
 	IWorld* world;
 	std::string name;
+	ActorGroup actor_group{};
 	int input_type;
 	Character chara;
 	Status	status;

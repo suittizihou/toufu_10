@@ -435,6 +435,5 @@
   <ItemGroup>
     <None Include="setting.csv" />
     <None Include="map.csv" />
-    <None Include=".gitignore" />
   </ItemGroup>
 </Project>

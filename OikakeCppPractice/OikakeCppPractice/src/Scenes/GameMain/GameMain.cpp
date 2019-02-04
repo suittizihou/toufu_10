@@ -135,7 +135,7 @@ int GameMain::RandomJudge(int value1, int value2) {
 
 void GameMain::AddToufu() {
 
-	if (random_toufu_time > toufu_spone_limit && 20 > MapGenerater::get_toufu_value())
+	if (random_toufu_time > toufu_spone_limit/* && 20 > MapGenerater::get_toufu_value()*/)
 	{
 		Random rand;
 
@@ -197,6 +197,7 @@ void GameMain::Update(float deltaTime) {
 
 void GameMain::Draw() const {
 	//renderer.DrawTexture(Assets::Texture::Background);
+	DrawFormatString(0, 48, GetColor(255, 0, 0), "toufu : %d", MapGenerater::get_toufu_value());
 	world->Draw(renderer);
 }
 

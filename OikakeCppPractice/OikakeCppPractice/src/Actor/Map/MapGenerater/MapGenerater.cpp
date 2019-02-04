@@ -83,27 +83,27 @@ Vector2 MapGenerater::get_near_pos(const Vector2 & position) {
 }
 
 // 知りたいマスのx、yを指定するとそこの左上座標が返ってくる
-Vector2 MapGenerater::up_left_get_pos(int x, int y) {
+//Vector2 MapGenerater::up_left_get_pos(int x, int y) {
+//
+//		float tempX = (112.0f + map_chip_space) * x;
+//		float tempY = (64.0f + map_chip_space) * y;
+//
+//		tempX += map_spaceX;
+//		tempY += map_spaceY;
+//
+//		return Vector2(tempX, tempY);
+//}
 
-		float tempX = (112.0f + map_chip_space) * x;
-		float tempY = (64.0f + map_chip_space) * y;
-
-		tempX += map_spaceX;
-		tempY += map_spaceY;
-
-		return Vector2(tempX, tempY);
-}
-
-Vector2 MapGenerater::up_left_get_pos(const Vector2& position) {
-
-	float tempX = (112.0f + map_chip_space) * get_pos_numver(position).x;
-	float tempY = (64.0f + map_chip_space) * get_pos_numver(position).y;
-
-	tempX += map_spaceX;
-	tempY += map_spaceY;
-
-	return Vector2(tempX, tempY);
-}
+//Vector2 MapGenerater::up_left_get_pos(const Vector2& position) {
+//
+//	float tempX = (112.0f + map_chip_space) * get_pos_numver(position).x;
+//	float tempY = (64.0f + map_chip_space) * get_pos_numver(position).y;
+//
+//	tempX += map_spaceX;
+//	tempY += map_spaceY;
+//
+//	return Vector2(tempX, tempY);
+//}
 
 // 知りたいマスのx、yを指定するとそこの左上座標が返ってくる
 Vector2 MapGenerater::up_left_get_localpos(int x, int y) {

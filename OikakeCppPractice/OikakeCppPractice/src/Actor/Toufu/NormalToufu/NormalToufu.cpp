@@ -13,7 +13,7 @@
 NormalToufu::NormalToufu(IWorld * world, const Vector2 & position_, const int& _number)
 	: Actor2D(world, "SponeNormalToufu", position_, std::make_shared<Box>(Vector2(0, 57), Vector2(110, 120)), _number)
 {
-	// 267
+	actor_group = ActorGroup::NormalToufu;
 	MapGenerater::set_map_toufu(Average_Position(position), ToufuID::Normal);
 	spone_position = Vector2(position.x, -128.0f);
 	spone_move = NormalToufuMove::SponeMove;
@@ -48,7 +48,6 @@ void NormalToufu::OnUpdate(float deltaTime)
 	}
 	//one_time_position = position;
 
-
 	if (spone_move == NormalToufuMove::SponeMove) {
 		position.y += 10.0f;
 	}
@@ -78,11 +77,12 @@ void NormalToufu::OnUpdate(float deltaTime)
 void NormalToufu::OnDraw(Renderer & renderer)
 {
 	renderer.DrawTexture(Assets::Texture::NormalToufu, position);
-	//DrawBox(position.x, position.y + 57, position.x + 110, position.y + 120, GetColor(0, 255, 0), TRUE);
+	DrawBox(position.x, position.y + 57, position.x + 110, position.y + 120, GetColor(0, 255, 0), TRUE);
 	//DrawPixel(target_pos.x, target_pos.y, GetColor(255, 0, 0));
-	DrawCircle(center_pos.x, center_pos.y, 5, GetColor(0, 255, 0));
+	DrawCircle(center_pos.x, center_pos.y, 5, GetColor(0, 0, 255));
 	DrawCircle(target_pos.x, target_pos.y, 5, GetColor(255, 0, 0));
 	DrawFormatString(0, 16, GetColor(255, 0, 0), "movement.x : %f, movement.y : %f", movement.x, movement.y);
+	DrawFormatString(0, 32, GetColor(255, 0, 0), "move : %d", _move);
 	
 	//float test = GetDegree(MapGenerater::up_left_get_pos(5, 5), Average_Position());
 
@@ -106,8 +106,9 @@ void NormalToufu::Move()
 {
 	if (target_pos.Vector2::Distance(center_pos) <= 5.0f) {
 		movement = Vector2::Zero;
-		position = target_pos - Vector2(55, 88);
+		position = target_pos - Vector2(54, 87);
 		target_pos = Vector2::Zero;
+		_move = false;
 	}
 	else {
 		position += movement;

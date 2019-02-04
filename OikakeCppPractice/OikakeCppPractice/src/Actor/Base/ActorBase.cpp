@@ -223,6 +223,11 @@ ActorPtr ActorBase::FindChildren(const std::string & name)
 	});
 }
 
+ActorGroup ActorBase::GetActorGroup() const
+{
+	return actor_group;
+}
+
 void ActorBase::ChangeStatus(Status status)
 {
 	this->status = status;
@@ -324,7 +329,7 @@ int ActorBase::GetNumber()
 {
 	return number;
 }
-Vector2 ActorBase::GetMovement( )
+Vector2 ActorBase::GetMovement( ) const
 {
 	return movement;
 }
