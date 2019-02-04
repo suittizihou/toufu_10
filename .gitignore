@@ -9,6 +9,7 @@ syntax:glob
 *.pch
 *.vspscc
 *.vs
+*.txt
 *_i.c
 *_p.c
 *.ncb
