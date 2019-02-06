@@ -23,6 +23,17 @@ private:
 
 	void Damage(const HitInfo& hitInfo);
 
+	void TopHitRiaction_1(const HitInfo& hitInfo);
+	void TopHitRiaction_2(const HitInfo& hitInfo);
+	void BottomHitRiaction_1(const HitInfo& hitInfo);
+	void BottomHitRiaction_2(const HitInfo& hitInfo);
+	void RightHitRiaction_1(const HitInfo& hitInfo);
+	void RightHitRiaction_2(const HitInfo& hitInfo);
+	void LeftHitRiaction_1(const HitInfo& hitInfo);
+	void LeftHitRiaction_2(const HitInfo& hitInfo);
+
+	// “–‚½‚è”»’èŒn =======================================================================
+
 	float GetDegree(Vector2 targetposition, Vector2 thisposition);
 	bool TopHit(Vector2 targetposition, Vector2 thisposition);
 	bool BottomHit(Vector2 targetposition, Vector2 thisposition);
@@ -33,6 +44,8 @@ private:
 	float RightUpDegree();
 	float LeftUpDegree();
 
+	// ====================================================================================
+	
 private:
 	void Move();
 	bool _move = false;
