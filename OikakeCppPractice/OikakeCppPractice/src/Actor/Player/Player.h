@@ -32,6 +32,9 @@ private:
 
 	int time{};
 	int animeY{};
+	int animeX{};
+
+	int beforeMovement{};
 
 private:
 	Vector2 Average_Position();

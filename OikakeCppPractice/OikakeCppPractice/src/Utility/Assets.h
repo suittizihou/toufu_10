@@ -29,6 +29,7 @@ namespace Assets {
 		Player,
 		Player2,
 		Ninja,
+		Ninja_Back,
 		Ninja_Front_Anime,
 		Ninja_Back_Anime,
 		Ninja_Left_Anime,

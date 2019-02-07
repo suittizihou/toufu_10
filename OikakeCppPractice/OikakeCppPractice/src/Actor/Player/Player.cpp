@@ -19,6 +19,7 @@ Player::~Player()
 
 void Player::OnInitialize()
 { 
+	//target_position = Input::GetInstance().GetMapDistanceMove_Pad1(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y);
 	target_position = Input::GetInstance().GetMapDistanceMove_Pad1(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y);
 	position = target_position - Vector2(0.0f, 80.0f);
 }
@@ -28,7 +29,12 @@ void Player::OnUpdate(float deltaTime)
 	// é~Ç‹Ç¡ÇƒÇ¢ÇÈÇ∆Ç´ && ì§ïÖÇ…âüÇ≥ÇÍÇƒÇ»Ç¢éûìÆÇ≠
 	if (Input::GetInstance().move_state == MoveState::Stop && !toufu_hit) {
 		target_position = Input::GetInstance().GetMapDistanceMove_Pad1(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y) - Vector2(0.0f, 80.0f);
+		//target_position = Input::GetInstance().GetMapDistanceMove_Pad1(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y) - Vector2(0.0f, 80.0f);	
 	}
+
+	//if (Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::A)) {
+	//	DrawBox(position.x - 5, position.y + 75, position.x + 117, position.y + 149, GetColor(255, 0, 0), TRUE);
+	//}
 
 	velocity = target_position - position;
 
@@ -58,16 +64,41 @@ void Player::OnUpdate(float deltaTime)
 void Player::OnDraw(Renderer & renderer)
 {
 
-	time++;
-	if (time++ > 8)
-	{
-		animeY += abs(movement.y);
-		time = 0;
-		if (animeY == 4)animeY = 0;
-	}
+		time++;
+		if (time > 5)
+		{
+			animeY += abs(movement.y);
+			time = 0;
+			if (animeY == 4)animeY = 0;
+		}
+
+		if (movement.Length() != 0) {
+			beforeMovement = movement.y;
+		}
 
 	if (GetCharacter() == Character::Ninja) {
-		renderer.DrawRectangle(Assets::Texture::Ninja_Front_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeY, 0), Vector2(181, 181)));
+
+		if (beforeMovement == 1) {
+			renderer.DrawTexture(Assets::Texture::Ninja, position);
+		}
+		if (beforeMovement == -1) {
+			renderer.DrawTexture(Assets::Texture::Ninja_Back, position);
+		}
+		
+
+		if (movement.y == 1) {
+			renderer.DrawRectangle(Assets::Texture::Ninja_Front_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeY, 0), Vector2(181, 181)));
+		}
+		if (movement.y == -1) {
+			renderer.DrawRectangle(Assets::Texture::Ninja_Back_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeY, 0), Vector2(181, 181)));
+		}
+		if (movement.x == 1) {
+			renderer.DrawRectangle(Assets::Texture::Ninja_Right_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeY, 0), Vector2(181, 181)));
+		}
+		if (movement.x == -1) {
+			renderer.DrawRectangle(Assets::Texture::Ninja_Left_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeY, 0), Vector2(181, 181)));
+		}
+		
 	}
 	else if (GetCharacter() == Character::Kinniku) {
 		renderer.DrawTexture(Assets::Texture::Kinniku, position);
@@ -80,13 +111,12 @@ void Player::OnDraw(Renderer & renderer)
 	}
 	
 #if _DEBUG
-	DrawFormatString(0, 16, GetColor(255, 0, 0), "movementX:%f movement:%f", movement.x, movement.y);
-
 	//DrawFormatString(0, 16, GetColor(255, 0, 0), "positionX:%f positionY:%f", position.x, position.y);
 	//DrawFormatString(0, 32, GetColor(255, 0, 0), "target_positionX:%f target_positionY:%f", target_position.x, target_position.y);
 	//DrawFormatString(0, 48, GetColor(255, 0, 0), "Distance:%f", target_position.Vector2::Distance(position));
 	//DrawFormatString(0, 64, GetColor(255, 0, 0), "numverX:%fÅ@numverY:%f", MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y);
-	//DrawFormatString(0, 80, GetColor(255, 0, 0), "centerX:%fÅ@centerY:%f", Average_Position().x, Average_Position().y);
+	DrawFormatString(0, 80, GetColor(255, 0, 0), "movementX:%fÅ@movementY:%f", movement.x, movement.y);
+	 
 
 	//DrawBox(position.x - 5, position.y + 75, position.x + 117, position.y + 149, GetColor(255, 0, 0), TRUE);
 	//DrawBox(position.x, position.y, position.x + 117, position.y + 149, GetColor(255, 0, 0), TRUE);

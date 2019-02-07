@@ -38,7 +38,11 @@ void GameMain::LoadAssets()
 	//renderer.LoadTexture(Assets::Texture::Player, "player.png");
 	//renderer.LoadTexture(Assets::Texture::Player2, "player.png");
 	renderer.LoadTexture(Assets::Texture::Ninja, "gameplay/player3.png");
-	renderer.LoadTexture(Assets::Texture::Ninja_Front_Anime, "gameplay/player3_anime_walk.png");
+	renderer.LoadTexture(Assets::Texture::Ninja_Back,"gameplay/player3-2.png");
+	renderer.LoadTexture(Assets::Texture::Ninja_Front_Anime, "gameplay/player3_anime_walk_front.png");
+	renderer.LoadTexture(Assets::Texture::Ninja_Back_Anime, "gameplay/player3_anime_walk_back.png");
+	renderer.LoadTexture(Assets::Texture::Ninja_Left_Anime, "gameplay/player3_anime_walk_left.png");
+	renderer.LoadTexture(Assets::Texture::Ninja_Right_Anime, "gameplay/player3_anime_walk_right.png");
 	renderer.LoadTexture(Assets::Texture::Kinniku, "gameplay/player1.png");
 	renderer.LoadTexture(Assets::Texture::Yoroi, "gameplay/player4.png");
 	renderer.LoadTexture(Assets::Texture::Kakutouka, "gameplay/player2.png");
