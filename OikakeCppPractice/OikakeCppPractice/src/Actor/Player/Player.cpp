@@ -85,6 +85,8 @@ void Player::OnDraw(Renderer & renderer)
 	}
 	
 #if _DEBUG
+	DrawFormatString(0, 16, GetColor(255, 0, 0), "movementX:%f movement:%f", movement.x, movement.y);
+
 	//DrawFormatString(0, 16, GetColor(255, 0, 0), "positionX:%f positionY:%f", position.x, position.y);
 	//DrawFormatString(0, 32, GetColor(255, 0, 0), "target_positionX:%f target_positionY:%f", target_position.x, target_position.y);
 	//DrawFormatString(0, 48, GetColor(255, 0, 0), "Distance:%f", target_position.Vector2::Distance(position));

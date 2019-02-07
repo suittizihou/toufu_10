@@ -68,7 +68,6 @@ void NormalToufu::OnUpdate(float deltaTime)
 		name = "NormalToufu";
 	}
 
-
 	//if (one_time_position.x == position.x && one_time_position.y == position.y) _move = false;
 
 	center_pos = Average_Position(position);
@@ -81,8 +80,8 @@ void NormalToufu::OnDraw(Renderer & renderer)
 	//DrawPixel(target_pos.x, target_pos.y, GetColor(255, 0, 0));
 	DrawCircle(center_pos.x, center_pos.y, 5, GetColor(0, 0, 255));
 	DrawCircle(target_pos.x, target_pos.y, 5, GetColor(255, 0, 0));
-	DrawFormatString(0, 16, GetColor(255, 0, 0), "movement.x : %f, movement.y : %f", movement.x, movement.y);
-	DrawFormatString(0, 32, GetColor(255, 0, 0), "move : %d", _move);
+	//DrawFormatString(0, 16, GetColor(255, 0, 0), "movement.x : %f, movement.y : %f", movement.x, movement.y);
+	//DrawFormatString(0, 32, GetColor(255, 0, 0), "move : %d", _move);
 	
 	//float test = GetDegree(MapGenerater::up_left_get_pos(5, 5), Average_Position());
 
