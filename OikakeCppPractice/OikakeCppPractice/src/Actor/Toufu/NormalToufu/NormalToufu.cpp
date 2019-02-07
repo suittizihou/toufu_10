@@ -187,7 +187,7 @@ void NormalToufu::TopHitRiaction_2(const HitInfo& hitInfo)
 		if (hitInfo.collideActor->GetCharacter() != Character::Yoroi) {
 			if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::Dpad_Down) ||
 				Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_DOWN)) {
-				if (Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1)) {
+				if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1)) {
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 0, 1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, 0, 1) + Vector2(55, 30);
 				}
@@ -199,10 +199,10 @@ void NormalToufu::TopHitRiaction_2(const HitInfo& hitInfo)
 		}
 		else {
 			if ((Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::Dpad_Down) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_DOWN) ||
-				(Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_3)))) {
+				(Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_3)))) {
 				// Aボタン || 1ボタンで押す || Xボタン || 3ボタンで押す(鎧豆腐の必殺技用)
-				if (Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1) || 
-					Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_3)) {
+				if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1) || 
+					Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_3)) {
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 0, 1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, 0, 1) + Vector2(55, 30);
 				}
@@ -262,7 +262,7 @@ void NormalToufu::BottomHitRiaction_2(const HitInfo& hitInfo)
 		if (hitInfo.collideActor->GetCharacter() != Character::Yoroi) {
 			if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::Dpad_Up) ||
 				Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_UP)) {
-				if (Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1)) {
+				if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1)) {
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 0, -1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, 0, 1) + Vector2(55, 30);
 				}
@@ -274,10 +274,10 @@ void NormalToufu::BottomHitRiaction_2(const HitInfo& hitInfo)
 		}
 		else {
 			if ((Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::Dpad_Up) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_UP) ||
-				(Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_3)))) {
+				(Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_3)))) {
 				// Aボタン || 1ボタンで押す || Xボタン || 3ボタンで押す(鎧豆腐の必殺技用)
-				if (Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1) || 
-					Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_3)) {
+				if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1) || 
+					Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_3)) {
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 0, -1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, 0, 1) + Vector2(55, 30);
 				}
@@ -338,7 +338,7 @@ void NormalToufu::RightHitRiaction_2(const HitInfo& hitInfo)
 		if (hitInfo.collideActor->GetCharacter() != Character::Yoroi) {
 			if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::Dpad_Left) ||
 				Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_LEFT)) {
-				if (Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1)) {
+				if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1)) {
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, -1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, -1, 0) + Vector2(55, 30);
 				}
@@ -350,10 +350,10 @@ void NormalToufu::RightHitRiaction_2(const HitInfo& hitInfo)
 		}
 		else {
 			if ((Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::Dpad_Left) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_LEFT) ||
-				(Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_3)))) {
+				(Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_3)))) {
 				// Aボタン || 1ボタンで押す || Xボタン || 3ボタンで押す(鎧豆腐の必殺技用)
-				if (Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1) || 
-					Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_3)) {
+				if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1) || 
+					Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_3)) {
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, -1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, -1, 0) + Vector2(55, 30);
 				}
@@ -414,7 +414,7 @@ void NormalToufu::LeftHitRiaction_2(const HitInfo& hitInfo)
 		if (hitInfo.collideActor->GetCharacter() != Character::Yoroi) {
 			if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::Dpad_Right) ||
 				Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_RIGHT)) {
-				if (Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1)) {
+				if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1)) {
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, 1, 0) + Vector2(55, 30);
 				}
@@ -426,10 +426,10 @@ void NormalToufu::LeftHitRiaction_2(const HitInfo& hitInfo)
 		}
 		else {
 			if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::Dpad_Right) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_RIGHT) ||
-				Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_3)) {
+				Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_3)) {
 				// Aボタン || 1ボタンで押す || Xボタン || 3ボタンで押す(鎧豆腐の必殺技用)
-				if ((Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1) ||
-					(Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_3)))) {
+				if ((Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1) ||
+					(Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_3)))) {
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, 1, 0) + Vector2(55, 30);
 				}
@@ -481,7 +481,7 @@ void NormalToufu::OnCollide(const HitInfo & hitInfo)
 				_move = true;
 			}
 		}
-		else if (/*hitInfo.collideActor->GetName() == "player" && */hitInfo.collideActor->GetControllerType() == DX_INPUT_PAD1 && !_move)
+		else if (/*hitInfo.collideActor->GetName() == "player" && */hitInfo.collideActor->GetControllerType() == DX_INPUT_PAD2 && !_move)
 		{// プレイヤー２用
 
 						// 上に当たっているとき

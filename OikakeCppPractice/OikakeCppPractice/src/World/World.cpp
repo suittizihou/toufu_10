@@ -48,7 +48,10 @@ void World::AddActor_Back(ActorGroup group, const ActorPtr & actor)
 {
 	actorManager.AddActor_Back(group, actor);
 }
-
+void World::sort(ActorGroup group)
+{
+	actorManager.sort(group);
+}
 ActorPtr World::FindActor(const std::string& name) {
 	return actorManager.FindActor(name);
 }

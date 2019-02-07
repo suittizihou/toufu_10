@@ -51,7 +51,7 @@ void Result::Update(float deltaTime)
 	select = ResultManager::GetSelect();
 
 	Input::GetInstance().Update();
-	if (Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_SPACE)) {
+	if (Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_SPACE) || Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::A)) {
 		// メニューでゲームエンド以外が選択された場合、シーンを切り替える
 		isEnd = true;
 	}

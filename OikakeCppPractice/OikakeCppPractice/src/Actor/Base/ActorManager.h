@@ -95,6 +95,8 @@ public:
 	/// </summary>
 	void Clear();
 
+	void sort(ActorGroup group);
+
 private:
 	/// <summary>
 	/// ƒOƒ‹[ƒv‚ğ’Ç‰Á

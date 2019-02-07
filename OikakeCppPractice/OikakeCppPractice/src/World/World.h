@@ -94,7 +94,7 @@ public:
 	/// </summary>
 	/// <returns>シーン間で共有する変数</returns>
 	virtual SceneShareValue& GetSceneShareValue() override;
-
+	void sort(ActorGroup group);
 
 	/// <summary>
 	 /// EventMessageを受け取る関数を登録 主にアクター以外が登録する
