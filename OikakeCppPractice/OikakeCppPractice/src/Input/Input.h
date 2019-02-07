@@ -80,8 +80,8 @@ public:
 	MoveState move_state2{ MoveState::Stop };
 	// WASD操作用
 	Vector2 GetMapDistanceMove_WASD(int map_chipX, int map_chipY);
-	// 矢印キー操作用(未実装)
-	//Vector2 GetMapDistanceMove_Arrow(int map_chipX, int map_chipY);
+	// 矢印キー操作用
+	Vector2 GetMapDistanceMove_Arrow(int map_chipX, int map_chipY);
 	// パッド操作用
 	Vector2 GetMapDistanceMove_Pad1(int map_chipX, int map_chipY);
 	Vector2 GetMapDistanceMove_Pad2(int map_chipX, int map_chipY);

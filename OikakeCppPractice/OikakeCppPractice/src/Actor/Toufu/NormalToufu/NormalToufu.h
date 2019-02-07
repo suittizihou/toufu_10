@@ -57,7 +57,7 @@ private:
 	Vector2 target_pos{};
 	Vector2 velocity{};
 
-	int hp{ 3 };	// ‘Ì—Í
+	int hp{ 5 };	// ‘Ì—Í
 
 private:
 	Vector2 Average_Position(const Vector2& position);

@@ -31,7 +31,7 @@ private:
 	int hp{};
 
 	int time{};
-	int animeX{};
+	int animeY{};
 
 private:
 	Vector2 Average_Position();
