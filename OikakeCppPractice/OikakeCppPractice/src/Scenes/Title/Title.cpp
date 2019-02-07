@@ -24,6 +24,7 @@ void Title::LoadAssets()
 	renderer.LoadTexture(Assets::Texture::Title3, "title/title3.png");
 	renderer.LoadTexture(Assets::Texture::Title4, "title/title4.png");
 	renderer.LoadTexture(Assets::Texture::White, "title/white.png");
+	
 }
 
 void Title::Initialize()
@@ -43,6 +44,8 @@ void Title::Initialize()
 	alpha = 0;
 	timeCount = 0;
 	flashStart = true;
+	sh = LoadSoundMem("asset/BGM&SE/title_bgm.MP3");
+	PlaySoundMem(sh, DX_PLAYTYPE_BACK, true);
 	noneOperation = false;
 }
 
@@ -57,11 +60,13 @@ void Title::Update(float deltaTime)
 	if ((Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_SPACE) || Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::Start)) && 
 		 animeCount == 5) {
  		isEnd = true;
+		StopSoundMem(sh);
 	}
 	
 	if (timeCount == 600) {
 		noneOperation = true;
 		isEnd = true;
+		StopSoundMem(sh);
 	}
 
 	if (animeCount == 5) {
@@ -70,7 +75,7 @@ void Title::Update(float deltaTime)
 
 	TitleAnimation();
 
-
+	
 }
 
 void Title::Draw() const
