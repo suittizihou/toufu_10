@@ -2,6 +2,7 @@
 
 #include "ActorBase.h"
 #include "ActorGroup.h"
+#include <algorithm>
 
 ActorManager::ActorManager()
 	: root("Root")
@@ -45,7 +46,10 @@ void ActorManager::AddActor_Back(ActorGroup group, const ActorPtr & actor)
 {
 	actors[group]->AddChild_Back(actor);
 }
-
+void ActorManager::sort(ActorGroup group)
+{
+	actors[group]->sort();
+}
 
 void ActorManager::AddGroup(ActorGroup group, const std::string& name, const ActorPtr& actor ) {
 	ActorPtr target = actor == nullptr ? std::make_shared<ActorBase>(name) : actor;

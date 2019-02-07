@@ -162,6 +162,10 @@ void ActorBase::AddChild_Back(ActorGroup group, const ActorPtr & actor)
 	world->AddActor_Back(group, actor);
 }
 
+void ActorBase::sort()
+{
+	children.sort([](ActorPtr a, ActorPtr b) { return a->GetVec2Position().y < b->GetVec2Position().y; });
+}
 void ActorBase::EachChildren(std::function<void(ActorBase&)> func)
 {
 	std::for_each(children.begin(), children.end(),

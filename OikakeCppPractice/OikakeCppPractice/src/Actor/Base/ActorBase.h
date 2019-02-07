@@ -58,6 +58,8 @@ public:
 	int GetChildNum() const;
 	int GetNumber();
 	float GetSpeed();
+
+	void sort();
 protected:
 	virtual void OnInitialize();
 	virtual void OnFirstUpdate(float deltaTime);

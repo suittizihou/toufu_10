@@ -55,9 +55,9 @@ void GameMain::Initialize() {
 	//// マップチップをアクターにまとめて登録
 	mapGenerater.AddMapChip();
 
-	world->AddActor_Back(ActorGroup::Player, std::make_shared<Player>(world.get(), Vector2::Zero, objNumber, 5.0f, DX_INPUT_PAD1, CharacterManager::GetCharacterP1()));
+	world->AddActor_Back(ActorGroup::NormalToufu, std::make_shared<Player>(world.get(), Vector2::Zero, objNumber, 5.0f, DX_INPUT_PAD1, CharacterManager::GetCharacterP1()));
 	objNumber++;
-	world->AddActor_Back(ActorGroup::Player2, std::make_shared<Player2>(world.get(), mapGenerater.up_left_get_pos(7, 7) - Vector2(0, 58.0f), objNumber, 5.0f, DX_INPUT_PAD2, CharacterManager::GetCharacterP2()));
+	world->AddActor_Back(ActorGroup::NormalToufu, std::make_shared<Player2>(world.get(), mapGenerater.up_left_get_pos(7, 7) - Vector2(0, 58.0f), objNumber, 5.0f, DX_INPUT_PAD2, CharacterManager::GetCharacterP2()));
 	objNumber++;
 	//world->AddActor_Back(ActorGroup::UI, std::make_shared<Score>(world.get()));
 	world->AddActor_Back(ActorGroup::UI, std::make_shared<TimerUI>(world.get(),1 * 60000,0));
@@ -99,7 +99,7 @@ void GameMain::Initialize() {
 		if (x == 0 && y == 0 || x == 7 && y == 7) { continue; }
 		// 豆腐が無かったら生成
 		if (mapGenerater.check_toufu(x, y)) { continue; }
-			world->AddActor_Back(ActorGroup::MetalToufu,
+			world->AddActor_Back(ActorGroup::NormalToufu,
 			std::make_shared<MetalToufu>(world.get(),
 			mapGenerater.up_left_get_pos(x, y) + Vector2(1.0f, -57.0f),
 			objNumber,
@@ -162,7 +162,7 @@ void GameMain::AddToufu() {
 		// 豆腐が無かったら生成
 		if (mapGenerater.check_toufu(x, y)) { return; }
 		if (rand.Range(0, 10) == 0) {
-			world->AddActor_Back(ActorGroup::MetalToufu,
+			world->AddActor_Back(ActorGroup::NormalToufu,
 				std::make_shared<MetalToufu>(world.get(),
 					mapGenerater.up_left_get_pos(x, y) + Vector2(1.0f, -57.0f),
 					objNumber,
@@ -193,6 +193,7 @@ void GameMain::Update(float deltaTime) {
 	random_toufu_time++;
 	Input::GetInstance().Update();
 	world->Update(deltaTime);
+	world->sort(ActorGroup::NormalToufu);
 }
 
 void GameMain::Draw() const {
