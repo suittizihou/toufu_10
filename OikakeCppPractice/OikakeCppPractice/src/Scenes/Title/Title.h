@@ -87,9 +87,16 @@ private:
 
 	//アニメーションもどき用カウント変数
 	int animeCount;
-
+	
+	//フラッシュのアルファ値
 	float alpha;
-	int count;
 
+	//フラッシュ管理用
 	bool flashStart;
+
+	//シーン分岐用
+	bool noneOperation;
+
+	//無操作カウント
+	int timeCount;
 };

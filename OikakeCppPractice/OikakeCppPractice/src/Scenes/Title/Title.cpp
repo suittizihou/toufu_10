@@ -41,8 +41,9 @@ void Title::Initialize()
 
 	animeCount = 0;
 	alpha = 0;
-	count = 0;
+	timeCount = 0;
 	flashStart = true;
+	noneOperation = false;
 }
 
 void Title::FirstUpdate(float deltaTime)
@@ -56,6 +57,15 @@ void Title::Update(float deltaTime)
 	if ((Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_SPACE) || Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::Start)) && 
 		 animeCount == 5) {
  		isEnd = true;
+	}
+	
+	if (timeCount == 600) {
+		noneOperation = true;
+		isEnd = true;
+	}
+
+	if (animeCount == 5) {
+		timeCount += 1;
 	}
 
 	TitleAnimation();
@@ -82,7 +92,15 @@ bool Title::IsEnd() const
 
 Scene Title::Next() const
 {
-	return Scene::Description;
+	if (!noneOperation) {
+		return Scene::Description;
+	}
+	else {
+		//ここをMovieに変えればMovieシーンに移動すると思います
+		//※Movieシーンまだ作ってません
+		return Scene::CharacterSelect;
+	}
+	
 }
 
 void Title::Finalize()
@@ -188,7 +206,6 @@ void Title::TitleAnimation() {
 		if (alpha != 1.0f) {
 
 			alpha += 0.1f;
-			count = 0;
 			Draw();
 
 		}

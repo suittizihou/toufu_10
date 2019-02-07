@@ -16,6 +16,8 @@ enum class Scene {
 	None,
 	//!タイトル
 	Title,
+	// 動画再生シーン
+	Movie,
 	// キャラクターセレクト
 	CharacterSelect,
 	// 説明画面
