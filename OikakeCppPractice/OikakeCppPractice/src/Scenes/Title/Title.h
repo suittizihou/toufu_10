@@ -99,4 +99,7 @@ private:
 
 	//無操作カウント
 	int timeCount;
+
+	//サウンドハンドル
+	int sh;
 };
