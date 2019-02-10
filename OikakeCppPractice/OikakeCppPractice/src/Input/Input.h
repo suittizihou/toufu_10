@@ -4,6 +4,7 @@
 #include<array>
 #include<functional>
 #include<unordered_map>
+#include "Collision/HitInfo.h"
 
 #include"Math/Math.h"
 #include"Math/Vector3/Vector3.h"
@@ -86,7 +87,7 @@ public:
 	Vector2 GetMapDistanceMove_Pad1(int map_chipX, int map_chipY);
 	Vector2 GetMapDistanceMove_Pad2(int map_chipX, int map_chipY);
 	// “¤•…“®‚«—p
-	Vector2 PlayerHitToufuMove(const Vector2& position, int map_chipX, int map_chipY);
+	Vector2 PlayerHitToufuMove(const Vector2& center_pos, const HitInfo& HitInfo, int map_chipX, int map_chipY);
 	
 	XBoxController& GetXBoxController();
 	KeyBoard& GetKeyBoard();

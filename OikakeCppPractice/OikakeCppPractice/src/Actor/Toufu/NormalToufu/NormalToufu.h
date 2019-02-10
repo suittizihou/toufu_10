@@ -54,7 +54,6 @@ private:
 	Vector2 one_time_position{};
 	Vector2 default_position{};
 
-	Vector2 target_pos{};
 	Vector2 velocity{};
 
 	int hp{ 5 };	// ‘Ì—Í

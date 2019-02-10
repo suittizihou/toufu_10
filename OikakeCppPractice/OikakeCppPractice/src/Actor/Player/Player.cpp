@@ -115,8 +115,10 @@ void Player::OnDraw(Renderer & renderer)
 	//DrawFormatString(0, 32, GetColor(255, 0, 0), "target_positionX:%f target_positionY:%f", target_position.x, target_position.y);
 	//DrawFormatString(0, 48, GetColor(255, 0, 0), "Distance:%f", target_position.Vector2::Distance(position));
 	//DrawFormatString(0, 64, GetColor(255, 0, 0), "numverX:%fÅ@numverY:%f", MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y);
-	DrawFormatString(0, 80, GetColor(255, 0, 0), "movementX:%fÅ@movementY:%f", movement.x, movement.y);
+	//DrawFormatString(0, 80, GetColor(255, 0, 0), "movementX:%fÅ@movementY:%f", movement.x, movement.y);
 	 
+
+	DrawCircle(target_position.x, target_position.y, 3, GetColor(0, 0, 255));
 
 	//DrawBox(position.x - 5, position.y + 75, position.x + 117, position.y + 149, GetColor(255, 0, 0), TRUE);
 	//DrawBox(position.x, position.y, position.x + 117, position.y + 149, GetColor(255, 0, 0), TRUE);

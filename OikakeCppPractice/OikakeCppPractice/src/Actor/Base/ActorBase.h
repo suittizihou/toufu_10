@@ -51,6 +51,7 @@ public:
 	std::list<ActorPtr>& GetChildren();
 	void ClearChildren();
 	void ChangeStatus(Status status);
+	Vector2 GetTarget_Pos();
 	Vector2 GetVec2Position();
 	Vector2 GetCenterPosition();
 	Vector2 GetMovement() const;
@@ -58,6 +59,7 @@ public:
 	int GetChildNum() const;
 	int GetNumber();
 	float GetSpeed();
+	bool GetKinnikuMove();
 
 	void sort();
 protected:
@@ -78,11 +80,14 @@ protected:
 	int input_type;
 	Character chara;
 	Status	status;
+	Vector2 target_pos;
 	Vector2 position;
 	Vector2 center_pos;
 	Vector2 movement = Vector2::Zero;
 	float speed{};
 	int number = 0;
+	bool kinniku_move{ false };		// ‹Ø“÷“¤•…‚É‰Ÿ‚³‚ê‚½‚Æ‚«true‚É‚È‚é‚à‚Ì
+
 private:
 	std::list<ActorPtr> children;
 private:
