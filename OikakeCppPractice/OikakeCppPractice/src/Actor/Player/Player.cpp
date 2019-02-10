@@ -22,6 +22,7 @@ void Player::OnInitialize()
 	//target_position = Input::GetInstance().GetMapDistanceMove_Pad1(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y);
 	target_position = Input::GetInstance().GetMapDistanceMove_Pad1(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y);
 	position = target_position - Vector2(0.0f, 80.0f);
+	firstDraw = true;
 }
 
 void Player::OnUpdate(float deltaTime)
@@ -68,35 +69,56 @@ void Player::OnDraw(Renderer & renderer)
 		if (time > 5)
 		{
 			animeY += abs(movement.y);
+			animeX += abs(movement.x);
 			time = 0;
 			if (animeY == 4)animeY = 0;
+			if (animeX == 4)animeX = 0;
 		}
 
-		if (movement.Length() != 0) {
-			beforeMovement = movement.y;
+		if (movement.y != 0) {
+			beforeMovementY = movement.y;
 		}
+
+		if (movement.x != 0) {
+			beforeMovementX = movement.x;
+		}
+
+
 
 	if (GetCharacter() == Character::Ninja) {
+		//ç≈èâÇÃìÆÇ¢ÇƒÇ»Ç¢Ç∆Ç´ÇÃï`âÊ
+		if (firstDraw||movement.Length() == 0) 
+		{
+			renderer.DrawTexture(Assets::Texture::Ninja, position);
+			if (movement.Length() == 1) {
+				firstDraw = false;
+			}			
+		}
 
-		if (beforeMovement == 1) {
+		//óßÇøé~Ç‹Ç¡ÇƒÇÈÇ∆Ç´ÇÃï`âÊ
+		if (beforeMovementY == 1 && movement.Length() == 0)
+		{
 			renderer.DrawTexture(Assets::Texture::Ninja, position);
 		}
-		if (beforeMovement == -1) {
+		if (beforeMovementY == -1 && movement.Length() == 0)
+		{
 			renderer.DrawTexture(Assets::Texture::Ninja_Back, position);
 		}
 		
-
+		//ècà⁄ìÆ
 		if (movement.y == 1) {
 			renderer.DrawRectangle(Assets::Texture::Ninja_Front_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeY, 0), Vector2(181, 181)));
 		}
-		if (movement.y == -1) {
+		else if (movement.y == -1) {
 			renderer.DrawRectangle(Assets::Texture::Ninja_Back_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeY, 0), Vector2(181, 181)));
 		}
+
+		//â°à⁄ìÆ
 		if (movement.x == 1) {
-			renderer.DrawRectangle(Assets::Texture::Ninja_Right_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeY, 0), Vector2(181, 181)));
+			renderer.DrawRectangle(Assets::Texture::Ninja_Right_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeX, 0), Vector2(181, 181)));
 		}
 		if (movement.x == -1) {
-			renderer.DrawRectangle(Assets::Texture::Ninja_Left_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeY, 0), Vector2(181, 181)));
+			renderer.DrawRectangle(Assets::Texture::Ninja_Left_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeX, 0), Vector2(181, 181)));
 		}
 		
 	}
@@ -115,7 +137,7 @@ void Player::OnDraw(Renderer & renderer)
 	//DrawFormatString(0, 32, GetColor(255, 0, 0), "target_positionX:%f target_positionY:%f", target_position.x, target_position.y);
 	//DrawFormatString(0, 48, GetColor(255, 0, 0), "Distance:%f", target_position.Vector2::Distance(position));
 	//DrawFormatString(0, 64, GetColor(255, 0, 0), "numverX:%fÅ@numverY:%f", MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y);
-	DrawFormatString(0, 80, GetColor(255, 0, 0), "movementX:%fÅ@movementY:%f", movement.x, movement.y);
+	//DrawFormatString(0, 80, GetColor(255, 0, 0), "movementX:%fÅ@movementY:%f", movement.x, movement.y);
 	 
 
 	//DrawBox(position.x - 5, position.y + 75, position.x + 117, position.y + 149, GetColor(255, 0, 0), TRUE);

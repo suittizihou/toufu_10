@@ -33,8 +33,10 @@ private:
 	int time{};
 	int animeY{};
 	int animeX{};
+	int beforeMovementY{};
+	int beforeMovementX{};
 
-	int beforeMovement{};
+	bool firstDraw{};
 
 private:
 	Vector2 Average_Position();
