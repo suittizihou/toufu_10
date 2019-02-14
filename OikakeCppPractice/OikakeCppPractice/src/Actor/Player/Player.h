@@ -45,4 +45,6 @@ private:
 	int beforeMovementX{};
 
 	bool firstDraw{};
+
+	int direction = 0;
 };

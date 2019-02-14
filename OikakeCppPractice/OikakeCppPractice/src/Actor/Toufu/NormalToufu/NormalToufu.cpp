@@ -13,6 +13,7 @@
 NormalToufu::NormalToufu(IWorld * world, const Vector2 & position_, const int& _number)
 	: Actor2D(world, "SponeNormalToufu", position_, std::make_shared<Box>(Vector2(0, 57), Vector2(110, 120)), _number)//std::make_shared<Box>(Vector2(0, 57), Vector2(110, 120))
 {
+	sponed_pos = position_;
 	actor_group = ActorGroup::NormalToufu;
 	MapGenerater::set_map_toufu(Average_Position(position), ToufuID::Normal);
 	spone_position = Vector2(position.x, -128.0f);
@@ -94,8 +95,8 @@ void NormalToufu::OnUpdate(float deltaTime)
 
 void NormalToufu::OnDraw(Renderer & renderer)
 {
-	//renderer.DrawTexture(Assets::Texture::NormalToufu, position);
-	DrawBox(position.x, position.y + 57, position.x + 110, position.y + 120, GetColor(0, 255, 0), TRUE);
+	renderer.DrawTexture(Assets::Texture::NormalToufu, position);
+	//DrawBox(position.x, position.y + 57, position.x + 110, position.y + 120, GetColor(0, 255, 0), TRUE);
 	//DrawPixel(target_pos.x, target_pos.y, GetColor(255, 0, 0));
 	DrawCircle(center_pos.x, center_pos.y, 5, GetColor(0, 0, 255));
 	DrawCircle(target_pos.x, target_pos.y, 5, GetColor(255, 0, 0));
