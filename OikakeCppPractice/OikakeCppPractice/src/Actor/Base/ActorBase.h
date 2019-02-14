@@ -54,11 +54,14 @@ public:
 	Vector2 GetVec2Position();
 	Vector2 GetCenterPosition();
 	Vector2 GetMovement() const;
+	Vector2 GetTargetPos();
 	int GetControllerType() const;
 	int GetChildNum() const;
 	int GetNumber();
 	float GetSpeed();
 	bool GetKinnikuMove();
+
+	//void SetName(const std::string& _name);
 
 	void sort();
 protected:
@@ -82,6 +85,7 @@ protected:
 	Vector2 position;
 	Vector2 center_pos;
 	Vector2 movement = Vector2::Zero;
+	Vector2 target_pos{};
 	float speed{};
 	int number = 0;
 	bool kinniku_move{ false };		// ‹Ø“÷“¤•…‚É‰Ÿ‚³‚ê‚½‚Æ‚«true‚É‚È‚é‚à‚Ì

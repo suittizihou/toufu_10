@@ -338,6 +338,11 @@ Vector2 ActorBase::GetMovement( ) const
 	return movement;
 }
 
+Vector2 ActorBase::GetTargetPos()
+{
+	return target_pos;
+}
+
 float ActorBase::GetSpeed() {
 	return speed;
 }
@@ -346,3 +351,8 @@ bool ActorBase::GetKinnikuMove()
 {
 	return kinniku_move;
 }
+
+//void ActorBase::SetName(const std::string& _name)
+//{
+//	name = _name;
+//}
