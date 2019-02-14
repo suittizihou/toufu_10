@@ -39,5 +39,6 @@ private:
 	int animeX	{};
 
 private:
-	Vector2 Average_Position();
+	Vector2 Average_Position();	
+	int direction = 1;
 };
