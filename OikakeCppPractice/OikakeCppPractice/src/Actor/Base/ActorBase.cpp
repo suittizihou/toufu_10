@@ -164,7 +164,22 @@ void ActorBase::AddChild_Back(ActorGroup group, const ActorPtr & actor)
 
 void ActorBase::sort()
 {
-	children.sort([](ActorPtr a, ActorPtr b) { return a->GetVec2Position().y < b->GetVec2Position().y; });
+	children.sort([](ActorPtr a, ActorPtr b) {
+		if (a->GetName() == "SponeNormalToufu"&&b->GetName() == "SponeNormalToufu")
+		{
+			return a->GetSponedPosition().y   < b->GetSponedPosition().y;
+		}
+		if (a->GetName() == "SponeNormalToufu")
+		{
+			return a->GetSponedPosition().y   < b->GetVec2Position().y;
+		}
+		if (b->GetName() == "SponeNormalToufu")
+		{
+			return a->GetVec2Position().y   < b->GetSponedPosition().y;
+		}
+		return a->GetVec2Position().y < b->GetVec2Position().y; 
+	}
+	);
 }
 void ActorBase::EachChildren(std::function<void(ActorBase&)> func)
 {
@@ -338,9 +353,9 @@ Vector2 ActorBase::GetMovement( ) const
 	return movement;
 }
 
-Vector2 ActorBase::GetTargetPos()
+Vector2 ActorBase::GetSponedPosition() const
 {
-	return target_pos;
+	return sponed_pos;
 }
 
 float ActorBase::GetSpeed() {
@@ -351,8 +366,3 @@ bool ActorBase::GetKinnikuMove()
 {
 	return kinniku_move;
 }
-
-//void ActorBase::SetName(const std::string& _name)
-//{
-//	name = _name;
-//}

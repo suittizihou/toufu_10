@@ -12,6 +12,7 @@
 MetalToufu::MetalToufu(IWorld * world, const Vector2 & position_, const int& _number, bool spone_special_move)
 	: Actor2D(world, "SponeMetalToufu", position_, std::make_shared<Box>(Vector2(0, 57), Vector2(110, 120)), _number)
 {
+	sponed_pos = position_;
 	actor_group = ActorGroup::MetalToufu;
 
 	// 267

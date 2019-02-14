@@ -34,6 +34,10 @@ void CharacterSelect::LoadAssets()
 void CharacterSelect::Initialize()
 {
 	isEnd = false;
+	sceneBGM = LoadSoundMem("asset/BGM&SE/choose_bgm.mp3");
+	cursorSound = LoadSoundMem("asset/BGM&SE/choose_se.mp3");
+	enterSound = LoadSoundMem("asset/BGM&SE/choosed_se.mp3");
+	PlaySoundMem(sceneBGM, DX_PLAYTYPE_LOOP, true);
 }
 
 void CharacterSelect::FirstUpdate(float deltaTime)
@@ -44,18 +48,26 @@ void CharacterSelect::Update(float deltaTime)
 {
 	Input::GetInstance().Update();
 
-	if (Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_A) || 
-		LeftButton(awd))x = true;
-
-	if (Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_D) || 
-		RightButton(awd))x = false;
-	
-	if (Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_W) || 
-		UpButton(awd))y = true;
-	
-	if (Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_S) || 
-		DownButton(awd))y = false;
-
+	if (Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_A) ||
+		LeftButton(awd)) {
+		PlaySoundMem(cursorSound, DX_PLAYTYPE_BACK);
+		x = true;
+	}
+	if (Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_D) ||
+		RightButton(awd)) {
+		PlaySoundMem(cursorSound, DX_PLAYTYPE_BACK);
+		x = false;
+	}
+	if (Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_W) ||
+		UpButton(awd)) {
+		PlaySoundMem(cursorSound, DX_PLAYTYPE_BACK);
+		y = true;
+	}
+	if (Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_S) ||
+		DownButton(awd)) {
+		PlaySoundMem(cursorSound, DX_PLAYTYPE_BACK);
+		y = false;
+	}
 	if (x  &&  y)tex_enum = Assets::Texture::choose1_walk;
 	if (!x &&  y)tex_enum = Assets::Texture::choose2_walk;
 	if (x && !y)tex_enum = Assets::Texture::choose4_walk;
@@ -71,18 +83,23 @@ void CharacterSelect::Update(float deltaTime)
 			{
 			case Assets::Texture::choose1_walk:
 				CharacterManager::SetCharacterP2(Character::Kinniku);
+				PlaySoundMem(enterSound, DX_PLAYTYPE_BACK);
 				break;
 			case Assets::Texture::choose2_walk:
 				CharacterManager::SetCharacterP2(Character::Kakutouka);
+				PlaySoundMem(enterSound, DX_PLAYTYPE_BACK);
 				break;
 			case Assets::Texture::choose3_walk:
 				CharacterManager::SetCharacterP2(Character::Ninja);
+				PlaySoundMem(enterSound, DX_PLAYTYPE_BACK);
 				break;
 			case Assets::Texture::choose4_walk:
 				CharacterManager::SetCharacterP2(Character::Yoroi);
+				PlaySoundMem(enterSound, DX_PLAYTYPE_BACK);
 				break;
 			}
 			isEnd = true;
+			StopSoundMem(sceneBGM);
 		}
 		else
 		{
@@ -90,15 +107,19 @@ void CharacterSelect::Update(float deltaTime)
 			{
 			case Assets::Texture::choose1_walk:
 				CharacterManager::SetCharacterP1(Character::Kinniku);
+				PlaySoundMem(enterSound, DX_PLAYTYPE_BACK);
 				break;
 			case Assets::Texture::choose2_walk:
 				CharacterManager::SetCharacterP1(Character::Kakutouka);
+				PlaySoundMem(enterSound, DX_PLAYTYPE_BACK);
 				break;
 			case Assets::Texture::choose3_walk:
 				CharacterManager::SetCharacterP1(Character::Ninja);
+				PlaySoundMem(enterSound, DX_PLAYTYPE_BACK);
 				break;
 			case Assets::Texture::choose4_walk:
 				CharacterManager::SetCharacterP1(Character::Yoroi);
+				PlaySoundMem(enterSound, DX_PLAYTYPE_BACK);
 				break;
 			}
 			awd = false;
