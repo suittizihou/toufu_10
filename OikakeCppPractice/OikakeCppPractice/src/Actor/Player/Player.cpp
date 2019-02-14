@@ -196,7 +196,6 @@ void Player::Damage() {
 		if (!MapGenerater::check_toufu(x, y)) {
 			position = MapGenerater::up_left_get_pos(x, y);
 		}
-
 	}
 }
 
