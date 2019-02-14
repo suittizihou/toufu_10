@@ -91,4 +91,8 @@ private:
 	bool awd = true;
 	int time = 0;
 	int a = 0;
+
+	int sceneBGM = 0;
+	int cursorSound = 0;
+	int enterSound = 0;
 };
