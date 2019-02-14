@@ -51,7 +51,6 @@ public:
 	std::list<ActorPtr>& GetChildren();
 	void ClearChildren();
 	void ChangeStatus(Status status);
-	Vector2 GetTarget_Pos();
 	Vector2 GetVec2Position();
 	Vector2 GetCenterPosition();
 	Vector2 GetMovement() const;
@@ -81,7 +80,6 @@ protected:
 	int input_type;
 	Character chara;
 	Status	status;
-	Vector2 target_pos;
 	Vector2 position;
 	Vector2 center_pos;
 	Vector2 movement = Vector2::Zero;

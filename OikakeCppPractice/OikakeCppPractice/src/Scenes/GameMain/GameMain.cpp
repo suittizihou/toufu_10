@@ -37,15 +37,43 @@ void GameMain::LoadAssets()
 	renderer.LoadTexture(Assets::Texture::BlueTile, "gameplay/blueTile.png");
 	//renderer.LoadTexture(Assets::Texture::Player, "player.png");
 	//renderer.LoadTexture(Assets::Texture::Player2, "player.png");
+
+	//”EŽÒ‚ÌƒeƒNƒXƒ`ƒƒ
 	renderer.LoadTexture(Assets::Texture::Ninja, "gameplay/player3.png");
 	renderer.LoadTexture(Assets::Texture::Ninja_Back,"gameplay/player3-2.png");
 	renderer.LoadTexture(Assets::Texture::Ninja_Front_Anime, "gameplay/player3_anime_walk_front.png");
 	renderer.LoadTexture(Assets::Texture::Ninja_Back_Anime, "gameplay/player3_anime_walk_back.png");
 	renderer.LoadTexture(Assets::Texture::Ninja_Left_Anime, "gameplay/player3_anime_walk_left.png");
 	renderer.LoadTexture(Assets::Texture::Ninja_Right_Anime, "gameplay/player3_anime_walk_right.png");
+	//‚±‚±‚Ü‚Å”EŽÒ
+
+	//‚±‚±‚©‚ç‹Ø“÷
 	renderer.LoadTexture(Assets::Texture::Kinniku, "gameplay/player1.png");
+	renderer.LoadTexture(Assets::Texture::Kinniku_Back, "gameplay/player1-2.png");
+	renderer.LoadTexture(Assets::Texture::Kinniku_Front_Anime, "gameplay/player1_anime_walk.png");
+	renderer.LoadTexture(Assets::Texture::Kinniku_Back_Anime, "gameplay/player1_anime_walk2.png");
+	renderer.LoadTexture(Assets::Texture::Kinniku_Left_Anime, "gameplay/player1_anime_walk3.png");
+	renderer.LoadTexture(Assets::Texture::Kinniku_Right_Anime, "gameplay/player1_anime_walk4.png");
+	//‚±‚±‚Ü‚Å‹Ø“÷
+
+	//‚±‚±‚©‚çŠZ
 	renderer.LoadTexture(Assets::Texture::Yoroi, "gameplay/player4.png");
+	renderer.LoadTexture(Assets::Texture::Yoroi_Back, "gameplay/player4-2.png");
+	renderer.LoadTexture(Assets::Texture::Yoroi_Front_Anime, "gameplay/player4_anime_walk.png");
+	renderer.LoadTexture(Assets::Texture::Yoroi_Back_Anime, "gameplay/player4_anime_walk2.png");
+	renderer.LoadTexture(Assets::Texture::Yoroi_Left_Anime, "gameplay/player4_anime_walk3.png");
+	renderer.LoadTexture(Assets::Texture::Yoroi_Right_Anime, "gameplay/player4_anime_walk4.png");
+	//‚±‚±‚Ü‚ÅŠZ
+
+	//‚±‚±‚©‚çŠi“¬‰Æ
 	renderer.LoadTexture(Assets::Texture::Kakutouka, "gameplay/player2.png");
+	renderer.LoadTexture(Assets::Texture::Kakutouka_Back, "gameplay/player2-2.png");
+	renderer.LoadTexture(Assets::Texture::Kakutouka_Front_Anime, "gameplay/player2_anime_walk.png");
+	renderer.LoadTexture(Assets::Texture::Kakutouka_Back_Anime, "gameplay/player2_anime_walk2.png");
+	renderer.LoadTexture(Assets::Texture::Kakutouka_Left_Anime, "gameplay/player2_anime_walk3.png");
+	renderer.LoadTexture(Assets::Texture::Kakutouka_Right_Anime, "gameplay/player2_anime_walk4.png");
+	//‚±‚±‚Ü‚ÅŠi“¬‰Æ
+
 	//renderer.LoadTexture(Assets::Texture::Player2, "player_atari.jpg");
 	renderer.LoadTexture(Assets::Texture::NormalToufu, "gameplay/tofu.png");
 	renderer.LoadTexture(Assets::Texture::MetalToufu, "gameplay/iron_tofu.png");

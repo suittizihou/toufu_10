@@ -458,33 +458,33 @@ Vector2 Input::PlayerHitToufuMove(const Vector2& center_pos, const HitInfo& hitI
 		x += map_chipX;
 		y += map_chipY;
 
-		// 豆腐があったら
-		if (MapGenerater::check_toufu(x, y)) {
-			// 豆腐に当たった回数が1回以上なら || 当たったキャラクターが筋肉以外ならこのifは無条件で豆腐に当たったところの前のマスで返る
-			if (count >= 1 || hitInfo.collideActor->GetCharacter() != Character::Kinniku) {
-				// 上から下に押されたときの処理
-				if (map_chipY == 1) {
-					y -= 1;
-				}
-				// 下から上に押されたときの処理
-				if (map_chipY == -1) {
-					y += 1;
-				}
-				// 左から下に押されたときの処理
-				if (map_chipX == 1) {
-					x -= 1;
-				}
-				// 右から左に押されたときの処理
-				if (map_chipX == -1) {
-					x += 1;
-				}
-				break;
-			}
-			else {
-				toufu_hit = true;
-				++count;
-			}
-		}
+		//// 豆腐があったら
+		//if (MapGenerater::check_toufu(x, y)) {
+		//	// 豆腐に当たった回数が1回以上なら || 当たったキャラクターが筋肉以外ならこのifは無条件で豆腐に当たったところの前のマスで返る
+		//	if (count >= 1 || hitInfo.collideActor->GetCharacter() != Character::Kinniku) {
+		//		// 上から下に押されたときの処理
+		//		if (map_chipY == 1) {
+		//			y -= 1;
+		//		}
+		//		// 下から上に押されたときの処理
+		//		if (map_chipY == -1) {
+		//			y += 1;
+		//		}
+		//		// 左から下に押されたときの処理
+		//		if (map_chipX == 1) {
+		//			x -= 1;
+		//		}
+		//		// 右から左に押されたときの処理
+		//		if (map_chipX == -1) {
+		//			x += 1;
+		//		}
+		//		break;
+		//	}
+		//	else {
+		//		toufu_hit = true;
+		//		++count;
+		//	}
+		//}
 
 		// 壁際に当たったら
 		if (x < 0 || x > 7 || y < 0 || y > 7) {

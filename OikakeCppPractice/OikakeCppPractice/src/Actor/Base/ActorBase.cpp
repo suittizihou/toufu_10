@@ -252,11 +252,6 @@ void ActorBase::ChangeStatus(Status status)
 	this->status = status;
 }
 
-Vector2 ActorBase::GetTarget_Pos()
-{
-	return target_pos;
-}
-
 Status ActorBase::GetStatus() const
 {
 	return status;
