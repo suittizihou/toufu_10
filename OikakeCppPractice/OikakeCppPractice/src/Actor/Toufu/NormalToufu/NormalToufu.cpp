@@ -38,6 +38,19 @@ void NormalToufu::OnFirstUpdate(float deltaTime)
 		status = Status::Dead;
 		MapGenerater::set_map_Texture(center_pos, Assets::Texture::NormalToufuTile);
 	}
+
+	if (top_hit) {
+
+	}
+	if (bottom_hit) {
+
+	}
+	if (left_hit) {
+
+	}
+	if (right_hit) {
+
+	}
 }
 
 void NormalToufu::OnUpdate(float deltaTime)
@@ -61,10 +74,10 @@ void NormalToufu::OnUpdate(float deltaTime)
 		_move = false;
 		movement = Vector2::Zero;
 	}
-	if (movement.Length() == 0.0f) {
+	if (spone_move == NormalToufuMove::SponeMoveStop && movement.Length() == 0.0f) {
 		name = "StopNormalToufu";
 	}
-	else {
+	else if(spone_move == NormalToufuMove::SponeMoveStop) {
 		name = "NormalToufu";
 	}
 
@@ -81,11 +94,17 @@ void NormalToufu::OnUpdate(float deltaTime)
 
 void NormalToufu::OnDraw(Renderer & renderer)
 {
-	renderer.DrawTexture(Assets::Texture::NormalToufu, position);
+	//renderer.DrawTexture(Assets::Texture::NormalToufu, position);
 	DrawBox(position.x, position.y + 57, position.x + 110, position.y + 120, GetColor(0, 255, 0), TRUE);
 	//DrawPixel(target_pos.x, target_pos.y, GetColor(255, 0, 0));
 	DrawCircle(center_pos.x, center_pos.y, 5, GetColor(0, 0, 255));
 	DrawCircle(target_pos.x, target_pos.y, 5, GetColor(255, 0, 0));
+	if (name == "StopNormalToufu" || name == "NormalToutu") {
+		DrawFormatString(center_pos.x, center_pos.y, GetColor(255, 0, 0), name.c_str());
+	}
+	else {
+		DrawFormatString(center_pos.x, center_pos.y, GetColor(255, 255, 0), name.c_str());
+	}
 	//DrawFormatString(0, 16, GetColor(255, 0, 0), "movement.x : %f, movement.y : %f", movement.x, movement.y);
 	//DrawFormatString(0, 32, GetColor(255, 0, 0), "move : %d", _move);
 	
@@ -477,6 +496,24 @@ void NormalToufu::LeftHitRiaction_2(const HitInfo& hitInfo)
 }
 
 
+void NormalToufu::TopHitTarget(const HitInfo& hitInfo)
+{
+	
+}
+
+void NormalToufu::BottomHitTarget(const HitInfo& hitInfo)
+{
+}
+
+void NormalToufu::LeftHitTarget(const HitInfo& hitInfo)
+{
+}
+
+void NormalToufu::RightHitTarget(const HitInfo& hitInfo)
+{
+}
+
+
 void NormalToufu::OnCollide(const HitInfo & hitInfo)
 {
 	// 自分と同じ奴には当たらない
@@ -485,14 +522,26 @@ void NormalToufu::OnCollide(const HitInfo & hitInfo)
 	}
 
 	// 豆腐と豆腐が衝突した関連
-	if (name != "SponeNormalToufu") {
-		if (hitInfo.collideActor->GetName() == "NormalToufu" || hitInfo.collideActor->GetName() == "StopNormalToufu")
-		{
-			//MapGenerater::set_map_toufu(Average_Position(position), ToufuID::None);
-			//status = Status::Dead;
+	if (name != "SponeNormalToufu" || hitInfo.collideActor->GetName() != "SponeNormalToufu") {
+		// 筋肉豆腐に押された豆腐の場合
+		if (kinniku_move) {
+			if (hitInfo.collideActor->GetName() == "NormalToufu" || hitInfo.collideActor->GetName() == "StopNormalToufu")
+			{
+				// 豆腐に当たったならカウント
+				++toufu_hit_count;
+				if (toufu_hit_count >= 1) {
+					target_pos = MapGenerater::get_near_pos(center_pos);
+				}
+			}
+		} // そうじゃない場合
+		else {
+			if (hitInfo.collideActor->GetName() == "NormalToufu" || hitInfo.collideActor->GetName() == "StopNormalToufu") {
+				target_pos = MapGenerater::get_near_pos(center_pos);
+			}
 		}
 	}
 
+	// 筋肉豆腐に押されてない && 動いてない豆腐に当たった時
 	if (!kinniku_move && hitInfo.collideActor->GetName() == "StopNormalToufu") {
 		movement = Vector2::Zero;
 	}
@@ -502,34 +551,6 @@ void NormalToufu::OnCollide(const HitInfo & hitInfo)
 
 		// 相手の豆腐のムーブメントを自分に入れる
 		movement = hitInfo.collideActor->GetMovement();
-
-		//// 上から当たっている && 相手の豆腐は下に進んでいるとき
-		//if (TopHit(center_pos, hitInfo.collideActor->GetCenterPosition()) && hitInfo.collideActor->GetMovement().y == 1) {
-		//	movement = hitInfo.collideActor->GetMovement();
-		//	// 相手のターゲットポジションを自分のターゲットポジションに
-		//	target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, 0, 1) + Vector2(55, 30);
-		//}
-
-		//// 下から当たっている && 相手の豆腐は上に進んでいるとき
-		//if (BottomHit(center_pos, hitInfo.collideActor->GetCenterPosition()) && hitInfo.collideActor->GetMovement().y == -1) {
-		//	movement = hitInfo.collideActor->GetMovement();
-		//	// 相手のターゲットポジションを自分のターゲットポジションに
-		//	target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, 0, -1) + Vector2(55, 30);
-		//}
-
-		//// 右から当たっている && 相手の豆腐は左に進んでいるとき
-		//if (RightHit(center_pos, hitInfo.collideActor->GetCenterPosition()) && hitInfo.collideActor->GetMovement().x == -1) {
-		//	movement = hitInfo.collideActor->GetMovement();
-		//	// 相手のターゲットポジションを自分のターゲットポジションに
-		//	target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, -1, 0) + Vector2(55, 30);
-		//}
-
-		//// 左から当たっている && 相手の豆腐は右に進んでいるとき
-		//if (LeftHit(center_pos, hitInfo.collideActor->GetCenterPosition()) && hitInfo.collideActor->GetMovement().x == -1) {
-		//	movement = hitInfo.collideActor->GetMovement();
-		//	// 相手のターゲットポジションを自分のターゲットポジションに
-		//	target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, 1, 0) + Vector2(55, 30);
-		//}
 	}
 
 	// 押す処理関連

@@ -191,6 +191,11 @@ ToufuID MapGenerater::get_toufu_id(int x, int y)
 	return toufu_map[y][x];
 }
 
+ToufuID MapGenerater::get_toufu_id(const Vector2& position)
+{
+	return toufu_map[static_cast<int>(get_pos_numver(position).y)][static_cast<int>(get_pos_numver(position).x)];
+}
+
 Vector3 MapGenerater::get_toufuPos_and_id(int x, int y)
 {
 	return Vector3(up_left_get_pos(x, y).x, up_left_get_pos(x, y).y, static_cast<int>(toufu_map[y][x]));

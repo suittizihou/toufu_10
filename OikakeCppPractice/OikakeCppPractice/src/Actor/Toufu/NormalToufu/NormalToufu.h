@@ -32,6 +32,11 @@ private:
 	void LeftHitRiaction_1(const HitInfo& hitInfo);
 	void LeftHitRiaction_2(const HitInfo& hitInfo);
 
+	void TopHitTarget(const HitInfo& hitInfo);
+	void BottomHitTarget(const HitInfo& hitInfo);
+	void LeftHitTarget(const HitInfo& hitInfo);
+	void RightHitTarget(const HitInfo& hitInfo);
+
 	// “–‚½‚è”»’èŒn =======================================================================
 
 	float GetDegree(Vector2 targetposition, Vector2 thisposition);
@@ -57,6 +62,13 @@ private:
 	Vector2 velocity{};
 
 	int hp{ 5 };	// ‘Ì—Í
+
+	int toufu_hit_count{};	// ‹Ø“÷“¤•…‚É‰Ÿ‚³‚ê‚½“z—p
+
+	bool top_hit{};
+	bool bottom_hit{};
+	bool left_hit{};
+	bool right_hit{};
 
 private:
 	Vector2 Average_Position(const Vector2& position);

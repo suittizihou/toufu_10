@@ -24,10 +24,10 @@ void ResultMenu::OnUpdate(float deltaTime) {
 	//if (Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_DOWN)) {
 	//	++select;
 	//}
-	if (Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::Dpad_Up)) {
+	if (Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::Dpad_Up) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_UP)) {
 		--select;
 	}
-	if (Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::Dpad_Down)) {
+	if (Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::Dpad_Down) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_DOWN)) {
 		++select;
 	}
 

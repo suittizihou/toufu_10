@@ -13,7 +13,6 @@
 #include"XBoxController/XBoxController.h"
 #include"Command.h"
 #include"Axis.h"
-#include"MoveState.h"
 
 
 /**
@@ -75,10 +74,6 @@ public:
 	Vector2 GetVelocity() const;
 	Vector2 GetVelocity2() const;
 	Vector2 GetDInputVelocity(int input_type) const;
-
-	// プレイヤーの移動状態を表す
-	MoveState move_state{ MoveState::Stop };
-	MoveState move_state2{ MoveState::Stop };
 	// WASD操作用
 	Vector2 GetMapDistanceMove_WASD(int map_chipX, int map_chipY);
 	// 矢印キー操作用

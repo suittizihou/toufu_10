@@ -35,7 +35,7 @@ void GameFrame::Initialize()
 	sceneManager.Add(Scene::Result, std::make_shared<Result>(world));
 	sceneManager.Add(Scene::GameEnd, std::make_shared<GameEnd>());
 
-	sceneManager.Change(Scene::Title);
+	sceneManager.Change(Scene::CharacterSelect);
 
 }
 

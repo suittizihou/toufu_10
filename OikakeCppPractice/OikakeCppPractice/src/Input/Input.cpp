@@ -89,7 +89,6 @@ Vector2 Input::GetMapDistanceMove_WASD(int map_chipX, int map_chipY) {
 			}
 			else {
 				valueY = -1;
-				move_state = MoveState::Move;
 			}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;
@@ -109,7 +108,6 @@ Vector2 Input::GetMapDistanceMove_WASD(int map_chipX, int map_chipY) {
 		}
 		else {
 			valueY = 1;
-			move_state = MoveState::Move;
 		}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;
@@ -129,7 +127,6 @@ Vector2 Input::GetMapDistanceMove_WASD(int map_chipX, int map_chipY) {
 		}
 		else {
 			valueX = 1;
-			move_state = MoveState::Move;
 		}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;
@@ -150,7 +147,6 @@ Vector2 Input::GetMapDistanceMove_WASD(int map_chipX, int map_chipY) {
 		}
 		else {
 			valueX = -1;
-			move_state = MoveState::Move;
 		}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;
@@ -184,7 +180,6 @@ Vector2 Input::GetMapDistanceMove_Arrow(int map_chipX, int map_chipY) {
 			}
 			else {
 				valueY = -1;
-				move_state = MoveState::Move;
 			}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;
@@ -204,7 +199,6 @@ Vector2 Input::GetMapDistanceMove_Arrow(int map_chipX, int map_chipY) {
 		}
 		else {
 			valueY = 1;
-			move_state = MoveState::Move;
 		}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;
@@ -224,7 +218,6 @@ Vector2 Input::GetMapDistanceMove_Arrow(int map_chipX, int map_chipY) {
 		}
 		else {
 			valueX = 1;
-			move_state = MoveState::Move;
 		}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;
@@ -245,7 +238,6 @@ Vector2 Input::GetMapDistanceMove_Arrow(int map_chipX, int map_chipY) {
 		}
 		else {
 			valueX = -1;
-			move_state = MoveState::Move;
 		}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;
@@ -281,7 +273,6 @@ Vector2 Input::GetMapDistanceMove_Pad1(int map_chipX, int map_chipY) {
 			}
 			else {
 				valueY = -1;
-				move_state = MoveState::Move;
 			}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;
@@ -302,7 +293,6 @@ Vector2 Input::GetMapDistanceMove_Pad1(int map_chipX, int map_chipY) {
 		}
 		else {
 		valueY = 1;
-		move_state = MoveState::Move;
 		}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;
@@ -322,7 +312,6 @@ Vector2 Input::GetMapDistanceMove_Pad1(int map_chipX, int map_chipY) {
 		}
 		else {
 		valueX = 1;
-		move_state = MoveState::Move;
 		}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;
@@ -344,7 +333,6 @@ Vector2 Input::GetMapDistanceMove_Pad1(int map_chipX, int map_chipY) {
 		}
 		else {
 		valueX = -1;
-		move_state = MoveState::Move;
 		}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;
@@ -380,7 +368,6 @@ Vector2 Input::GetMapDistanceMove_Pad2(int map_chipX, int map_chipY) {
 			}
 			else {
 				valueY = -1;
-				move_state2 = MoveState::Move;
 			}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;
@@ -401,7 +388,6 @@ Vector2 Input::GetMapDistanceMove_Pad2(int map_chipX, int map_chipY) {
 		}
 		else {
 		valueY = 1;
-		move_state2 = MoveState::Move;
 		}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;
@@ -421,7 +407,6 @@ Vector2 Input::GetMapDistanceMove_Pad2(int map_chipX, int map_chipY) {
 		}
 		else {
 		valueX = 1;
-		move_state2 = MoveState::Move;
 		}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;
@@ -443,7 +428,6 @@ Vector2 Input::GetMapDistanceMove_Pad2(int map_chipX, int map_chipY) {
 		}
 		else {
 		valueX = -1;
-		move_state2 = MoveState::Move;
 		}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;

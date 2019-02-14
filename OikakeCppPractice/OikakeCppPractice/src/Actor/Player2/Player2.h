@@ -1,8 +1,8 @@
 #pragma once
 
 #include"Actor/Base/Actor2D.h"
-#include "../../Input/MoveState.h"
 #include "Utility/Random/Random.h"
+#include"../PlayerManager/MoveState.h"
 
 class Player2 : public Actor2D {
 public:
@@ -11,17 +11,25 @@ public:
 
 private:
 	virtual void OnInitialize() override;
+	virtual void OnFirstUpdate(float deltaTime)override;
 	virtual void OnUpdate(float deltaTime)override;
 	virtual void OnDraw(Renderer& renderer)override;
 	virtual void OnFinalize()override;
 	virtual void OnMessage(EventMessage message, void* param)override;
 	virtual void OnCollide(const HitInfo& hitInfo)override;
+
+private:
+	void Damage();
+
 private:
 	float speed;
 	bool collision = false;
 
 	Vector2 target_position{};
+	Vector2 previous_target_position{};
 	Vector2 velocity{};
+
+	MoveState move_state{ MoveState::Stop };
 
 	Random rand;
 
