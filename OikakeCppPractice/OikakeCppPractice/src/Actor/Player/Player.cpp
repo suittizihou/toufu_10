@@ -20,7 +20,7 @@ Player::~Player()
 void Player::OnInitialize()
 { 
 	//target_position = Input::GetInstance().GetMapDistanceMove_Pad1(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y);
-	target_position = Input::GetInstance().GetMapDistanceMove_Pad1(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y);
+	target_position = Input::GetInstance().GetMapDistanceMove_WASD(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y);
 	position = target_position - Vector2(0.0f, 80.0f);
 	firstDraw = true;
 }
@@ -35,7 +35,7 @@ void Player::OnUpdate(float deltaTime)
 {
 	// Ž~‚Ü‚Á‚Ä‚¢‚é‚Æ‚« && “¤•…‚É‰Ÿ‚³‚ê‚Ä‚È‚¢Žž“®‚­
 	if (move_state == MoveState::Stop && !toufu_hit) {
-		target_position = Input::GetInstance().GetMapDistanceMove_Pad1(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y) - Vector2(0.0f, 80.0f);
+		target_position = Input::GetInstance().GetMapDistanceMove_WASD(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y) - Vector2(0.0f, 80.0f);
 		//target_position = Input::GetInstance().GetMapDistanceMove_Pad1(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y) - Vector2(0.0f, 80.0f);	
 		if ((target_position.x != previous_target_position.x) || (target_position.y != previous_target_position.y)) { move_state = MoveState::Move; }
 	}

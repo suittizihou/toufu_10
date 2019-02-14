@@ -52,6 +52,7 @@ public:
 	// ゲッター(豆腐)
 	static ToufuID get_toufu_id(int x, int y);
 	static ToufuID get_toufu_id(const Vector2& position);
+	static ToufuID get_toufu_id(const Vector2& position, int x, int y);
 	static Vector3 get_toufuPos_and_id(int x, int y);
 
 	// マップセッター(タイル)
@@ -77,6 +78,7 @@ public:
 	// 調べたマスに豆腐があるか調べる(あったらtrue)
 	static bool check_toufu(int x, int y);
 	static bool check_toufu(const Vector2& position);
+	static bool check_toufu(const Vector2& position, int x, int y);
 
 	// 豆腐をリセット
 	static void clear_toufu();

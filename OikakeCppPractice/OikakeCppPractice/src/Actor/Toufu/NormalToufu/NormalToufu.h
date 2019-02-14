@@ -59,8 +59,6 @@ private:
 
 	int hp{ 5 };	// ‘Ì—Í
 
-	int toufu_hit_count{};	// ‹Ø“÷“¤•…‚É‰Ÿ‚³‚ê‚½“z—p
-
 private:
 	Vector2 Average_Position(const Vector2& position);
 };

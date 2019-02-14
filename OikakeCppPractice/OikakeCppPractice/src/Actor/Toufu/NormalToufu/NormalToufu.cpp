@@ -116,10 +116,11 @@ void NormalToufu::Move()
 {
 	if (toufu_hit) {
 		movement = Vector2::Zero;
-		position = MapGenerater::get_near_pos(center_pos) - Vector2(0, 57);
+		position = MapGenerater::get_near_pos(center_pos) - Vector2(-1, 56);
 		_move = false;
 		kinniku_move = false;
 		name = "StopNormalToufu";
+		toufu_hit = false;
 	}
 	else {
 		position += movement;
@@ -487,26 +488,6 @@ void NormalToufu::OnCollide(const HitInfo & hitInfo)
 		return;
 	}
 
-	// 豆腐と豆腐が衝突した関連
-	if (name != "SponeNormalToufu" || hitInfo.collideActor->GetName() != "SponeNormalToufu") {
-		// 筋肉豆腐に押された豆腐の場合
-		if (kinniku_move) {
-			if (hitInfo.collideActor->GetName() == "NormalToufu" || hitInfo.collideActor->GetName() == "StopNormalToufu")
-			{
-				// 豆腐に当たったならカウント
-				++toufu_hit_count;
-				if (toufu_hit_count >= 1) {
-					toufu_hit = true;
-				}
-			}
-		} // そうじゃない場合
-		else {
-			if (hitInfo.collideActor->GetName() == "NormalToufu" || hitInfo.collideActor->GetName() == "StopNormalToufu" || hitInfo.collideActor->GetName() == "MetalToufu") {
-				toufu_hit = true;
-			}
-		}
-	}
-
 	// 筋肉豆腐に押されてない && 動いてない豆腐に当たった時
 	if (!kinniku_move && hitInfo.collideActor->GetName() == "StopNormalToufu") {
 		movement = Vector2::Zero;
@@ -539,7 +520,7 @@ void NormalToufu::OnCollide(const HitInfo & hitInfo)
 		else if (/*hitInfo.collideActor->GetName() == "player" && */hitInfo.collideActor->GetControllerType() == DX_INPUT_PAD2 && !_move)
 		{// プレイヤー２用
 
-						// 上に当たっているとき
+			// 上に当たっているとき
 			TopHitRiaction_2(hitInfo);
 
 			// 下に当たっているとき
@@ -550,6 +531,29 @@ void NormalToufu::OnCollide(const HitInfo & hitInfo)
 
 			// 左に当たっているとき
 			LeftHitRiaction_2(hitInfo);
+		}
+	}
+
+	// 豆腐と豆腐が衝突した関連
+	if (name != "SponeNormalToufu" || hitInfo.collideActor->GetName() != "SponeNormalToufu") {
+		// 筋肉豆腐に押された豆腐の場合
+		if (kinniku_move) {
+			if (hitInfo.collideActor->GetName() == "NormalToufu" || hitInfo.collideActor->GetName() == "StopNormalToufu" || hitInfo.collideActor->GetName() == "MetalToufu")
+			{
+				float x = Math::Clamp(movement.x, -1.0f, 1.0f);
+				float y = Math::Clamp(movement.x, -1.0f, 1.0f);
+				// 豆腐に触れている間二マス先の場所をチェックして豆腐があったら止まる || 相手がMetal豆腐なら止まる
+				if (MapGenerater::check_toufu(center_pos, (x + x), (y + y)) || MapGenerater::get_toufu_id(center_pos, x, y) == ToufuID::Metal) {
+					toufu_hit = true;
+				}
+			}
+		} // そうじゃない場合
+		else {
+			float x = Math::Clamp(movement.x, -1.0f, 1.0f);
+			float y = Math::Clamp(movement.x, -1.0f, 1.0f);
+			if (MapGenerater::check_toufu(center_pos, x, y)) {
+				toufu_hit = true;
+			}
 		}
 	}
 
