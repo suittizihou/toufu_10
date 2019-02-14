@@ -25,12 +25,19 @@ void Player::OnInitialize()
 	firstDraw = true;
 }
 
+void Player::OnFirstUpdate(float deltaTime)
+{
+	// 今のターゲットポジションを入れて取っておく
+	previous_target_position = target_position;
+}
+
 void Player::OnUpdate(float deltaTime)
 {
 	// 止まっているとき && 豆腐に押されてない時動く
-	if (Input::GetInstance().move_state == MoveState::Stop && !toufu_hit) {
+	if (move_state == MoveState::Stop && !toufu_hit) {
 		target_position = Input::GetInstance().GetMapDistanceMove_Pad1(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y) - Vector2(0.0f, 80.0f);
 		//target_position = Input::GetInstance().GetMapDistanceMove_Pad1(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y) - Vector2(0.0f, 80.0f);	
+		if ((target_position.x != previous_target_position.x) || (target_position.y != previous_target_position.y)) { move_state = MoveState::Move; }
 	}
 
 	//if (Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::A)) {
@@ -39,7 +46,7 @@ void Player::OnUpdate(float deltaTime)
 
 	velocity = target_position - position;
 
-	if (Input::GetInstance().move_state == MoveState::Move) {
+	if (move_state == MoveState::Move) {
 		if (velocity.Length() != 0) {
 			// 正規化(Normalizeにバグあり)
 			velocity = velocity / Math::SquareRoot(velocity.x * velocity.x + velocity.y * velocity.y);
@@ -51,9 +58,17 @@ void Player::OnUpdate(float deltaTime)
 
 	// 目標座標と自分の座標の距離が5ドット以下
 	if (target_position.Vector2::Distance(position) <= 5.0f) {
-		Input::GetInstance().move_state = MoveState::Stop;
+		move_state = MoveState::Stop;
 		movement = Vector2::Zero;
 		position = target_position;
+	}
+
+	// 止まってない時は動いてるとする
+	if (movement.Length() != 0) {
+		move_state = MoveState::Move;
+	}
+	else {
+		move_state = MoveState::Stop;
 	}
 
 	// マスの中心を入れる
@@ -61,6 +76,8 @@ void Player::OnUpdate(float deltaTime)
 	
 	collision = position.Clamp(Vector2(MapGenerater::map_spaceX, 0), Vector2(1016,508));
 }
+
+float distance{};
 
 void Player::OnDraw(Renderer & renderer)
 {
@@ -206,6 +223,9 @@ void Player::OnDraw(Renderer & renderer)
 	//DrawFormatString(0, 80, GetColor(255, 0, 0), "movementX:%f　movementY:%f", movement.x, movement.y);
 	 
 
+	DrawCircle(target_position.x, target_position.y, 3, GetColor(0, 0, 255));
+	DrawFormatString(0, 32, GetColor(255, 0, 0), "Player1HP : %d", hp);
+
 	//DrawBox(position.x - 5, position.y + 75, position.x + 117, position.y + 149, GetColor(255, 0, 0), TRUE);
 	//DrawBox(position.x, position.y, position.x + 117, position.y + 149, GetColor(255, 0, 0), TRUE);
 	//DrawPixel(Average_Position().x, Average_Position().y, GetColor(0, 255, 0));
@@ -235,6 +255,15 @@ void Player::Damage() {
 		world->SendEventMessage(EventMessage::PlayerDead);
 		status = Status::Dead;
 	}
+	else {// hpが0じゃないならリスポーン
+		int x = rand.Range(0, 7);
+		int y = rand.Range(0, 7);
+		// 豆腐が無かったら生成
+		if (!MapGenerater::check_toufu(x, y)) {
+			position = MapGenerater::up_left_get_pos(x, y);
+		}
+
+	}
 }
 
 void Player::OnCollide(const HitInfo & hitInfo)
@@ -243,72 +272,77 @@ void Player::OnCollide(const HitInfo & hitInfo)
 	//Vector2(182,3), Vector2(1016,509)P kabe
 	//Vector2(0,80), Vector2(110,120)　豆腐のサイズ
 	//Vector2(187, 31), Vector2(1013, 509) T kabe
+
 	toufu_hit = false;
-	if (hitInfo.collideActor->GetName() == "SponeNormalToufu") {
+
+	if ((hitInfo.collideActor->GetName() == "StopNormalToufu" || hitInfo.collideActor->GetName() == "NormalToufu" || hitInfo.collideActor->GetName() == "MetalToufu")
+		&& hitInfo.collideActor->GetCenterPosition().Distance(center_pos) <= 66.0f) {
+
 		Damage();
 	}
-	if (hitInfo.collideActor->GetName() == "NormalToufu")
-	{
-		toufu_hit = true;
-		// エネミーの座標を入れる
-		Vector2 enemy_pos = hitInfo.collideActor->GetVec2Position();
 
-		// 自分の座標Xよりエネミーの座標Xが大きい かつ 動きが-1以下なら
-		if (position.x < enemy_pos.x && hitInfo.collideActor->GetMovement().x <= -1)
-		{
-			// 自分の座標に敵の移動量を加算
-			position += hitInfo.collideActor->GetMovement();
+	//if (hitInfo.collideActor->GetName() == "NormalToufu")
+	//{
+	//	toufu_hit = true;
+	//	// エネミーの座標を入れる
+	//	Vector2 enemy_pos = hitInfo.collideActor->GetVec2Position();
 
-			if (enemy_pos.x - 187 < 113) { 
-				int x = rand.Range(0, 7);
-				int y = rand.Range(0, 7);
-				// 豆腐が無かったら生成
-				if (!MapGenerater::check_toufu(x, y)) {
-					position = MapGenerater::up_left_get_pos(x, y);
-					Damage();
-				}
-			}
-		}
-		if (position.x > enemy_pos.x&& hitInfo.collideActor->GetMovement().x >= 1) {
-			position += hitInfo.collideActor->GetMovement();
-			if (1016 - (enemy_pos.x + 110) < 40) {
-				int x = rand.Range(0, 7);
-				int y = rand.Range(0, 7);
-				// 豆腐が無かったら生成
-				if (!MapGenerater::check_toufu(x, y)) {
-					position = MapGenerater::up_left_get_pos(x, y);
-					Damage();
-				}
-			}
-		}
-		if (position.y < enemy_pos.y&& hitInfo.collideActor->GetMovement().y <= -1)
-		{
-			position += hitInfo.collideActor->GetMovement();
-			if (enemy_pos.y - 3 < 45) {
-				int x = rand.Range(0, 7);
-				int y = rand.Range(0, 7);
-				// 豆腐が無かったら生成
-				if (!MapGenerater::check_toufu(x, y)) {
-					position = MapGenerater::up_left_get_pos(x, y);
-					Damage();
-				}
-			}
-		}
-		if (position.y > enemy_pos.y&& hitInfo.collideActor->GetMovement().y >= 1)
-		{
-			position += hitInfo.collideActor->GetMovement();
-			if (508 - (enemy_pos.y + 40) < 22) {
-				int x = rand.Range(0, 7);
-				int y = rand.Range(0, 7);
-				// 豆腐が無かったら生成
-				if (!MapGenerater::check_toufu(x, y)) {
-					position = MapGenerater::up_left_get_pos(x, y);
-					Damage();
-				}
-			}
-		}
+	//	// 自分の座標Xよりエネミーの座標Xが大きい かつ 動きが-1以下なら
+	//	if (position.x < enemy_pos.x && hitInfo.collideActor->GetMovement().x <= -1)
+	//	{
+	//		// 自分の座標に敵の移動量を加算
+	//		position += hitInfo.collideActor->GetMovement();
 
-	}
+	//		if (enemy_pos.x - 187 < 113) { 
+	//			int x = rand.Range(0, 7);
+	//			int y = rand.Range(0, 7);
+	//			// 豆腐が無かったら生成
+	//			if (!MapGenerater::check_toufu(x, y)) {
+	//				position = MapGenerater::up_left_get_pos(x, y);
+	//				Damage();
+	//			}
+	//		}
+	//	}
+	//	if (position.x > enemy_pos.x&& hitInfo.collideActor->GetMovement().x >= 1) {
+	//		position += hitInfo.collideActor->GetMovement();
+	//		if (1016 - (enemy_pos.x + 110) < 40) {
+	//			int x = rand.Range(0, 7);
+	//			int y = rand.Range(0, 7);
+	//			// 豆腐が無かったら生成
+	//			if (!MapGenerater::check_toufu(x, y)) {
+	//				position = MapGenerater::up_left_get_pos(x, y);
+	//				Damage();
+	//			}
+	//		}
+	//	}
+	//	if (position.y < enemy_pos.y&& hitInfo.collideActor->GetMovement().y <= -1)
+	//	{
+	//		position += hitInfo.collideActor->GetMovement();
+	//		if (enemy_pos.y - 3 < 45) {
+	//			int x = rand.Range(0, 7);
+	//			int y = rand.Range(0, 7);
+	//			// 豆腐が無かったら生成
+	//			if (!MapGenerater::check_toufu(x, y)) {
+	//				position = MapGenerater::up_left_get_pos(x, y);
+	//				Damage();
+	//			}
+	//		}
+	//	}
+	//	if (position.y > enemy_pos.y&& hitInfo.collideActor->GetMovement().y >= 1)
+	//	{
+	//		position += hitInfo.collideActor->GetMovement();
+	//		if (508 - (enemy_pos.y + 40) < 22) {
+	//			int x = rand.Range(0, 7);
+	//			int y = rand.Range(0, 7);
+	//			// 豆腐が無かったら生成
+	//			if (!MapGenerater::check_toufu(x, y)) {
+	//				position = MapGenerater::up_left_get_pos(x, y);
+	//				Damage();
+	//			}
+	//		}
+	//	}
+
+	//}
 	world->SendEventMessage(EventMessage::Hit);
 }
 /*

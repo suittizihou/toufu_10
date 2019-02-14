@@ -177,9 +177,6 @@
     <ClCompile Include="src\Scenes\CharacterSelect\CharacterManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\Actor\Kakutou\Kakutou.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="src\Actor\PlayerManager\PlayerManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -395,9 +392,6 @@
     <ClInclude Include="src\Actor\UI\ResultCharacter\DecideWinnerAndLoser.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="src\Input\MoveState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="src\Scenes\CharacterSelect\CharacterSelect.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -425,10 +419,13 @@
     <ClInclude Include="src\Scenes\CharacterSelect\CharacterManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="src\Actor\Kakutou\Kakutou.h">
+    <ClInclude Include="src\Actor\PlayerManager\PlayerManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="src\Actor\PlayerManager\PlayerManager.h">
+    <ClInclude Include="src\Actor\PlayerManager\MoveState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Collision\Collision2D\HitAngle\HitAngle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

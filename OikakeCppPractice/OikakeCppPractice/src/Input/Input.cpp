@@ -89,7 +89,6 @@ Vector2 Input::GetMapDistanceMove_WASD(int map_chipX, int map_chipY) {
 			}
 			else {
 				valueY = -1;
-				move_state = MoveState::Move;
 			}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;
@@ -109,7 +108,6 @@ Vector2 Input::GetMapDistanceMove_WASD(int map_chipX, int map_chipY) {
 		}
 		else {
 			valueY = 1;
-			move_state = MoveState::Move;
 		}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;
@@ -129,7 +127,6 @@ Vector2 Input::GetMapDistanceMove_WASD(int map_chipX, int map_chipY) {
 		}
 		else {
 			valueX = 1;
-			move_state = MoveState::Move;
 		}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;
@@ -150,7 +147,6 @@ Vector2 Input::GetMapDistanceMove_WASD(int map_chipX, int map_chipY) {
 		}
 		else {
 			valueX = -1;
-			move_state = MoveState::Move;
 		}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;
@@ -164,52 +160,95 @@ Vector2 Input::GetMapDistanceMove_WASD(int map_chipX, int map_chipY) {
 }
 
 // 矢印キー用
-//Vector2 Input::GetMapDistanceMove_Arrow(int map_chipX, int map_chipY) {
-//	int map_chip_numverX{ map_chipX };
-//	int map_chip_numverY{ map_chipY };
-//
-//	// 上
-//	if (keyBoard.IsState(KEY_INPUT_UP) && move_state == MoveState::Stop) {
-//
-//		// 豆腐があればリターンする
-//		if (MapGenerater::check_toufu(map_chip_numverX, map_chip_numverY - 1)) { return MapGenerater::up_left_get_pos(map_chip_numverX, map_chip_numverY); }
-//
-//		valueY += -1;
-//		move_state = MoveState::Move;
-//	}
-//
-//	// 下
-//	if (keyBoard.IsState(KEY_INPUT_DOWN) && move_state == MoveState::Stop) {
-//
-//		if (MapGenerater::check_toufu(map_chip_numverX, map_chip_numverY + 1)) { return MapGenerater::up_left_get_pos(map_chip_numverX, map_chip_numverY); }
-//
-//		valueY += 1;
-//		move_state = MoveState::Move;
-//	}
-//
-//	// 右
-//	if (keyBoard.IsState(KEY_INPUT_RIGHT) && move_state == MoveState::Stop) {
-//
-//		if (MapGenerater::check_toufu(map_chip_numverX + 1, map_chip_numverY)) { return MapGenerater::up_left_get_pos(map_chip_numverX, map_chip_numverY); }
-//
-//		valueX += 1;
-//		move_state = MoveState::Move;
-//	}
-//
-//	// 左
-//	if (keyBoard.IsState(KEY_INPUT_LEFT) && move_state == MoveState::Stop) {
-//
-//		if (MapGenerater::check_toufu(map_chip_numverX - 1, map_chip_numverY)) { return MapGenerater::up_left_get_pos(map_chip_numverX, map_chip_numverY); }
-//
-//		valueX += -1;
-//		move_state = MoveState::Move;
-//	}
-//
-//	map_chip_numverX += valueX;
-//	map_chip_numverY += valueY;
-//
-//	return MapGenerater::up_left_get_pos(map_chip_numverX, map_chip_numverY);
-//}
+Vector2 Input::GetMapDistanceMove_Arrow(int map_chipX, int map_chipY) {
+	int valueX{};
+	int valueY{};
+	int map_chip_numverX{ map_chipX };
+	int map_chip_numverY{ map_chipY };
+
+	// 上ボタン
+	if (Input::GetInstance().keyBoard.IsState(KEY_INPUT_UP)) {
+
+		//// 豆腐があればリターンする
+		if (MapGenerater::check_holeAndtoufu(map_chipX, map_chipY - 1)) {
+			return MapGenerater::up_left_get_pos(map_chipX, map_chipY);
+		}
+		else
+			if (map_chip_numverX < 0 || map_chip_numverX >= 8 ||
+				map_chip_numverY - 1 < 0 || map_chip_numverY - 1 >= 8) {
+				return MapGenerater::up_left_get_pos(map_chipX, map_chipY);
+			}
+			else {
+				valueY = -1;
+			}
+		map_chip_numverX += valueX;
+		map_chip_numverY += valueY;
+
+		return MapGenerater::up_left_get_pos(map_chip_numverX, map_chip_numverY);
+	}
+
+	// 下ボタン
+	if (Input::GetInstance().keyBoard.IsState(KEY_INPUT_DOWN)) {
+
+		if (MapGenerater::check_holeAndtoufu(map_chipX, map_chipY + 1)) {
+			//return MapGenerater::up_left_get_pos(map_chipX, map_chipY); 
+		}
+		else if (map_chip_numverX < 0 || map_chip_numverX >= 8 ||
+			map_chip_numverY + 1 < 0 || map_chip_numverY + 1 >= 8) {
+			//return MapGenerater::up_left_get_pos(map_chipX, map_chipY);
+		}
+		else {
+			valueY = 1;
+		}
+		map_chip_numverX += valueX;
+		map_chip_numverY += valueY;
+
+		return MapGenerater::up_left_get_pos(map_chip_numverX, map_chip_numverY);
+	}
+
+	// 右ボタン
+	if (Input::GetInstance().keyBoard.IsState(KEY_INPUT_RIGHT)) {
+
+		if (MapGenerater::check_holeAndtoufu(map_chipX + 1, map_chipY)) {
+			//return MapGenerater::up_left_get_pos(map_chipX, map_chipY); 
+		}
+		else if (map_chip_numverX + 1 < 0 || map_chip_numverX + 1 >= 8 ||
+			map_chip_numverY < 0 || map_chip_numverY >= 8) {
+			//return MapGenerater::up_left_get_pos(map_chipX, map_chipY);
+		}
+		else {
+			valueX = 1;
+		}
+		map_chip_numverX += valueX;
+		map_chip_numverY += valueY;
+
+		return MapGenerater::up_left_get_pos(map_chip_numverX, map_chip_numverY);
+	}
+
+	// 左ボタン
+	if (Input::GetInstance().keyBoard.IsState(KEY_INPUT_LEFT))
+	{
+		//	// 行こうとしている場所に豆腐はあるか
+		if (MapGenerater::check_holeAndtoufu(map_chipX - 1, map_chipY)) {
+			return MapGenerater::up_left_get_pos(map_chipX, map_chipY);
+		}
+		else if (map_chip_numverX - 1 < 0 || map_chip_numverX - 1 >= 8 ||
+			map_chip_numverY < 0 || map_chip_numverY >= 8) {
+			//return MapGenerater::up_left_get_pos(map_chipX, map_chipY);
+		}
+		else {
+			valueX = -1;
+		}
+		map_chip_numverX += valueX;
+		map_chip_numverY += valueY;
+
+		return MapGenerater::up_left_get_pos(map_chip_numverX, map_chip_numverY);
+	}
+	map_chip_numverX += valueX;
+	map_chip_numverY += valueY;
+
+	return MapGenerater::up_left_get_pos(map_chip_numverX, map_chip_numverY);
+}
 
 // パッド用(1P)
 Vector2 Input::GetMapDistanceMove_Pad1(int map_chipX, int map_chipY) {
@@ -234,7 +273,6 @@ Vector2 Input::GetMapDistanceMove_Pad1(int map_chipX, int map_chipY) {
 			}
 			else {
 				valueY = -1;
-				move_state = MoveState::Move;
 			}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;
@@ -255,7 +293,6 @@ Vector2 Input::GetMapDistanceMove_Pad1(int map_chipX, int map_chipY) {
 		}
 		else {
 		valueY = 1;
-		move_state = MoveState::Move;
 		}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;
@@ -275,7 +312,6 @@ Vector2 Input::GetMapDistanceMove_Pad1(int map_chipX, int map_chipY) {
 		}
 		else {
 		valueX = 1;
-		move_state = MoveState::Move;
 		}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;
@@ -297,7 +333,6 @@ Vector2 Input::GetMapDistanceMove_Pad1(int map_chipX, int map_chipY) {
 		}
 		else {
 		valueX = -1;
-		move_state = MoveState::Move;
 		}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;
@@ -333,7 +368,6 @@ Vector2 Input::GetMapDistanceMove_Pad2(int map_chipX, int map_chipY) {
 			}
 			else {
 				valueY = -1;
-				move_state2 = MoveState::Move;
 			}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;
@@ -354,7 +388,6 @@ Vector2 Input::GetMapDistanceMove_Pad2(int map_chipX, int map_chipY) {
 		}
 		else {
 		valueY = 1;
-		move_state2 = MoveState::Move;
 		}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;
@@ -374,7 +407,6 @@ Vector2 Input::GetMapDistanceMove_Pad2(int map_chipX, int map_chipY) {
 		}
 		else {
 		valueX = 1;
-		move_state2 = MoveState::Move;
 		}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;
@@ -396,7 +428,6 @@ Vector2 Input::GetMapDistanceMove_Pad2(int map_chipX, int map_chipY) {
 		}
 		else {
 		valueX = -1;
-		move_state2 = MoveState::Move;
 		}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;
@@ -415,35 +446,71 @@ Vector2 AveragePosition(const Vector2& position) {
 }
 
 // 豆腐の座標、移動したい方向の配列座標たち
-Vector2 Input::PlayerHitToufuMove(const Vector2& position, int map_chipX, int map_chipY)
+Vector2 Input::PlayerHitToufuMove(const Vector2& center_pos, const HitInfo& hitInfo, int map_chipX, int map_chipY)
 {
-	int x{ static_cast<int>(MapGenerater::get_pos_numver(position).x) };
-	int y{ static_cast<int>(MapGenerater::get_pos_numver(position).y) };
+	int x{ static_cast<int>(MapGenerater::get_pos_numver(center_pos).x) };
+	int y{ static_cast<int>(MapGenerater::get_pos_numver(center_pos).y) };
+
+	int count{};
+	bool toufu_hit{};
 
 	while (true) {
 		x += map_chipX;
 		y += map_chipY;
+
+		// 豆腐があったら
 		if (MapGenerater::check_toufu(x, y)) {
-			// 上から下に押されたときの処理
-			if (map_chipY == 1) {
-				y -= 1;
+			// 豆腐に当たった回数が1回以上なら || 当たったキャラクターが筋肉以外ならこのifは無条件で豆腐に当たったところの前のマスで返る
+			if (count >= 1 || hitInfo.collideActor->GetCharacter() != Character::Kinniku) {
+				// 上から下に押されたときの処理
+				if (map_chipY == 1) {
+					y -= 1;
+				}
+				// 下から上に押されたときの処理
+				if (map_chipY == -1) {
+					y += 1;
+				}
+				// 左から下に押されたときの処理
+				if (map_chipX == 1) {
+					x -= 1;
+				}
+				// 右から左に押されたときの処理
+				if (map_chipX == -1) {
+					x += 1;
+				}
+				break;
 			}
-			// 下から上に押されたときの処理
-			if (map_chipY == -1) {
-				y += 1;
+			else {
+				toufu_hit = true;
+				++count;
 			}
-			// 左から下に押されたときの処理
-			if (map_chipX == 1) {
-				x -= 1;
-			}
-			// 右から左に押されたときの処理
-			if (map_chipX == -1) {
-				x += 1;
-			}
-			break;
 		}
+
+		// 壁際に当たったら
 		if (x < 0 || x > 7 || y < 0 || y > 7) {
-			break;
+			// 押したキャラクターが筋肉豆腐であり、かつ豆腐に当たっていたなら
+			if (hitInfo.collideActor->GetCharacter() == Character::Kinniku && toufu_hit) {	// 一個前のマスに戻す
+				// 上から下に押されたときの処理
+				if (map_chipY == 1) {
+					y -= 1;
+				}
+				// 下から上に押されたときの処理
+				if (map_chipY == -1) {
+					y += 1;
+				}
+				// 左から下に押されたときの処理
+				if (map_chipX == 1) {
+					x -= 1;
+				}
+				// 右から左に押されたときの処理
+				if (map_chipX == -1) {
+					x += 1;
+				}
+				break;
+			}
+			else {
+				break;
+			}
 		}
 	}
 

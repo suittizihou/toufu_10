@@ -174,7 +174,7 @@ Vector2 MapGenerater::get_pos_numver(const Vector2 & position)
 			if (up_left_get_pos(i, j).x <= position.x && position.x <= down_right_get_pos(i, j).x &&
 				up_left_get_pos(i, j).y <= position.y && position.y <= down_right_get_pos(i, j).y) {
 
-				// ðŒ‚É“–‚Ä‚Í‚Ü‚Á‚½‚ç“ü‚ê‚é5
+				// ðŒ‚É“–‚Ä‚Í‚Ü‚Á‚½‚ç“ü‚ê‚é
 				mapVector = Vector2(i, j);
 			}
 			else {
@@ -189,6 +189,11 @@ Vector2 MapGenerater::get_pos_numver(const Vector2 & position)
 ToufuID MapGenerater::get_toufu_id(int x, int y)
 {
 	return toufu_map[y][x];
+}
+
+ToufuID MapGenerater::get_toufu_id(const Vector2& position)
+{
+	return toufu_map[static_cast<int>(get_pos_numver(position).y)][static_cast<int>(get_pos_numver(position).x)];
 }
 
 Vector3 MapGenerater::get_toufuPos_and_id(int x, int y)
@@ -275,6 +280,11 @@ bool MapGenerater::check_toufu(int x, int y) {
 	x = Math::Clamp(x, 0, 7);
 	y = Math::Clamp(y, 0, 7);
 	return toufu_map[y][x] != ToufuID::None;
+}
+
+bool MapGenerater::check_toufu(const Vector2& position)
+{	
+	return toufu_map[static_cast<int>(get_pos_numver(position).y)][static_cast<int>(get_pos_numver(position).x)] != ToufuID::None;
 }
 
 void MapGenerater::clear_toufu()
