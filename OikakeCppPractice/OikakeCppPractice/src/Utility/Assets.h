@@ -28,19 +28,36 @@ namespace Assets {
 		Background,
 		Player,
 		Player2,
+		//”EŽÒ
 		Ninja,
 		Ninja_Back,
 		Ninja_Front_Anime,
 		Ninja_Back_Anime,
 		Ninja_Left_Anime,
 		Ninja_Right_Anime,
+		//‹Ø“÷
 		Kinniku,
+		Kinniku_Back,
 		Kinniku_Front_Anime,
 		Kinniku_Back_Anime,
 		Kinniku_Left_Anime,
 		Kinniku_Right_Anime,
+
+		//ŠZ
 		Yoroi,
+		Yoroi_Back,
+		Yoroi_Front_Anime,
+		Yoroi_Back_Anime,
+		Yoroi_Left_Anime,
+		Yoroi_Right_Anime,
+		//Ši“¬‰Æ
 		Kakutouka,
+		Kakutouka_Back,
+		Kakutouka_Front_Anime,
+		Kakutouka_Back_Anime,
+		Kakutouka_Left_Anime,
+		Kakutouka_Right_Anime,
+
 		NormalToufu,
 		MetalToufu,
 		Number,
