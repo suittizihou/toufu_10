@@ -123,10 +123,76 @@ void Player::OnDraw(Renderer & renderer)
 		
 	}
 	else if (GetCharacter() == Character::Kinniku) {
-		renderer.DrawTexture(Assets::Texture::Kinniku, position);
+		//Å‰‚Ì“®‚¢‚Ä‚È‚¢‚Æ‚«‚Ì•`‰æ
+		if (firstDraw || movement.Length() == 0)
+		{
+			renderer.DrawTexture(Assets::Texture::Kinniku, position);
+			if (movement.Length() == 1) {
+				firstDraw = false;
+			}
+		}
+
+		//—§‚¿~‚Ü‚Á‚Ä‚é‚Æ‚«‚Ì•`‰æ
+		if (beforeMovementY == 1 && movement.Length() == 0)
+		{
+			renderer.DrawTexture(Assets::Texture::Kinniku, position);
+		}
+		if (beforeMovementY == -1 && movement.Length() == 0)
+		{
+			renderer.DrawTexture(Assets::Texture::Kinniku_Back, position);
+		}
+
+		//cˆÚ“®
+		if (movement.y == 1) {
+			renderer.DrawRectangle(Assets::Texture::Kinniku_Front_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeY, 0), Vector2(181, 181)));
+		}
+		else if (movement.y == -1) {
+			renderer.DrawRectangle(Assets::Texture::Kinniku_Back_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeY, 0), Vector2(181, 181)));
+		}
+
+		//‰¡ˆÚ“®
+		if (movement.x == 1) {
+			renderer.DrawRectangle(Assets::Texture::Kinniku_Right_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeX, 0), Vector2(181, 181)));
+		}
+		if (movement.x == -1) {
+			renderer.DrawRectangle(Assets::Texture::Kinniku_Left_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeX, 0), Vector2(181, 181)));
+		}
 	}
 	else if (GetCharacter() == Character::Yoroi) {
-		renderer.DrawTexture(Assets::Texture::Yoroi, position);
+		//Å‰‚Ì“®‚¢‚Ä‚È‚¢‚Æ‚«‚Ì•`‰æ
+		if (firstDraw || movement.Length() == 0)
+		{
+			renderer.DrawTexture(Assets::Texture::Yoroi, position);
+			if (movement.Length() == 1) {
+				firstDraw = false;
+			}
+		}
+
+		//—§‚¿~‚Ü‚Á‚Ä‚é‚Æ‚«‚Ì•`‰æ
+		if (beforeMovementY == 1 && movement.Length() == 0)
+		{
+			renderer.DrawTexture(Assets::Texture::Yoroi, position);
+		}
+		if (beforeMovementY == -1 && movement.Length() == 0)
+		{
+			renderer.DrawTexture(Assets::Texture::Yoroi_Back, position);
+		}
+
+		//cˆÚ“®
+		if (movement.y == 1) {
+			renderer.DrawRectangle(Assets::Texture::Yoroi_Front_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeY, 0), Vector2(181, 181)));
+		}
+		else if (movement.y == -1) {
+			renderer.DrawRectangle(Assets::Texture::Yoroi_Back_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeY, 0), Vector2(181, 181)));
+		}
+
+		//‰¡ˆÚ“®
+		if (movement.x == 1) {
+			renderer.DrawRectangle(Assets::Texture::Yoroi_Right_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeX, 0), Vector2(181, 181)));
+		}
+		if (movement.x == -1) {
+			renderer.DrawRectangle(Assets::Texture::Yoroi_Left_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeX, 0), Vector2(181, 181)));
+		}
 	}
 	else if (GetCharacter() == Character::Kakutouka) {
 		renderer.DrawTexture(Assets::Texture::Kakutouka, position);
