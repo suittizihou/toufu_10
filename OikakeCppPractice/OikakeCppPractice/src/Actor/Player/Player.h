@@ -46,5 +46,5 @@ private:
 
 	bool firstDraw{};
 
-	int direction = 0;
+	int direction = 1;
 };

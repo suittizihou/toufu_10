@@ -37,25 +37,26 @@ void Player::OnUpdate(float deltaTime)
 	if (move_state == MoveState::Stop && !toufu_hit) {
 		target_position = Input::GetInstance().GetMapDistanceMove_WASD(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y) - Vector2(0.0f, 80.0f);
 		//target_position = Input::GetInstance().GetMapDistanceMove_Pad1(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y) - Vector2(0.0f, 80.0f);	
-		if ((target_position.x != previous_target_position.x) || (target_position.y != previous_target_position.y)) { 
-			move_state = MoveState::Move; 
-			if (Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_S))
-			{
-				MapGenerater::check_toufu()
-				direction = 1;
-			}
-			if (Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_W))
-			{
-				direction = 3;
-			}
-			if (Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_D))
-			{
-				direction = 2;
-			}
-			if (Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_A))
-			{
-				direction = 4;
-			}
+		if ((target_position.x != previous_target_position.x) || (target_position.y != previous_target_position.y)) {move_state = MoveState::Move;}
+	}
+	if (move_state == MoveState::Stop)
+	{
+		if (Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_S))
+		{
+			bool aa = MapGenerater::check_toufu(center_pos, 0, 1);
+			if (aa) { direction = 0; }else { direction = 1; }
+		}
+		if (Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_W))
+		{
+			direction = 3;
+		}
+		if (Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_D))
+		{
+			direction = 2;
+		}
+		if (Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_A))
+		{
+			direction = 4;
 		}
 	}
 	velocity = target_position - position;
@@ -148,6 +149,9 @@ void Player::OnDraw(Renderer & renderer)
 
 			switch (direction)
 			{
+			case 0:
+				renderer.DrawTexture(Assets::Texture::Ninja, position + Vector2(0,73));
+				break;
 			case 1://前
 				renderer.DrawRectangle(Assets::Texture::Ninja_Front_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeY, 0), Vector2(181, 181)));
 				break;
@@ -308,18 +312,3 @@ void Player::OnCollide(const HitInfo & hitInfo)
 	//}
 	world->SendEventMessage(EventMessage::Hit);
 }
-/*
-総当たりで全部見て
-範囲に入ってるかどうかを見て
-範囲に入っていたら押した方向の
-配列をみてあったらその配列の壁を
-なかったら自分の立っている
-配列の壁を取得
-*/
-/*
-豆腐にぶつかる
-豆腐が移動中だったら
-プレイヤーにポジションをプラス
-その間操作は受け付けないように遮断する
-壁に触れたら死ぬ
-*/
