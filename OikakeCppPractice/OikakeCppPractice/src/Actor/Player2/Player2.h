@@ -35,10 +35,13 @@ private:
 
 	int hp{ 3 };
 
-	int time	{};
-	int animeX	{};
+	int time{};
+	int animeY{};
+	int animeX{};
+	int beforeMovementY{};
+	int beforeMovementX{};
+	bool firstDraw{};
 
-private:
 	Vector2 Average_Position();	
 	int direction = 1;
 };
