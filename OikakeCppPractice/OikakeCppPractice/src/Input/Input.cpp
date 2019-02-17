@@ -451,33 +451,30 @@ Vector2 Input::PlayerHitToufuMove(const Vector2& center_pos, int map_chipX, int 
 	int x{ static_cast<int>(MapGenerater::get_pos_numver(center_pos).x) };
 	int y{ static_cast<int>(MapGenerater::get_pos_numver(center_pos).y) };
 
-	int count{};
-	bool toufu_hit{};
-
 	while (true) {
 		x += map_chipX;
 		y += map_chipY;
 
-		//// “¤•…‚ª‚ ‚Á‚½‚ç && ‰Ÿ‚µ‚Ä‚«‚½“¤•…‚ª‹Ø“÷“¤•…ˆÈŠO‚È‚ç
-		//if (MapGenerater::check_toufu(x, y) && hitInfo.collideActor->GetCharacter() != Character::Kinniku) {
-		//	// ã‚©‚ç‰º‚É‰Ÿ‚³‚ê‚½‚Æ‚«‚Ìˆ—
-		//	if (map_chipY == 1) {
-		//		y -= 1;
-		//	}
-		//	// ‰º‚©‚çã‚É‰Ÿ‚³‚ê‚½‚Æ‚«‚Ìˆ—
-		//	if (map_chipY == -1) {
-		//		y += 1;
-		//	}
-		//	// ¶‚©‚ç‰º‚É‰Ÿ‚³‚ê‚½‚Æ‚«‚Ìˆ—
-		//	if (map_chipX == 1) {
-		//		x -= 1;
-		//	}
-		//	// ‰E‚©‚ç¶‚É‰Ÿ‚³‚ê‚½‚Æ‚«‚Ìˆ—
-		//	if (map_chipX == -1) {
-		//		x += 1;
-		//	}
-		//	break;			
-		//}
+		// “¤•…‚ª‚ ‚Á‚½‚ç
+		if (MapGenerater::check_toufu(x, y)) {
+			// ã‚©‚ç‰º‚É‰Ÿ‚³‚ê‚½‚Æ‚«‚Ìˆ—
+			if (map_chipY == 1) {
+				y -= 1;
+			}
+			// ‰º‚©‚çã‚É‰Ÿ‚³‚ê‚½‚Æ‚«‚Ìˆ—
+			if (map_chipY == -1) {
+				y += 1;
+			}
+			// ¶‚©‚ç‰º‚É‰Ÿ‚³‚ê‚½‚Æ‚«‚Ìˆ—
+			if (map_chipX == 1) {
+				x -= 1;
+			}
+			// ‰E‚©‚ç¶‚É‰Ÿ‚³‚ê‚½‚Æ‚«‚Ìˆ—
+			if (map_chipX == -1) {
+				x += 1;
+			}
+			break;			
+		}
 
 		// •ÇÛ‚É“–‚½‚Á‚½‚ç
 		if (x < 0 || x > 7 || y < 0 || y > 7) {
@@ -501,12 +498,12 @@ Vector2 Input::PlayerHitToufuMove(const Vector2& center_pos, int map_chipX, int 
 		}
 	}
 
-	//if (x <= 0) {
-	//	x -= map_chipX;
-	//}
-	//if (y <= 0) {
-	//	y -= map_chipY;
-	//}
+	if (x <= 0) {
+		x -= map_chipX;
+	}
+	if (y <= 0) {
+		y -= map_chipY;
+	}
 
 	x = Math::Clamp(x, 0, 7);
 	y = Math::Clamp(y, 0, 7);

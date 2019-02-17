@@ -353,6 +353,11 @@ Vector2 ActorBase::GetMovement( ) const
 	return movement;
 }
 
+Vector2 ActorBase::GetTargetPosition()
+{
+	return target_pos;
+}
+
 Vector2 ActorBase::GetSponedPosition() const
 {
 	return sponed_pos;

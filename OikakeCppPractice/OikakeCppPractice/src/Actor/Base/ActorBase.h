@@ -54,6 +54,7 @@ public:
 	Vector2 GetVec2Position();
 	Vector2 GetCenterPosition();
 	Vector2 GetMovement() const;
+	Vector2 GetTargetPosition();
 	Vector2 GetSponedPosition() const;
 	int GetControllerType() const;
 	int GetChildNum() const;
@@ -83,6 +84,7 @@ protected:
 	Vector2 position;
 	Vector2 center_pos;
 	Vector2 movement = Vector2::Zero;
+	Vector2 target_pos{};
 	Vector2 sponed_pos{};
 	float speed{};
 	int number = 0;
