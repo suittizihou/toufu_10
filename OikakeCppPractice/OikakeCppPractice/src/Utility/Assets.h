@@ -35,6 +35,8 @@ namespace Assets {
 		Ninja_Back_Anime,
 		Ninja_Left_Anime,
 		Ninja_Right_Anime,
+		Ninja_Icon,
+		Ninja_Icon_Cry,
 		//‹Ø“÷
 		Kinniku,
 		Kinniku_Back,
@@ -42,6 +44,8 @@ namespace Assets {
 		Kinniku_Back_Anime,
 		Kinniku_Left_Anime,
 		Kinniku_Right_Anime,
+		Kinniku_Icon,
+		Kinniku_Icon_Cry,
 
 		//ŠZ
 		Yoroi,
@@ -50,6 +54,9 @@ namespace Assets {
 		Yoroi_Back_Anime,
 		Yoroi_Left_Anime,
 		Yoroi_Right_Anime,
+		Yoroi_Icon,
+		Yoroi_Icon_Cry,
+
 		//Ši“¬‰Æ
 		Kakutouka,
 		Kakutouka_Back,
@@ -57,6 +64,8 @@ namespace Assets {
 		Kakutouka_Back_Anime,
 		Kakutouka_Left_Anime,
 		Kakutouka_Right_Anime,
+		Kakutouka_Icon,
+		Kakutouka_Icon_Cry,
 
 		NormalToufu,
 		MetalToufu,
