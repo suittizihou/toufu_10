@@ -47,4 +47,10 @@ private:
 	bool firstDraw{};
 
 	int direction = 1;
+
+	//サウンドハンドル変数
+	//	int pushseSh{};
+//	int punchseSh{};
+//	int dropseSh{};
+
 };

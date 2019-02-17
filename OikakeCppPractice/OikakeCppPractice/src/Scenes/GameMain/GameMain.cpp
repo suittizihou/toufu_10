@@ -158,6 +158,10 @@ void GameMain::Initialize() {
 			++i;
 	}
 
+	bgmSh = LoadSoundMem("asset/BGM&SE/gameplay_bgm.mp3");
+
+	PlaySoundMem(bgmSh, DX_PLAYTYPE_LOOP);
+
 	isEnd = false;
 
 	//!ワールドのイベントメッセージを受け取る

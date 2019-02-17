@@ -23,6 +23,8 @@ void Player::OnInitialize()
 	//target_position = Input::GetInstance().GetMapDistanceMove_Pad1(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y);
 	position = target_position - Vector2(0.0f, 80.0f);
 	firstDraw = true;
+
+
 }
 
 void Player::OnFirstUpdate(float deltaTime)
