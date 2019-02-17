@@ -8,6 +8,7 @@ syntax:glob
 *.aps
 *.pch
 *.vspscc
+*.vcxproj
 *.vs
 *.txt
 *_i.c
