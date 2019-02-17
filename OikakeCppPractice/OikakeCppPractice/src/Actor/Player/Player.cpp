@@ -44,7 +44,7 @@ void Player::OnUpdate(float deltaTime)
 		if (Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_S))
 		{
 			bool aa = MapGenerater::check_toufu(center_pos, 0, 1);
-			if (aa) { direction = 0; }else { direction = 1; }
+			if (aa&&GetCharacter()== Character::Ninja) { direction = 0; }else { direction = 1; }
 		}
 		if (Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_W))
 		{
