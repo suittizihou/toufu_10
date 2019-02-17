@@ -35,13 +35,10 @@ namespace Assets {
 		Ninja_Back_Anime,
 		Ninja_Left_Anime,
 		Ninja_Right_Anime,
-<<<<<<< HEAD
 		Ninja_Icon,
 		Ninja_Icon_Cry,
 		Ninja_Icon2,
 		Ninja_Icon_Cry2,
-=======
->>>>>>> parent of 8765ada... UIやプレイヤーの向き
 		//�ؓ�
 		Kinniku,
 		Kinniku_Back,
@@ -49,13 +46,10 @@ namespace Assets {
 		Kinniku_Back_Anime,
 		Kinniku_Left_Anime,
 		Kinniku_Right_Anime,
-<<<<<<< HEAD
 		Kinniku_Icon,
 		Kinniku_Icon_Cry,
 		Kinniku_Icon2,
 		Kinniku_Icon_Cry2,
-=======
->>>>>>> parent of 8765ada... UIやプレイヤーの向き
 
 		//�Z
 		Yoroi,
@@ -64,14 +58,11 @@ namespace Assets {
 		Yoroi_Back_Anime,
 		Yoroi_Left_Anime,
 		Yoroi_Right_Anime,
-<<<<<<< HEAD
 		Yoroi_Icon,
 		Yoroi_Icon_Cry,
 		Yoroi_Icon2,
 		Yoroi_Icon_Cry2,
 
-=======
->>>>>>> parent of 8765ada... UIやプレイヤーの向き
 		//�i����
 		Kakutouka,
 		Kakutouka_Back,
@@ -79,13 +70,10 @@ namespace Assets {
 		Kakutouka_Back_Anime,
 		Kakutouka_Left_Anime,
 		Kakutouka_Right_Anime,
-<<<<<<< HEAD
 		Kakutouka_Icon,
 		Kakutouka_Icon_Cry,
 		Kakutouka_Icon2,
 		Kakutouka_Icon_Cry2,
-=======
->>>>>>> parent of 8765ada... UIやプレイヤーの向き
 
 		NormalToufu,
 		MetalToufu,

@@ -19,8 +19,8 @@ Player::~Player()
 
 void Player::OnInitialize()
 { 
+	target_position = Input::GetInstance().GetMapDistanceMove_WASD(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y);
 	//target_position = Input::GetInstance().GetMapDistanceMove_Pad1(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y);
-	target_position = Input::GetInstance().GetMapDistanceMove_Pad1(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y);
 	position = target_position - Vector2(0.0f, 80.0f);
 	firstDraw = true;
 }
@@ -137,7 +137,7 @@ void Player::OnDraw(Renderer & renderer)
 		switch (GetCharacter())
 		{
 		case Character::Ninja:
-			
+			renderer.DrawTexture(Assets::Texture::Ninja_Icon, Vector2(0, 0));
 			if (firstDraw)
 			{
 				renderer.DrawTexture(Assets::Texture::Ninja, position);
@@ -168,16 +168,88 @@ void Player::OnDraw(Renderer & renderer)
 			break;
 
 		case Character::Kinniku:
-			renderer.DrawTexture(Assets::Texture::Kinniku, position);
+			renderer.DrawTexture(Assets::Texture::Kinniku_Icon, Vector2(0, 0));
+			if (firstDraw)
+			{
+				renderer.DrawTexture(Assets::Texture::Kinniku, position);
+				if (movement.Length() == 1)
+				{
+					firstDraw = false;
+				}
+			}
+
+			switch (direction)
+			{
+				case 1://前
+					renderer.DrawRectangle(Assets::Texture::Kinniku_Front_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeY, 0), Vector2(181, 181)));
+					break;
+				case 2://右
+					renderer.DrawRectangle(Assets::Texture::Kinniku_Right_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeX, 0), Vector2(181, 181)));
+					break;
+				case 3://後ろ
+					renderer.DrawRectangle(Assets::Texture::Kinniku_Back_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeY, 0), Vector2(181, 181)));
+					break;
+				case 4://左
+					renderer.DrawRectangle(Assets::Texture::Kinniku_Left_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeX, 0), Vector2(181, 181)));
+					break;
+			}
 			break;
 
 		case Character::Yoroi:
-			renderer.DrawTexture(Assets::Texture::Yoroi, position);
+			renderer.DrawTexture(Assets::Texture::Yoroi_Icon, Vector2(0, 0));
+			if (firstDraw)
+			{
+				renderer.DrawTexture(Assets::Texture::Yoroi, position);
+				if (movement.Length() == 1)
+				{
+					firstDraw = false;
+				}
+			}
+
+			switch (direction)
+			{
+				case 1://前
+					renderer.DrawRectangle(Assets::Texture::Yoroi_Front_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeY, 0), Vector2(181, 181)));
+					break;
+				case 2://右
+					renderer.DrawRectangle(Assets::Texture::Yoroi_Right_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeX, 0), Vector2(181, 181)));
+					break;
+				case 3://後ろ
+					renderer.DrawRectangle(Assets::Texture::Yoroi_Back_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeY, 0), Vector2(181, 181)));
+					break;
+				case 4://左
+					renderer.DrawRectangle(Assets::Texture::Yoroi_Left_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeX, 0), Vector2(181, 181)));
+					break;
+			}
 			break;
 
 
 		case Character::Kakutouka:
-			renderer.DrawTexture(Assets::Texture::Kakutouka, position);
+			renderer.DrawTexture(Assets::Texture::Kakutouka_Icon, Vector2(0, 0));
+			if (firstDraw)
+			{
+				renderer.DrawTexture(Assets::Texture::Kakutouka, position);
+				if (movement.Length() == 1)
+				{
+					firstDraw = false;
+				}
+			}
+
+			switch (direction)
+			{
+				case 1://前
+					renderer.DrawRectangle(Assets::Texture::Kakutouka_Front_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeY, 0), Vector2(181, 181)));
+					break;
+				case 2://右
+					renderer.DrawRectangle(Assets::Texture::Kakutouka_Right_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeX, 0), Vector2(181, 181)));
+					break;
+				case 3://後ろ
+					renderer.DrawRectangle(Assets::Texture::Kakutouka_Back_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeY, 0), Vector2(181, 181)));
+					break;
+				case 4://左
+					renderer.DrawRectangle(Assets::Texture::Kakutouka_Left_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeX, 0), Vector2(181, 181)));
+					break;
+			}
 			break;
 		}
 
