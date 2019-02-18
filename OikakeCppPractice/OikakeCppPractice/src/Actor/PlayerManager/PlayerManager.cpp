@@ -36,7 +36,7 @@ void PlayerManager::Judge() {
 		winer_chara = p2chara;
 		loser_chara = p1chara;
 	}
-	else if(p1hp > p2hp) {
+	else {
 		winer_chara = p1chara;
 		loser_chara = p2chara;
 	}

@@ -357,7 +357,7 @@ Vector2 Input::GetMapDistanceMove_Pad2(int map_chipX, int map_chipY) {
 
 	// 上ボタン
 	if (GetXBoxController().IsButtonState2(XboxGamePad::Dpad_Up)) {
-	// 豆腐があればリターンする
+		// 豆腐があればリターンする
 		if (MapGenerater::check_holeAndtoufu(map_chipX, map_chipY - 1)) {
 			return MapGenerater::up_left_get_pos(map_chipX, map_chipY);
 		}
@@ -380,14 +380,14 @@ Vector2 Input::GetMapDistanceMove_Pad2(int map_chipX, int map_chipY) {
 	if (GetXBoxController().IsButtonState2(XboxGamePad::Dpad_Down)) {
 
 		if (MapGenerater::check_holeAndtoufu(map_chipX, map_chipY + 1)) {
-			return MapGenerater::up_left_get_pos(map_chipX, map_chipY); 
+			return MapGenerater::up_left_get_pos(map_chipX, map_chipY);
 		}
 		else if (map_chip_numverX < 0 || map_chip_numverX >= 8 ||
 			map_chip_numverY + 1 < 0 || map_chip_numverY + 1 >= 8) {
 			return MapGenerater::up_left_get_pos(map_chipX, map_chipY);
 		}
 		else {
-		valueY = 1;
+			valueY = 1;
 		}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;
@@ -399,14 +399,14 @@ Vector2 Input::GetMapDistanceMove_Pad2(int map_chipX, int map_chipY) {
 	if (GetXBoxController().IsButtonState2(XboxGamePad::Dpad_Right)) {
 
 		if (MapGenerater::check_holeAndtoufu(map_chipX + 1, map_chipY)) {
-			return MapGenerater::up_left_get_pos(map_chipX, map_chipY); 
+			return MapGenerater::up_left_get_pos(map_chipX, map_chipY);
 		}
 		else if (map_chip_numverX + 1 < 0 || map_chip_numverX + 1 >= 8 ||
 			map_chip_numverY < 0 || map_chip_numverY >= 8) {
 			return MapGenerater::up_left_get_pos(map_chipX, map_chipY);
 		}
 		else {
-		valueX = 1;
+			valueX = 1;
 		}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;
@@ -420,14 +420,14 @@ Vector2 Input::GetMapDistanceMove_Pad2(int map_chipX, int map_chipY) {
 
 		//	// 行こうとしている場所に豆腐はあるか
 		if (MapGenerater::check_holeAndtoufu(map_chipX - 1, map_chipY)) {
-			return MapGenerater::up_left_get_pos(map_chipX, map_chipY); 
+			return MapGenerater::up_left_get_pos(map_chipX, map_chipY);
 		}
 		else if (map_chip_numverX - 1 < 0 || map_chip_numverX - 1 >= 8 ||
 			map_chip_numverY < 0 || map_chip_numverY >= 8) {
 			return MapGenerater::up_left_get_pos(map_chipX, map_chipY);
 		}
 		else {
-		valueX = -1;
+			valueX = -1;
 		}
 		map_chip_numverX += valueX;
 		map_chip_numverY += valueY;

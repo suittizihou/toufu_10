@@ -61,8 +61,6 @@ private:
 
 	int hp{ 5 };	// ‘Ì—Í
 
-	int toufu_hit_count{};
-
 	int dropSh{};
 	int punchSh{};
 

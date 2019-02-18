@@ -45,8 +45,13 @@ void NormalToufu::OnFirstUpdate(float deltaTime)
 
 void NormalToufu::OnUpdate(float deltaTime)
 {
-	if (moveX != 0 || moveY != 0) {
-		target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, moveX, moveY) + Vector2(55, 30);
+	// 筋肉豆腐ムーブ中でない時
+	if (!kinniku_move) {
+		 // X、Yどちらかでも０でないなら
+		if (moveX != 0 || moveY != 0) {
+			target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, moveX, moveY) + Vector2(55, 30);
+			kinniku_move = false;
+		}
 	}
 
 	if (_move)
@@ -509,10 +514,15 @@ void NormalToufu::OnCollide(const HitInfo & hitInfo)
 		return;
 	}
 
-	// 豆腐と豆腐が衝突した関連
-	if (hitInfo.collideActor->GetName() == "NormalToufu")
-	{
+	//if(hitInfo.collideActor->GetName() == "NormalToufu" || hitInfo.collideActor->GetName() == "StopNormalToufu" || hitInfo)
 
+	// 自身が筋肉豆腐押されていて、なおかつ当たった豆腐たちが普通の豆腐なら
+	if (kinniku_move && (hitInfo.collideActor->GetName() == "NormalToufu" || hitInfo.collideActor->GetName() == "StopNormalToufu"))
+	{
+		// 当たった豆腐を消す
+		hitInfo.collideActor->ChangeStatus(Status::Dead);
+
+		kinniku_move = false;
 	}
 
 	// 押す処理関連
