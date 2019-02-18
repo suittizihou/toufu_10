@@ -27,6 +27,9 @@ MetalToufu::MetalToufu(IWorld * world, const Vector2 & position_, const int& _nu
 		default_position = position_;
 		position = spone_position;
 	}
+	else {
+		name = "MetalToufu";
+	}
 }
 
 MetalToufu::~MetalToufu()
@@ -67,7 +70,6 @@ void MetalToufu::OnUpdate(float deltaTime)
 	{
 		_move = false;
 		movement = Vector2::Zero;
-
 	}
 
 	//if (one_time_position.x == position.x && one_time_position.y == position.y) b_move = false;
@@ -77,12 +79,18 @@ void MetalToufu::OnUpdate(float deltaTime)
 void MetalToufu::OnDraw(Renderer & renderer)
 {
 	renderer.DrawTexture(Assets::Texture::MetalToufu, position);
-	//DrawBox(position.x, position.y + 57, position.x + 110, position.y + 120, GetColor(0, 255, 0), TRUE);
-	//DrawPixel(Average_Position().x, Average_Position().y, GetColor(255, 0, 0));
-	//
-	//float test = GetDegree(MapGenerater::up_left_get_pos(5, 5), Average_Position());
+	
+	// —Ž‚¿‚Ä‚éŽž‚¾‚¯‰º‚É‰e‚ð•`‰æ
+	if (name == "SponeMetalToufu") {
+		int value{};
+		if (sponed_pos.Distance(position) <= 510) {
+			value = 510 - sponed_pos.Distance(position);
+		}
 
-	//DrawFormatString(0, 96, GetColor(255, 0, 0), "agree : %f", test);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, value / 2);
+		DrawBox(sponed_pos.x, sponed_pos.y + 57, sponed_pos.x + 110, sponed_pos.y + 120, GetColor(0, 0, 0), TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
 }
 
 void MetalToufu::Move()

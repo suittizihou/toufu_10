@@ -81,7 +81,11 @@ namespace Assets {
 		Kakutouka_point,
 
 		NormalToufu,
+		NormalToufu_kake1,
+		NormalToufu_kake2,
+		NormalToufu_kake3,
 		MetalToufu,
+		Kage,
 		Number,
 		Title,
 

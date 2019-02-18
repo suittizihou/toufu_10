@@ -49,6 +49,7 @@ private:
 private:
 	void Move();
 	bool _move = false;
+	int animeX{};
 	NormalToufuMove spone_move{};
 	Vector2 spone_position{};
 	Vector2 one_time_position{};
@@ -59,6 +60,7 @@ private:
 
 	Vector2 velocity{};
 
+	int previous_hp{ 5 };
 	int hp{ 5 };	// ‘Ì—Í
 
 	int dropSh{};

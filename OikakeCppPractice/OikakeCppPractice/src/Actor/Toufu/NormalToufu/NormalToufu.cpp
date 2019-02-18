@@ -9,6 +9,7 @@
 #include "Actor/Map/MapGenerater/MapGenerater.h"
 #include "../ToufuID.h"
 #include "Input/Input.h"
+#include "Renderer/Renderer.h"
 
 NormalToufu::NormalToufu(IWorld* world, const Vector2& position_, const int& _number)
 	: Actor2D(world, "SponeNormalToufu", position_, std::make_shared<Box>(Vector2(0, 57), Vector2(110, 120)), _number)
@@ -48,7 +49,7 @@ void NormalToufu::OnFirstUpdate(float deltaTime)
 void NormalToufu::OnUpdate(float deltaTime)
 {
 	// ‹Ø“÷“¤•…ƒ€[ƒu’†‚Å‚È‚¢Žž
-	if (!kinniku_move) {
+	if (!kinniku_move || MapGenerater::get_toufu_id(center_pos, moveX, moveY) == ToufuID::Metal) {
 		 // XAY‚Ç‚¿‚ç‚©‚Å‚à‚O‚Å‚È‚¢‚È‚ç
 		if (moveX != 0 || moveY != 0) {
 			target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, moveX, moveY) + Vector2(55, 30);
@@ -88,10 +89,40 @@ void NormalToufu::OnUpdate(float deltaTime)
 	center_pos = Average_Position(position);
 }
 
-void NormalToufu::OnDraw(Renderer & renderer)
+void NormalToufu::OnDraw(Renderer& renderer)
 {
-	renderer.DrawTexture(Assets::Texture::NormalToufu, position);
+
+	if (previous_hp != hp) {
+		if (hp >= 5) {
+			renderer.DrawTexture(Assets::Texture::NormalToufu, position);
+		}
+		else if (hp >= 3) {
+			renderer.DrawRectangle(Assets::Texture::NormalToufu_kake1, position, Rect(Vector2(110 * animeX, 0), Vector2(110, 120)));
+		}
+		else if (hp >= 1) {
+			renderer.DrawRectangle(Assets::Texture::NormalToufu_kake2, position, Rect(Vector2(110 * animeX, 0), Vector2(110, 120)));
+		}
+		else {
+			renderer.DrawRectangle(Assets::Texture::NormalToufu_kake3, position, Rect(Vector2(110 * animeX, 0), Vector2(110, 120)));
+		}
+	}
+	previous_hp = hp;
+
+	// —Ž‚¿‚Ä‚éŽž‚¾‚¯‰º‚É‰e‚ð•`‰æ
+	if (name == "SponeNormalToufu") {
+		int value{};
+		if (sponed_pos.Distance(position) <= 510) {
+			value = 510 - sponed_pos.Distance(position);
+		}
+
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, value / 2);
+		DrawBox(sponed_pos.x, sponed_pos.y + 57, sponed_pos.x + 110, sponed_pos.y + 120, GetColor(0, 0, 0), TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+
 	DrawBox(position.x, position.y + 57, position.x + 110, position.y + 120, GetColor(0, 255, 0), TRUE);
+
+
 	//DrawPixel(target_pos.x, target_pos.y, GetColor(255, 0, 0));
 	DrawCircle(center_pos.x, center_pos.y, 5, GetColor(0, 0, 255));
 	if (name == "SponeNormalToufu") {
@@ -582,7 +613,6 @@ void NormalToufu::OnCollide(const HitInfo & hitInfo)
 			// “–‚½‚Á‚½“¤•…‚ðÁ‚·
 			hitInfo.collideActor->ChangeStatus(Status::Dead);
 		}
-
 		kinniku_move = false;
 	}
 

@@ -241,7 +241,6 @@ void Player::OnDraw(Renderer & renderer)
 			}
 			break;
 		}
-
 	
 #if _DEBUG
 	//DrawFormatString(0, 16, GetColor(255, 0, 0), "positionX:%f positionY:%f", position.x, position.y);
