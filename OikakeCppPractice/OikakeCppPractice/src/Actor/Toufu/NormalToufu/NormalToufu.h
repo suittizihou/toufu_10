@@ -64,6 +64,9 @@ private:
 
 	int toufu_hit_count{};
 
+	int dropSh{};
+	int punchSh{};
+
 private:
 	Vector2 Average_Position(const Vector2& position);
 };

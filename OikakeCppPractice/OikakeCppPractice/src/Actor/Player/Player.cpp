@@ -21,10 +21,7 @@ void Player::OnInitialize()
 { 
 	target_position = Input::GetInstance().GetMapDistanceMove_WASD(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y);
 	//target_position = Input::GetInstance().GetMapDistanceMove_Pad1(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y);
-<<<<<<< .merge_file_a00556
 	target_position = Input::GetInstance().GetMapDistanceMove_WASD(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y);
-=======
->>>>>>> .merge_file_a23416
 	position = target_position - Vector2(0.0f, 80.0f);
 	firstDraw = true;
 

@@ -45,6 +45,7 @@ void Title::Initialize()
 	timeCount = 0;
 	flashStart = true;
 	bgmSh = LoadSoundMem("asset/BGM&SE/title_bgm.MP3");
+	seSh = LoadSoundMem("asset/BGM&SE/title_se.mp3");
 	PlaySoundMem(bgmSh, DX_PLAYTYPE_LOOP);
 	noneOperation = false;
 }

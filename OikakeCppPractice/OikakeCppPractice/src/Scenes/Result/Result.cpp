@@ -42,7 +42,7 @@ void Result::Initialize()
 
 	bgmSh = LoadSoundMem("asset/BGM&SE/result_bgm.mp3");
 
-	PlaySoundMem(bgmSh, DX_PLAYTYPE_LOOP);
+	PlaySoundMem(bgmSh, DX_PLAYTYPE_BACK);
 }
 
 void Result::FirstUpdate(float deltaTime)
