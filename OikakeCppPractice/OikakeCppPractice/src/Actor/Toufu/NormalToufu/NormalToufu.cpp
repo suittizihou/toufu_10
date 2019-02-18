@@ -578,8 +578,10 @@ void NormalToufu::OnCollide(const HitInfo & hitInfo)
 	// ©g‚ª‹Ø“÷“¤•…‰Ÿ‚³‚ê‚Ä‚¢‚ÄA‚È‚¨‚©‚Â“–‚½‚Á‚½“¤•…‚½‚¿‚ª•’Ê‚Ì“¤•…‚È‚ç
 	if (kinniku_move && (hitInfo.collideActor->GetName() == "NormalToufu" || hitInfo.collideActor->GetName() == "StopNormalToufu"))
 	{
-		// “–‚½‚Á‚½“¤•…‚ğÁ‚·
-		hitInfo.collideActor->ChangeStatus(Status::Dead);
+		if (!hitInfo.collideActor->GetKinnikuMove()) {
+			// “–‚½‚Á‚½“¤•…‚ğÁ‚·
+			hitInfo.collideActor->ChangeStatus(Status::Dead);
+		}
 
 		kinniku_move = false;
 	}
