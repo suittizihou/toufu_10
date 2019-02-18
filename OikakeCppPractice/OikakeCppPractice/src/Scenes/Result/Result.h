@@ -84,4 +84,6 @@ private:
 	bool checkGameEnd{};
 	// Œ»İ‘I‚Î‚ê‚Ä‚¢‚éƒƒjƒ…[‚Ì”Ô†‚ğ“ü‚ê‚é‚æ‚¤
 	int select{};
+
+	int bgmSh{};
 };

@@ -47,4 +47,9 @@ private:
 	bool firstDraw{};
 
 	int direction = 1;
+
+	//‰¹
+	int hitSh{};
+
+	int seflag{};
 };

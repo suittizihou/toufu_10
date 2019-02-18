@@ -99,7 +99,6 @@ void CharacterSelect::Update(float deltaTime)
 				break;
 			}
 			isEnd = true;
-			StopSoundMem(sceneBGM);
 		}
 		else
 		{
@@ -172,6 +171,7 @@ Scene CharacterSelect::Next() const
 void CharacterSelect::Finalize()
 {
 	renderer.Clear();
+	StopSoundMem(sceneBGM);
 }
 
 void CharacterSelect::HandleMessage(EventMessage message, void * param)
