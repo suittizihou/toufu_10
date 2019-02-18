@@ -31,6 +31,7 @@ void NormalToufu::OnInitialize()
 {
 	dropSh = LoadSoundMem("asset/BGM&SE/gameplay_drop_se.mp3");
 	punchSh = LoadSoundMem("asset/BGM&SE/gameplay_punch_se.mp3");
+	pushSh = LoadSoundMem("asset/BGM&SE/gameplay_push_se.mp3");
 }
 
 void NormalToufu::OnFirstUpdate(float deltaTime)
@@ -39,6 +40,7 @@ void NormalToufu::OnFirstUpdate(float deltaTime)
 	// そこが穴なら自分は死んでノーマル豆腐のタイルにする
 	if (MapGenerater::check_hole(center_pos)) {
 		status = Status::Dead;
+		PlaySoundMem(dropSh,DX_PLAYTYPE_BACK);
 		MapGenerater::set_map_Texture(center_pos, Assets::Texture::NormalToufuTile);
 	}
 }
@@ -170,6 +172,10 @@ void NormalToufu::TopHitRiaction_1(const HitInfo & hitInfo)
 				// Aボタン || Jボタンで押す
 				if (Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_J)) {
 
+					//押した音
+					PlaySoundMem(pushSh, DX_PLAYTYPE_BACK);
+
+
 					// 行きたい座標				 -						// 自分の今の座標
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 0, 1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					moveX = 0;
@@ -190,6 +196,9 @@ void NormalToufu::TopHitRiaction_1(const HitInfo & hitInfo)
 				// Aボタン || Jボタンで押す || Xボタン || Hボタンで押す(鎧豆腐の必殺技用)
 				if (Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_J) ||
 					Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_H)) {
+
+					//押した音
+					PlaySoundMem(pushSh, DX_PLAYTYPE_BACK);
 
 					// 行きたい座標				 -						// 自分の今の座標
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 0, 1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
@@ -214,6 +223,10 @@ void NormalToufu::TopHitRiaction_2(const HitInfo & hitInfo)
 			if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::Dpad_Down) ||
 				Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_DOWN)) {
 				if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1)) {
+					
+					//押した音
+					PlaySoundMem(pushSh, DX_PLAYTYPE_BACK);
+					
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 0, 1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					moveX = 0;
 					moveY = 1;
@@ -232,6 +245,10 @@ void NormalToufu::TopHitRiaction_2(const HitInfo & hitInfo)
 				// Aボタン || 1ボタンで押す || Xボタン || 3ボタンで押す(鎧豆腐の必殺技用)
 				if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1) ||
 					Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_3)) {
+					
+					//押した音
+					PlaySoundMem(pushSh, DX_PLAYTYPE_BACK);
+
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 0, 1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					moveX = 0;
 					moveY = 1;
@@ -256,6 +273,9 @@ void NormalToufu::BottomHitRiaction_1(const HitInfo & hitInfo)
 				Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_W)) {
 				if (Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_J)) {
 
+					//押した音
+					PlaySoundMem(pushSh, DX_PLAYTYPE_BACK);
+
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 0, -1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					moveX = 0;
 					moveY = -1;
@@ -275,6 +295,9 @@ void NormalToufu::BottomHitRiaction_1(const HitInfo & hitInfo)
 				// Aボタン || Jボタンで押す || Xボタン || Hボタンで押す(鎧豆腐の必殺技用)
 				if (Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_J) ||
 					Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_H)) {
+
+					//押した音
+					PlaySoundMem(pushSh, DX_PLAYTYPE_BACK);
 
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 0, -1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					moveX = 0;
@@ -299,6 +322,10 @@ void NormalToufu::BottomHitRiaction_2(const HitInfo & hitInfo)
 			if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::Dpad_Up) ||
 				Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_UP)) {
 				if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1)) {
+					
+					//押した音
+					PlaySoundMem(pushSh, DX_PLAYTYPE_BACK);
+
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 0, -1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					moveX = 0;
 					moveY = -1;
@@ -318,6 +345,10 @@ void NormalToufu::BottomHitRiaction_2(const HitInfo & hitInfo)
 				// Aボタン || 1ボタンで押す || Xボタン || 3ボタンで押す(鎧豆腐の必殺技用)
 				if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1) ||
 					Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_3)) {
+					
+					//押した音
+					PlaySoundMem(pushSh, DX_PLAYTYPE_BACK);
+
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 0, -1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					moveX = 0;
 					moveY = -1;
@@ -343,6 +374,9 @@ void NormalToufu::RightHitRiaction_1(const HitInfo & hitInfo)
 				Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_A)) {
 				if (Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_J)) {
 
+					//押した音
+					PlaySoundMem(pushSh, DX_PLAYTYPE_BACK);
+
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, -1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					moveX = -1;
 					moveY = 0;
@@ -362,6 +396,9 @@ void NormalToufu::RightHitRiaction_1(const HitInfo & hitInfo)
 				// Aボタン || Jボタンで押す || Xボタン || Hボタンで押す(鎧豆腐の必殺技用)
 				if (Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_J) ||
 					Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_H)) {
+
+					//押した音
+					PlaySoundMem(pushSh, DX_PLAYTYPE_BACK);
 
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, -1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					moveX = -1;
@@ -386,6 +423,10 @@ void NormalToufu::RightHitRiaction_2(const HitInfo & hitInfo)
 			if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::Dpad_Left) ||
 				Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_LEFT)) {
 				if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1)) {
+					
+					//押した音
+					PlaySoundMem(pushSh, DX_PLAYTYPE_BACK);
+
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, -1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					moveX = -1;
 					moveY = 0;
@@ -406,6 +447,10 @@ void NormalToufu::RightHitRiaction_2(const HitInfo & hitInfo)
 				// Aボタン || 1ボタンで押す || Xボタン || 3ボタンで押す(鎧豆腐の必殺技用)
 				if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1) ||
 					Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_3)) {
+					
+					//押した音
+					PlaySoundMem(pushSh, DX_PLAYTYPE_BACK);
+
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, -1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					moveX = -1;
 					moveY = 0;
@@ -432,6 +477,9 @@ void NormalToufu::LeftHitRiaction_1(const HitInfo & hitInfo)
 				Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_D)) {
 				if (Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_J)) {
 
+					//押した音
+					PlaySoundMem(pushSh, DX_PLAYTYPE_BACK);
+
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					moveX = 1;
 					moveY = 0;
@@ -450,6 +498,9 @@ void NormalToufu::LeftHitRiaction_1(const HitInfo & hitInfo)
 				// Aボタン || Jボタンで押す || Xボタン || Hボタンで押す(鎧豆腐の必殺技用)
 				if (Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_J) ||
 					Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_H)) {
+
+					//押した音
+					PlaySoundMem(pushSh, DX_PLAYTYPE_BACK);
 
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					moveX = 1;
@@ -474,6 +525,10 @@ void NormalToufu::LeftHitRiaction_2(const HitInfo & hitInfo)
 			if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::Dpad_Right) ||
 				Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_RIGHT)) {
 				if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1)) {
+					
+					//押した音
+					PlaySoundMem(pushSh, DX_PLAYTYPE_BACK);
+
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					moveX = 1;
 					moveY = 0;
@@ -492,6 +547,10 @@ void NormalToufu::LeftHitRiaction_2(const HitInfo & hitInfo)
 				// Aボタン || 1ボタンで押す || Xボタン || 3ボタンで押す(鎧豆腐の必殺技用)
 				if ((Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1) ||
 					(Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_3)))) {
+					
+					//押した音
+					PlaySoundMem(pushSh, DX_PLAYTYPE_BACK);
+
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					moveX = 1;
 					moveY = 0;

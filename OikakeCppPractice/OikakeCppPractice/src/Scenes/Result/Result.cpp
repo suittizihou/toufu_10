@@ -96,6 +96,7 @@ void Result::Finalize()
 {
 	world->Finalize();
 	renderer.Clear();
+	StopSoundMem(bgmSh);
 }
 
 void Result::HandleMessage(EventMessage message, void * param)

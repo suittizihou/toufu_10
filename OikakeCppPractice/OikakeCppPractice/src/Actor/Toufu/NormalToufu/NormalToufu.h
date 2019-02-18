@@ -63,6 +63,7 @@ private:
 
 	int dropSh{};
 	int punchSh{};
+	int pushSh{};
 
 private:
 	Vector2 Average_Position(const Vector2& position);

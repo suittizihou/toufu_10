@@ -24,6 +24,8 @@ void Player::OnInitialize()
 	//target_position = Input::GetInstance().GetMapDistanceMove_WASD(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y);
 	position = target_position - Vector2(0.0f, 80.0f);
 	firstDraw = true;
+
+	hitSh = LoadSoundMem("asset/BGM&SE/gameplay_ataru_se.mp3");
 }
 
 void Player::OnFirstUpdate(float deltaTime)
@@ -312,10 +314,18 @@ void Player::OnCollide(const HitInfo & hitInfo)
 		speed = 5.1f;
 		move_state = MoveState::Move;
 
+		seflag += 1;
+
+		if (seflag == 1) {
+			PlaySoundMem(hitSh, DX_PLAYTYPE_BACK);
+		}
+
 		// 豆腐の中心点と自分の中心点が60ドット以下なら
 		if (hitInfo.collideActor->GetCenterPosition().Distance(center_pos) <= 60.0f) {
 			// damage
 			Damage();
+			PlaySoundMem(hitSh, DX_PLAYTYPE_BACK);
+			seflag = 0;
 		}
 	}
 
