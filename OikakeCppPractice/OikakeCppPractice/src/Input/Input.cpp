@@ -445,11 +445,14 @@ Vector2 AveragePosition(const Vector2& position) {
 	return Vector2(pos.x / 2, pos.y / 2);
 }
 
+int x{};
+int y{};
+
 // 豆腐の座標、移動したい方向の配列座標たち
 Vector2 Input::PlayerHitToufuMove(const Vector2& center_pos, int map_chipX, int map_chipY)
 {
-	int x{ static_cast<int>(MapGenerater::get_pos_numver(center_pos).x) };
-	int y{ static_cast<int>(MapGenerater::get_pos_numver(center_pos).y) };
+	x = static_cast<int>(MapGenerater::get_pos_numver(center_pos).x);
+	y = static_cast<int>(MapGenerater::get_pos_numver(center_pos).y);
 
 	while (true) {
 		x += map_chipX;
@@ -473,7 +476,7 @@ Vector2 Input::PlayerHitToufuMove(const Vector2& center_pos, int map_chipX, int 
 			if (map_chipX == -1) {
 				x += 1;
 			}
-			break;			
+			break;
 		}
 
 		// 壁際に当たったら
@@ -494,16 +497,16 @@ Vector2 Input::PlayerHitToufuMove(const Vector2& center_pos, int map_chipX, int 
 			if (map_chipX == -1) {
 				x += 1;
 			}
-			break;			
+			break;
 		}
 	}
 
-	if (x <= 0) {
-		x -= map_chipX;
-	}
-	if (y <= 0) {
-		y -= map_chipY;
-	}
+	//if (x <= 0) {
+	//	x -= map_chipX;
+	//}
+	//if (y <= 0) {
+	//	y -= map_chipY;
+	//}
 
 	x = Math::Clamp(x, 0, 7);
 	y = Math::Clamp(y, 0, 7);

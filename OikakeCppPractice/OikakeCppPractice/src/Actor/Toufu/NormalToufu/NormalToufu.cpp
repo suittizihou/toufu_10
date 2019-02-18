@@ -39,20 +39,16 @@ void NormalToufu::OnFirstUpdate(float deltaTime)
 	// そこが穴なら自分は死んでノーマル豆腐のタイルにする
 	if (MapGenerater::check_hole(center_pos)) {
 		status = Status::Dead;
-		PlaySoundMem(dropSh, DX_PLAYTYPE_BACK);
 		MapGenerater::set_map_Texture(center_pos, Assets::Texture::NormalToufuTile);
 	}
-
-	if (/*moveX != 0 && moveY != 0*/true) {
-		target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, moveX, moveY) + Vector2(55, 30);
-	}
-	//else {
-	//	target_pos = Vector2::Zero;
-	//}
 }
 
 void NormalToufu::OnUpdate(float deltaTime)
 {
+	if (moveX != 0 || moveY != 0) {
+		target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, moveX, moveY) + Vector2(55, 30);
+	}
+
 	if (_move)
 	{
 		Move();
@@ -75,7 +71,7 @@ void NormalToufu::OnUpdate(float deltaTime)
 	if (spone_move == NormalToufuMove::SponeMoveStop && movement.Length() == 0.0f) {
 		name = "StopNormalToufu";
 	}
-	else if(spone_move == NormalToufuMove::SponeMoveStop){
+	else if (spone_move == NormalToufuMove::SponeMoveStop) {
 		name = "NormalToufu";
 	}
 
@@ -298,11 +294,12 @@ void NormalToufu::BottomHitRiaction_2(const HitInfo & hitInfo)
 					moveX = 0;
 					moveY = -1;
 				}
-			}
-			else if (Input::GetInstance().GetXBoxController().IsButtonDown2(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_2)) {
-				// 殴られ
-				Damage(hitInfo);
-				PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
+			
+				else if (Input::GetInstance().GetXBoxController().IsButtonDown2(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_2)) {
+					// 殴られ
+					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
+				}
 			}
 		}
 		else {
@@ -382,11 +379,13 @@ void NormalToufu::RightHitRiaction_2(const HitInfo & hitInfo)
 					moveX = -1;
 					moveY = 0;
 				}
-			}
-			else if (Input::GetInstance().GetXBoxController().IsButtonDown2(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_2)) {
-				// 殴られ
-				Damage(hitInfo);
-				PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
+			
+				else if (Input::GetInstance().GetXBoxController().IsButtonDown2(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_2)) {
+					// 殴られ
+					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
+
+				}
 			}
 		}
 		else {
@@ -465,12 +464,13 @@ void NormalToufu::LeftHitRiaction_2(const HitInfo & hitInfo)
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					moveX = 1;
 					moveY = 0;
+
 				}
-			}
-			else if (Input::GetInstance().GetXBoxController().IsButtonDown2(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_2)) {
-				// 殴られ
-				Damage(hitInfo);
-				PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
+				else if (Input::GetInstance().GetXBoxController().IsButtonDown2(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_2)) {
+					// 殴られ
+					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
+				}
 			}
 		}
 		else {
