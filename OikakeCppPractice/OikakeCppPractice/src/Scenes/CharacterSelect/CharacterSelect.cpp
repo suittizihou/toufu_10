@@ -30,7 +30,6 @@ void CharacterSelect::LoadAssets()
 
 
 }
-// 724 181
 void CharacterSelect::Initialize()
 {
 	isEnd = false;
@@ -38,10 +37,18 @@ void CharacterSelect::Initialize()
 	cursorSound = LoadSoundMem("asset/BGM&SE/choose_se.mp3");
 	enterSound = LoadSoundMem("asset/BGM&SE/choosed_se.mp3");
 	PlaySoundMem(sceneBGM, DX_PLAYTYPE_LOOP, true);
+	tex_enum = Assets::Texture::None;
+	tex_enum_p1 = Assets::Texture::None;
+	tex_enum_p2 = Assets::Texture::None;
+
+	awd = true;
+	time = 0;
+	timeCount = 0;
 }
 
 void CharacterSelect::FirstUpdate(float deltaTime)
 {
+	
 }
 
 void CharacterSelect::Update(float deltaTime)
@@ -131,9 +138,9 @@ void CharacterSelect::Update(float deltaTime)
 	time++;
 	if (time > 5)
 	{
-		a++;
+		timeCount++;
 		time = 0;
-		if (a == 4)a = 0;
+		if (timeCount == 4)timeCount = 0;
 	}
 }
 
@@ -154,8 +161,8 @@ void CharacterSelect::Draw() const
 	if (!x && !y)renderer.DrawTexture(Assets::Texture::choose4, Vector2(-120, -110), Vector2(0, 0), Vector2(1.2f, 1.2f));
 	else{ renderer.DrawTexture(Assets::Texture::choose4); }
 	//キャラのアニメーション
-	renderer.DrawRectangle(tex_enum_p1, Vector2(874, 210), Rect(Vector2(181*a, 0),Vector2(181,181)));
-	if(!awd) renderer.DrawRectangle(tex_enum_p2, Vector2(1035, 505), Rect(Vector2(181 * a, 0), Vector2(181, 181)));
+	renderer.DrawRectangle(tex_enum_p1, Vector2(874, 210), Rect(Vector2(181*timeCount, 0),Vector2(181,181)));
+	if(!awd) renderer.DrawRectangle(tex_enum_p2, Vector2(1035, 505), Rect(Vector2(181 * timeCount, 0), Vector2(181, 181)));
 }
 
 bool CharacterSelect::IsEnd() const
