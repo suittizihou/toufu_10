@@ -49,7 +49,6 @@ private:
 private:
 	void Move();
 	bool _move = false;
-	bool toufu_hit{};
 	NormalToufuMove spone_move{};
 	Vector2 spone_position{};
 	Vector2 one_time_position{};

@@ -88,7 +88,7 @@ protected:
 	Vector2 sponed_pos{};
 	float speed{};
 	int number = 0;
-	bool kinniku_move{ false };		// ‹Ø“÷“¤•…‚É‰Ÿ‚³‚ê‚½‚Æ‚«true‚É‚È‚é‚à‚Ì
+	bool kinniku_move{};		// ‹Ø“÷“¤•…‚É‰Ÿ‚³‚ê‚½‚Æ‚«true‚É‚È‚é‚à‚Ì
 
 private:
 	std::list<ActorPtr> children;

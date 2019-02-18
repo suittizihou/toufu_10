@@ -169,6 +169,8 @@ void NormalToufu::TopHitRiaction_1(const HitInfo & hitInfo)
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 0, 1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					moveX = 0;
 					moveY = 1;
+
+					if (hitInfo.collideActor->GetCharacter() == Character::Kinniku) { kinniku_move = true; }
 				}
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_K)) {
 					// 殴られ
@@ -210,6 +212,7 @@ void NormalToufu::TopHitRiaction_2(const HitInfo & hitInfo)
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 0, 1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					moveX = 0;
 					moveY = 1;
+					if (hitInfo.collideActor->GetCharacter() == Character::Kinniku) { kinniku_move = true; }
 				}
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown2(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_2)) {
 					// 殴られ
@@ -251,6 +254,7 @@ void NormalToufu::BottomHitRiaction_1(const HitInfo & hitInfo)
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 0, -1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					moveX = 0;
 					moveY = -1;
+					if (hitInfo.collideActor->GetCharacter() == Character::Kinniku) { kinniku_move = true; }
 				}
 
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_K)) {
@@ -293,6 +297,7 @@ void NormalToufu::BottomHitRiaction_2(const HitInfo & hitInfo)
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 0, -1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					moveX = 0;
 					moveY = -1;
+					if (hitInfo.collideActor->GetCharacter() == Character::Kinniku) { kinniku_move = true; }
 				}
 			
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown2(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_2)) {
@@ -336,6 +341,7 @@ void NormalToufu::RightHitRiaction_1(const HitInfo & hitInfo)
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, -1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					moveX = -1;
 					moveY = 0;
+					if (hitInfo.collideActor->GetCharacter() == Character::Kinniku) { kinniku_move = true; }
 				}
 
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_K)) {
@@ -378,6 +384,7 @@ void NormalToufu::RightHitRiaction_2(const HitInfo & hitInfo)
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, -1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					moveX = -1;
 					moveY = 0;
+					if (hitInfo.collideActor->GetCharacter() == Character::Kinniku) { kinniku_move = true; }
 				}
 			
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown2(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_2)) {
@@ -423,6 +430,7 @@ void NormalToufu::LeftHitRiaction_1(const HitInfo & hitInfo)
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					moveX = 1;
 					moveY = 0;
+					if (hitInfo.collideActor->GetCharacter() == Character::Kinniku) { kinniku_move = true; }
 				}
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_K)) {
 					// 殴られ
@@ -464,7 +472,7 @@ void NormalToufu::LeftHitRiaction_2(const HitInfo & hitInfo)
 					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
 					moveX = 1;
 					moveY = 0;
-
+					if (hitInfo.collideActor->GetCharacter() == Character::Kinniku) { kinniku_move = true; }
 				}
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown2(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_2)) {
 					// 殴られ
@@ -502,12 +510,9 @@ void NormalToufu::OnCollide(const HitInfo & hitInfo)
 	}
 
 	// 豆腐と豆腐が衝突した関連
-	if (name != "SponeNormalToufu") {
-		if (hitInfo.collideActor->GetName() == "NormalToufu" || hitInfo.collideActor->GetName() == "StopNormalToufu")
-		{
-			//MapGenerater::set_map_toufu(Average_Position(position), ToufuID::None);
-			//status = Status::Dead;
-		}
+	if (hitInfo.collideActor->GetName() == "NormalToufu")
+	{
+
 	}
 
 	// 押す処理関連
@@ -535,7 +540,7 @@ void NormalToufu::OnCollide(const HitInfo & hitInfo)
 		else if (/*hitInfo.collideActor->GetName() == "player" && */hitInfo.collideActor->GetControllerType() == DX_INPUT_PAD2 && !_move)
 		{// プレイヤー２用
 
-						// 上に当たっているとき
+			// 上に当たっているとき
 			TopHitRiaction_2(hitInfo);
 
 			// 下に当たっているとき
