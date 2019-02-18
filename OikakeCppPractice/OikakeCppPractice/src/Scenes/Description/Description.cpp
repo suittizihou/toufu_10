@@ -23,6 +23,7 @@ void Description::LoadAssets()
 void Description::Initialize()
 {
 	isEnd = false;
+	sh = LoadSoundMem("asset/BGM&SE/tutorial_se.mp3");
 }
 
 void Description::FirstUpdate(float deltaTime)
@@ -43,6 +44,7 @@ void Description::Update(float deltaTime)
 	}
 	if (Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_RETURN) || Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::A))
 	{
+		PlaySoundMem(sh, DX_PLAYTYPE_BACK);
 		if (!isEnd)drawtex = false;
 	}
 }

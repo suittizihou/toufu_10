@@ -48,6 +48,8 @@ void GameMain::LoadAssets()
 	renderer.LoadTexture(Assets::Texture::Ninja_Right_Anime, "gameplay/player3_anime_walk_right.png");
 	renderer.LoadTexture(Assets::Texture::Ninja_Icon, "gameplay/player1_cara3A.png");
 	renderer.LoadTexture(Assets::Texture::Ninja_Icon_Cry, "gameplay/player1_cara3B.png");
+	renderer.LoadTexture(Assets::Texture::Ninja_Icon2, "gameplay/player2_cara3A.png");
+	renderer.LoadTexture(Assets::Texture::Ninja_Icon_Cry2, "gameplay/player2_cara3B.png");
 	//‚±‚±‚Ü‚Å”EŽÒ
 
 	//‚±‚±‚©‚ç‹Ø“÷
@@ -59,6 +61,8 @@ void GameMain::LoadAssets()
 	renderer.LoadTexture(Assets::Texture::Kinniku_Right_Anime, "gameplay/player1_anime_walk4.png");
 	renderer.LoadTexture(Assets::Texture::Kinniku_Icon, "gameplay/player1_cara1A.png");
 	renderer.LoadTexture(Assets::Texture::Kinniku_Icon_Cry, "gameplay/player1_cara1B.png");
+	renderer.LoadTexture(Assets::Texture::Kinniku_Icon2, "gameplay/player2_cara1A.png");
+	renderer.LoadTexture(Assets::Texture::Kinniku_Icon_Cry2, "gameplay/player2_cara1B.png");
 	//‚±‚±‚Ü‚Å‹Ø“÷
 
 	//‚±‚±‚©‚çŠZ
@@ -70,6 +74,8 @@ void GameMain::LoadAssets()
 	renderer.LoadTexture(Assets::Texture::Yoroi_Right_Anime, "gameplay/player4_anime_walk4.png");
 	renderer.LoadTexture(Assets::Texture::Yoroi_Icon, "gameplay/player1_cara4A.png");
 	renderer.LoadTexture(Assets::Texture::Yoroi_Icon_Cry, "gameplay/player1_cara4B.png");
+	renderer.LoadTexture(Assets::Texture::Yoroi_Icon2, "gameplay/player2_cara4A.png");
+	renderer.LoadTexture(Assets::Texture::Yoroi_Icon_Cry2, "gameplay/player2_cara4B.png");
 	//‚±‚±‚Ü‚ÅŠZ
 
 	//‚±‚±‚©‚çŠi“¬‰Æ
@@ -81,6 +87,8 @@ void GameMain::LoadAssets()
 	renderer.LoadTexture(Assets::Texture::Kakutouka_Right_Anime, "gameplay/player2_anime_walk4.png");
 	renderer.LoadTexture(Assets::Texture::Kakutouka_Icon, "gameplay/player1_cara2A.png");
 	renderer.LoadTexture(Assets::Texture::Kakutouka_Icon_Cry, "gameplay/player1_cara2B.png");
+	renderer.LoadTexture(Assets::Texture::Kakutouka_Icon2, "gameplay/player2_cara2A.png");
+	renderer.LoadTexture(Assets::Texture::Kakutouka_Icon_Cry2, "gameplay/player2_cara2B.png");
 	//‚±‚±‚Ü‚ÅŠi“¬‰Æ
 
 	//renderer.LoadTexture(Assets::Texture::Player2, "player_atari.jpg");
@@ -149,6 +157,10 @@ void GameMain::Initialize() {
 			objNumber++;
 			++i;
 	}
+
+	bgmSh = LoadSoundMem("asset/BGM&SE/gameplay_bgm.mp3");
+
+	PlaySoundMem(bgmSh, DX_PLAYTYPE_LOOP);
 
 	isEnd = false;
 

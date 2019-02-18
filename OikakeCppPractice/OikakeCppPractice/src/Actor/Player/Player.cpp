@@ -27,6 +27,8 @@ void Player::OnInitialize()
 >>>>>>> .merge_file_a23416
 	position = target_position - Vector2(0.0f, 80.0f);
 	firstDraw = true;
+
+
 }
 
 void Player::OnFirstUpdate(float deltaTime)
@@ -48,7 +50,7 @@ void Player::OnUpdate(float deltaTime)
 		if (Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_S))
 		{
 			bool aa = MapGenerater::check_toufu(center_pos, 0, 1);
-			if (aa) { direction = 0; }else { direction = 1; }
+			if (aa&&GetCharacter()== Character::Ninja) { direction = 0; }else { direction = 1; }
 		}
 		if (Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_W))
 		{

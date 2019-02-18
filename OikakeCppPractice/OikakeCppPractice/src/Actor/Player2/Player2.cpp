@@ -36,7 +36,27 @@ void Player2::OnUpdate(float deltaTime)
 		target_position = Input::GetInstance().GetMapDistanceMove_Arrow(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y) - Vector2(0.0f, 80.0f);
 		if ((target_position.x != previous_target_position.x) || (target_position.y != previous_target_position.y)) { move_state = MoveState::Move; }
 	}
-
+	if (move_state == MoveState::Stop)
+	{
+		if (Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_S))
+		{
+			bool aa = MapGenerater::check_toufu(center_pos, 0, 1);
+			if (aa&&GetCharacter() == Character::Ninja) { direction = 0; }
+			else { direction = 1; }
+		}
+		if (Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_W))
+		{
+			direction = 3;
+		}
+		if (Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_D))
+		{
+			direction = 2;
+		}
+		if (Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_A))
+		{
+			direction = 4;
+		}
+	}
 	velocity = target_position - position;
 
 	if (move_state == MoveState::Move) {
@@ -44,6 +64,22 @@ void Player2::OnUpdate(float deltaTime)
 			// 正規化(Normalizeにバグあり)
 			velocity = velocity / Math::SquareRoot(velocity.x * velocity.x + velocity.y * velocity.y);
 			movement = velocity;
+		}
+		if (movement.y == 1)
+		{
+			direction = 1;
+		}
+		if (movement.y == -1)
+		{
+			direction = 3;
+		}
+		if (movement.x == 1)
+		{
+			direction = 2;
+		}
+		if (movement.x == -1)
+		{
+			direction = 4;
 		}
 	}
 
@@ -74,22 +110,140 @@ void Player2::OnDraw(Renderer & renderer)
 	time++;
 	if (time > 5)
 	{
-		animeX++;
+		animeY += abs(movement.y);
+		animeX += abs(movement.x);
 		time = 0;
+		if (animeY == 4)animeY = 0;
 		if (animeX == 4)animeX = 0;
 	}
+
+	if (movement.y != 0)
+	{
+		beforeMovementY = movement.y;
+	}
+
+	if (movement.x != 0)
+	{
+		beforeMovementX = movement.x;
+	}
 	
-	if (GetCharacter() == Character::Ninja) {
-		renderer.DrawRectangle(Assets::Texture::Ninja_Front_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeX, 0), Vector2(181, 181)));
-	}
-	else if (GetCharacter() == Character::Kinniku) {
-		renderer.DrawTexture(Assets::Texture::Kinniku, position);
-	}
-	else if (GetCharacter() == Character::Yoroi) {
-		renderer.DrawTexture(Assets::Texture::Yoroi, position);
-	}
-	else if (GetCharacter() == Character::Kakutouka) {
-		renderer.DrawTexture(Assets::Texture::Kakutouka, position);
+	switch (GetCharacter())
+	{
+		case Character::Ninja:
+			renderer.DrawTexture(Assets::Texture::Ninja_Icon2, Vector2(0, 0));
+			if (firstDraw)
+			{
+				renderer.DrawTexture(Assets::Texture::Ninja, position);
+				if (movement.Length() == 1)
+				{
+					firstDraw = false;
+				}
+			}
+
+			switch (direction)
+			{
+				case 0:
+					renderer.DrawTexture(Assets::Texture::Ninja, position + Vector2(0, 73));
+					break;
+				case 1://前
+					renderer.DrawRectangle(Assets::Texture::Ninja_Front_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeY, 0), Vector2(181, 181)));
+					break;
+				case 2://右
+					renderer.DrawRectangle(Assets::Texture::Ninja_Right_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeX, 0), Vector2(181, 181)));
+					break;
+				case 3://後ろ
+					renderer.DrawRectangle(Assets::Texture::Ninja_Back_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeY, 0), Vector2(181, 181)));
+					break;
+				case 4://左
+					renderer.DrawRectangle(Assets::Texture::Ninja_Left_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeX, 0), Vector2(181, 181)));
+					break;
+			}
+			break;
+
+		case Character::Kinniku:
+			renderer.DrawTexture(Assets::Texture::Kinniku_Icon2, Vector2(0, 0));
+			if (firstDraw)
+			{
+				renderer.DrawTexture(Assets::Texture::Kinniku, position);
+				if (movement.Length() == 1)
+				{
+					firstDraw = false;
+				}
+			}
+
+			switch (direction)
+			{
+				case 1://前
+					renderer.DrawRectangle(Assets::Texture::Kinniku_Front_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeY, 0), Vector2(181, 181)));
+					break;
+				case 2://右
+					renderer.DrawRectangle(Assets::Texture::Kinniku_Right_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeX, 0), Vector2(181, 181)));
+					break;
+				case 3://後ろ
+					renderer.DrawRectangle(Assets::Texture::Kinniku_Back_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeY, 0), Vector2(181, 181)));
+					break;
+				case 4://左
+					renderer.DrawRectangle(Assets::Texture::Kinniku_Left_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeX, 0), Vector2(181, 181)));
+					break;
+			}
+			break;
+
+		case Character::Yoroi:
+			renderer.DrawTexture(Assets::Texture::Yoroi_Icon2, Vector2(0, 0));
+			if (firstDraw)
+			{
+				renderer.DrawTexture(Assets::Texture::Yoroi, position);
+				if (movement.Length() == 1)
+				{
+					firstDraw = false;
+				}
+			}
+
+			switch (direction)
+			{
+				case 1://前
+					renderer.DrawRectangle(Assets::Texture::Yoroi_Front_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeY, 0), Vector2(181, 181)));
+					break;
+				case 2://右
+					renderer.DrawRectangle(Assets::Texture::Yoroi_Right_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeX, 0), Vector2(181, 181)));
+					break;
+				case 3://後ろ
+					renderer.DrawRectangle(Assets::Texture::Yoroi_Back_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeY, 0), Vector2(181, 181)));
+					break;
+				case 4://左
+					renderer.DrawRectangle(Assets::Texture::Yoroi_Left_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeX, 0), Vector2(181, 181)));
+					break;
+			}
+			break;
+
+
+		case Character::Kakutouka:
+			renderer.DrawTexture(Assets::Texture::Kakutouka_Icon2, Vector2(0, 0));
+			if (firstDraw)
+			{
+				renderer.DrawTexture(Assets::Texture::Kakutouka, position);
+				if (movement.Length() == 1)
+				{
+					firstDraw = false;
+				}
+			}
+
+			switch (direction)
+			{
+				case 1://前
+					renderer.DrawRectangle(Assets::Texture::Kakutouka_Front_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeY, 0), Vector2(181, 181)));
+					break;
+				case 2://右
+					renderer.DrawRectangle(Assets::Texture::Kakutouka_Right_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeX, 0), Vector2(181, 181)));
+					break;
+				case 3://後ろ
+					renderer.DrawRectangle(Assets::Texture::Kakutouka_Back_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeY, 0), Vector2(181, 181)));
+					break;
+				case 4://左
+					renderer.DrawRectangle(Assets::Texture::Kakutouka_Left_Anime, position - Vector2(35, 30), Rect(Vector2(181 * animeX, 0), Vector2(181, 181)));
+					break;
+			}
+			break;
 	}
 
 #if _DEBUG
@@ -178,7 +332,7 @@ void Player2::OnCollide(const HitInfo & hitInfo)
 	//			// 豆腐が無かったら生成
 	//			if (!MapGenerater::check_toufu(x, y)) {
 	//				position = MapGenerater::up_left_get_pos(x, y);
-	//			}
+	//			}l
 	//		}
 	//	}
 	//	if (position.x > NormalToufu_pos.x&& hitInfo.collideActor->GetMovement().x >= 1) {
