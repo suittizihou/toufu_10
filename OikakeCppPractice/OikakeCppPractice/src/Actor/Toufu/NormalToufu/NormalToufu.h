@@ -55,13 +55,14 @@ private:
 	Vector2 one_time_position{};
 	Vector2 default_position{};
 
+	int moveX{};
+	int moveY{};
+
 	Vector2 velocity{};
 
 	int hp{ 5 };	// 体力
 
-	//サウンドハンドル
-	int dropSh{};
-	int punchSh{};
+	int toufu_hit_count{};
 
 private:
 	Vector2 Average_Position(const Vector2& position);

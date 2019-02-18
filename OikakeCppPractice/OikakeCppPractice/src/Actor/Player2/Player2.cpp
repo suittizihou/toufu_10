@@ -290,9 +290,10 @@ void Player2::Damage() {
 		int y = rand.Range(0, 7);
 		// 豆腐が無かったら生成
 		if (!MapGenerater::check_toufu(x, y)) {
-			position = MapGenerater::up_left_get_pos(x, y);
 			movement = Vector2::Zero;
-			move_state = MoveState::Stop;
+			Vector2 respawn_position{ MapGenerater::up_left_get_pos(x, y) };
+			target_position = respawn_position;
+			position = respawn_position;
 		}
 	}
 }
@@ -307,6 +308,9 @@ void Player2::OnCollide(const HitInfo & hitInfo)
 	// 当たった豆腐がStopしてる豆腐、動いてる普通豆腐、鉄豆腐のどれかであり、かつ豆腐と自キャラの中心点との距離が66.0f以下である時ダメージを受ける
 	if ((hitInfo.collideActor->GetName() == "StopNormalToufu" || hitInfo.collideActor->GetName() == "NormalToufu" || hitInfo.collideActor->GetName() == "MetalToufu")
 		&& hitInfo.collideActor->GetCenterPosition().Distance(center_pos) <= 66.0f) {
+
+		target_position = hitInfo.collideActor->GetTargetPosition();
+		move_state = MoveState::Stop;
 
 		Damage();
 	}

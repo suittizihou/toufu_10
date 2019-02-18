@@ -21,6 +21,10 @@ void Player::OnInitialize()
 { 
 	target_position = Input::GetInstance().GetMapDistanceMove_WASD(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y);
 	//target_position = Input::GetInstance().GetMapDistanceMove_Pad1(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y);
+<<<<<<< .merge_file_a00556
+	target_position = Input::GetInstance().GetMapDistanceMove_WASD(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y);
+=======
+>>>>>>> .merge_file_a23416
 	position = target_position - Vector2(0.0f, 80.0f);
 	firstDraw = true;
 
@@ -61,6 +65,7 @@ void Player::OnUpdate(float deltaTime)
 			direction = 4;
 		}
 	}
+
 	velocity = target_position - position;
 
 	if (move_state == MoveState::Move) {
@@ -225,7 +230,6 @@ void Player::OnDraw(Renderer & renderer)
 			}
 			break;
 
-
 		case Character::Kakutouka:
 			renderer.DrawTexture(Assets::Texture::Kakutouka_Icon, Vector2(0, 0));
 			if (firstDraw)
@@ -301,9 +305,11 @@ void Player::Damage() {
 		int y = rand.Range(0, 7);
 		// “¤•…‚ª–³‚©‚Á‚½‚ç¶¬
 		if (!MapGenerater::check_toufu(x, y)) {
-			position = MapGenerater::up_left_get_pos(x, y);
+			movement = Vector2::Zero;
+			Vector2 respawn_position{ MapGenerater::up_left_get_pos(x, y) };
+			target_position = respawn_position;
+			position = respawn_position;
 		}
-
 	}
 }
 
@@ -318,6 +324,9 @@ void Player::OnCollide(const HitInfo & hitInfo)
 
 	if ((hitInfo.collideActor->GetName() == "StopNormalToufu" || hitInfo.collideActor->GetName() == "NormalToufu" || hitInfo.collideActor->GetName() == "MetalToufu")
 		&& hitInfo.collideActor->GetCenterPosition().Distance(center_pos) <= 66.0f) {
+
+		target_position = hitInfo.collideActor->GetTargetPosition();
+		move_state = MoveState::Stop;
 
 		Damage();
 	}
