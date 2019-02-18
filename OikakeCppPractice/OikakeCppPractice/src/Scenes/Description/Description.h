@@ -75,6 +75,4 @@ private:
 	bool isEnd;
 
 	bool drawtex = true;
-
-	int sh = 0;
 };

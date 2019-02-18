@@ -23,8 +23,6 @@ void Player::OnInitialize()
 	//target_position = Input::GetInstance().GetMapDistanceMove_Pad1(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y);
 	position = target_position - Vector2(0.0f, 80.0f);
 	firstDraw = true;
-
-
 }
 
 void Player::OnFirstUpdate(float deltaTime)
@@ -140,13 +138,9 @@ void Player::OnDraw(Renderer & renderer)
 		{
 		case Character::Ninja:
 			renderer.DrawTexture(Assets::Texture::Ninja_Icon, Vector2(0, 0));
-			if (firstDraw)
+			for (int i = 0; i < hp; i++)
 			{
-				renderer.DrawTexture(Assets::Texture::Ninja, position);
-				if (movement.Length() == 1)
-				{
-					firstDraw = false;
-				}
+				renderer.DrawTexture(Assets::Texture::Ninja_point, Vector2(30,190 + 80*i));
 			}
 
 			switch (direction)
@@ -171,13 +165,9 @@ void Player::OnDraw(Renderer & renderer)
 
 		case Character::Kinniku:
 			renderer.DrawTexture(Assets::Texture::Kinniku_Icon, Vector2(0, 0));
-			if (firstDraw)
+			for (int i = 0; i < hp; i++)
 			{
-				renderer.DrawTexture(Assets::Texture::Kinniku, position);
-				if (movement.Length() == 1)
-				{
-					firstDraw = false;
-				}
+				renderer.DrawTexture(Assets::Texture::Kinniku_point, Vector2(30, 190 + 80 * i));
 			}
 
 			switch (direction)
@@ -199,13 +189,9 @@ void Player::OnDraw(Renderer & renderer)
 
 		case Character::Yoroi:
 			renderer.DrawTexture(Assets::Texture::Yoroi_Icon, Vector2(0, 0));
-			if (firstDraw)
+			for (int i = 0; i < hp; i++)
 			{
-				renderer.DrawTexture(Assets::Texture::Yoroi, position);
-				if (movement.Length() == 1)
-				{
-					firstDraw = false;
-				}
+				renderer.DrawTexture(Assets::Texture::Yoroi_point, Vector2(30, 190 + 80 * i));
 			}
 
 			switch (direction)
@@ -228,13 +214,9 @@ void Player::OnDraw(Renderer & renderer)
 
 		case Character::Kakutouka:
 			renderer.DrawTexture(Assets::Texture::Kakutouka_Icon, Vector2(0, 0));
-			if (firstDraw)
+			for (int i = 0; i < hp; i++)
 			{
-				renderer.DrawTexture(Assets::Texture::Kakutouka, position);
-				if (movement.Length() == 1)
-				{
-					firstDraw = false;
-				}
+				renderer.DrawTexture(Assets::Texture::Kakutouka_point, Vector2(30, 190 + 80 * i));
 			}
 
 			switch (direction)

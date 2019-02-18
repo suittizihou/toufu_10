@@ -84,7 +84,4 @@ private:
 	bool checkGameEnd{};
 	// 現在選ばれているメニューの番号を入れるよう
 	int select{};
-
-	//BGMようサウンドハンドル
-	int bgmSh{};
 };

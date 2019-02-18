@@ -39,10 +39,6 @@ void Result::Initialize()
 	world->Initialize();
 	world->AddActor_Back(ActorGroup::UI, std::make_shared<ResultMenu>(world.get()));
 	world->AddActor_Back(ActorGroup::UI, std::make_shared<ResultCharacter>(world.get()));
-
-	bgmSh = LoadSoundMem("asset/BGM&SE/result_bgm.mp3");
-
-	PlaySoundMem(bgmSh, DX_PLAYTYPE_LOOP);
 }
 
 void Result::FirstUpdate(float deltaTime)

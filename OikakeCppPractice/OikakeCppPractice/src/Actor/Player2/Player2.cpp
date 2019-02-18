@@ -131,13 +131,9 @@ void Player2::OnDraw(Renderer & renderer)
 	{
 		case Character::Ninja:
 			renderer.DrawTexture(Assets::Texture::Ninja_Icon2, Vector2(0, 0));
-			if (firstDraw)
+			for (int i = 0; i < hp; i++)
 			{
-				renderer.DrawTexture(Assets::Texture::Ninja, position);
-				if (movement.Length() == 1)
-				{
-					firstDraw = false;
-				}
+				renderer.DrawTexture(Assets::Texture::Ninja_point, Vector2(1155, 480 - 80 * i));
 			}
 
 			switch (direction)
@@ -162,13 +158,9 @@ void Player2::OnDraw(Renderer & renderer)
 
 		case Character::Kinniku:
 			renderer.DrawTexture(Assets::Texture::Kinniku_Icon2, Vector2(0, 0));
-			if (firstDraw)
+			for (int i = 0; i < hp; i++)
 			{
-				renderer.DrawTexture(Assets::Texture::Kinniku, position);
-				if (movement.Length() == 1)
-				{
-					firstDraw = false;
-				}
+				renderer.DrawTexture(Assets::Texture::Kinniku_point, Vector2(1155, 480 - 80 * i));
 			}
 
 			switch (direction)
@@ -190,13 +182,9 @@ void Player2::OnDraw(Renderer & renderer)
 
 		case Character::Yoroi:
 			renderer.DrawTexture(Assets::Texture::Yoroi_Icon2, Vector2(0, 0));
-			if (firstDraw)
+			for (int i = 0; i < hp; i++)
 			{
-				renderer.DrawTexture(Assets::Texture::Yoroi, position);
-				if (movement.Length() == 1)
-				{
-					firstDraw = false;
-				}
+				renderer.DrawTexture(Assets::Texture::Yoroi_point, Vector2(1155, 480 - 80 * i));
 			}
 
 			switch (direction)
@@ -219,13 +207,9 @@ void Player2::OnDraw(Renderer & renderer)
 
 		case Character::Kakutouka:
 			renderer.DrawTexture(Assets::Texture::Kakutouka_Icon2, Vector2(0, 0));
-			if (firstDraw)
+			for (int i = 0; i < hp; i++)
 			{
-				renderer.DrawTexture(Assets::Texture::Kakutouka, position);
-				if (movement.Length() == 1)
-				{
-					firstDraw = false;
-				}
+				renderer.DrawTexture(Assets::Texture::Kakutouka_point, Vector2(1155, 480 - 80 * i));
 			}
 
 			switch (direction)
