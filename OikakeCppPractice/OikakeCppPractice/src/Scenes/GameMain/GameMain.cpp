@@ -158,7 +158,10 @@ void GameMain::Initialize() {
 			++i;
 	}
 
+	volume = 150;
+
 	bgmSh = LoadSoundMem("asset/BGM&SE/gameplay_bgm.mp3");
+	ChangeVolumeSoundMem(volume, bgmSh);
 
 	PlaySoundMem(bgmSh, DX_PLAYTYPE_LOOP);
 
@@ -266,6 +269,7 @@ Scene GameMain::Next() const {
 void GameMain::Finalize() {
 	world->Finalize();
 	renderer.Clear();
+	StopSoundMem(bgmSh);
 }
 
 void GameMain::HandleMessage(EventMessage message, void * param)

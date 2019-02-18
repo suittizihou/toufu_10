@@ -96,4 +96,5 @@ private:
 	int toufu_spone_limit{ 300 };
 
 	int bgmSh{};
+	int volume{};
 };

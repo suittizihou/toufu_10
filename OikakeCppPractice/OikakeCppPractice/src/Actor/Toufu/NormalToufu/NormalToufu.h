@@ -61,6 +61,7 @@ private:
 
 	//サウンドハンドル
 	int dropSh{};
+	int punchSh{};
 
 private:
 	Vector2 Average_Position(const Vector2& position);

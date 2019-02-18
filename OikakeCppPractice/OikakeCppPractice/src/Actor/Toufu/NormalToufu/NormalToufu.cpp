@@ -30,6 +30,7 @@ NormalToufu::~NormalToufu()
 void NormalToufu::OnInitialize()
 {
 	dropSh = LoadSoundMem("asset/BGM&SE/gameplay_drop_se.mp3");
+	punchSh = LoadSoundMem("asset/BGM&SE/gameplay_punch_se.mp3");
 }
 
 void NormalToufu::OnFirstUpdate(float deltaTime)
@@ -178,6 +179,7 @@ void NormalToufu::TopHitRiaction_1(const HitInfo& hitInfo)
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_K)) {
 					// ‰£‚ç‚ê
 					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
 				}
 			}
 		}
@@ -195,6 +197,7 @@ void NormalToufu::TopHitRiaction_1(const HitInfo& hitInfo)
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_K)) {
 					// ‰£‚ç‚ê
 					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
 				}
 			}
 		}
@@ -218,6 +221,7 @@ void NormalToufu::TopHitRiaction_2(const HitInfo& hitInfo)
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown2(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_2)) {
 					// ‰£‚ç‚ê
 					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
 				}
 			}
 		}
@@ -233,6 +237,7 @@ void NormalToufu::TopHitRiaction_2(const HitInfo& hitInfo)
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown2(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_2)) {
 					// ‰£‚ç‚ê
 					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
 				}
 			}
 		}
@@ -259,6 +264,7 @@ void NormalToufu::BottomHitRiaction_1(const HitInfo& hitInfo)
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_K)) {
 					// ‰£‚ç‚ê
 					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
 				}
 			}
 		}
@@ -275,6 +281,7 @@ void NormalToufu::BottomHitRiaction_1(const HitInfo& hitInfo)
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_K)) {
 					// ‰£‚ç‚ê
 					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
 				}
 			}
 		}
@@ -300,6 +307,7 @@ void NormalToufu::BottomHitRiaction_2(const HitInfo& hitInfo)
 			else if (Input::GetInstance().GetXBoxController().IsButtonDown2(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_2)) {
 				// ‰£‚ç‚ê
 				Damage(hitInfo);
+				PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
 			}
 		}
 		else {
@@ -314,6 +322,7 @@ void NormalToufu::BottomHitRiaction_2(const HitInfo& hitInfo)
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown2(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_2)) {
 					// ‰£‚ç‚ê
 					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
 				}
 			}
 		}
@@ -341,6 +350,7 @@ void NormalToufu::RightHitRiaction_1(const HitInfo& hitInfo)
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_K)) {
 					// ‰£‚ç‚ê
 					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
 				}
 			}
 		}
@@ -357,6 +367,7 @@ void NormalToufu::RightHitRiaction_1(const HitInfo& hitInfo)
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_K)) {
 					// ‰£‚ç‚ê
 					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
 				}
 			}
 		}
@@ -382,6 +393,7 @@ void NormalToufu::RightHitRiaction_2(const HitInfo& hitInfo)
 			else if (Input::GetInstance().GetXBoxController().IsButtonDown2(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_2)) {
 				// ‰£‚ç‚ê
 				Damage(hitInfo);
+				PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
 			}
 		}
 		else {
@@ -396,6 +408,7 @@ void NormalToufu::RightHitRiaction_2(const HitInfo& hitInfo)
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown2(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_2)) {
 					// ‰£‚ç‚ê
 					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
 				}
 			}
 		}
@@ -423,6 +436,7 @@ void NormalToufu::LeftHitRiaction_1(const HitInfo& hitInfo)
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_K)) {
 					// ‰£‚ç‚ê
 					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
 				}
 			}
 		}
@@ -439,6 +453,7 @@ void NormalToufu::LeftHitRiaction_1(const HitInfo& hitInfo)
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_K)) {
 					// ‰£‚ç‚ê
 					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
 				}
 			}
 		}
@@ -464,6 +479,7 @@ void NormalToufu::LeftHitRiaction_2(const HitInfo& hitInfo)
 			else if (Input::GetInstance().GetXBoxController().IsButtonDown2(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_2)) {
 				// ‰£‚ç‚ê
 				Damage(hitInfo);
+				PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
 			}
 		}
 		else {
@@ -478,6 +494,7 @@ void NormalToufu::LeftHitRiaction_2(const HitInfo& hitInfo)
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown2(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_2)) {
 					// ‰£‚ç‚ê
 					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
 				}
 			}
 		}
