@@ -59,6 +59,9 @@ private:
 
 	int hp{ 5 };	// 体力
 
+	//サウンドハンドル
+	int dropSh{};
+
 private:
 	Vector2 Average_Position(const Vector2& position);
 };

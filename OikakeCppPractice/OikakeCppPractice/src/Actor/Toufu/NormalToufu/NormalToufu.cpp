@@ -29,6 +29,7 @@ NormalToufu::~NormalToufu()
 
 void NormalToufu::OnInitialize()
 {
+	dropSh = LoadSoundMem("asset/BGM&SE/gameplay_drop_se.mp3");
 }
 
 void NormalToufu::OnFirstUpdate(float deltaTime)
@@ -37,6 +38,7 @@ void NormalToufu::OnFirstUpdate(float deltaTime)
 	// そこが穴なら自分は死んでノーマル豆腐のタイルにする
 	if (MapGenerater::check_hole(center_pos)) {
 		status = Status::Dead;
+		PlaySoundMem(dropSh, DX_PLAYTYPE_BACK);
 		MapGenerater::set_map_Texture(center_pos, Assets::Texture::NormalToufuTile);
 	}
 }
