@@ -94,4 +94,7 @@ private:
 
 	int random_toufu_time{};
 	int toufu_spone_limit{ 300 };
+
+	int bgmSh{};
+	int volume{};
 };

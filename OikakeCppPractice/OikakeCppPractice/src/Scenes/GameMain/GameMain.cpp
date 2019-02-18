@@ -50,7 +50,6 @@ void GameMain::LoadAssets()
 	renderer.LoadTexture(Assets::Texture::Ninja_Icon_Cry, "gameplay/player1_cara3B.png");
 	renderer.LoadTexture(Assets::Texture::Ninja_Icon2, "gameplay/player2_cara3A.png");
 	renderer.LoadTexture(Assets::Texture::Ninja_Icon_Cry2, "gameplay/player2_cara3B.png");
-	renderer.LoadTexture(Assets::Texture::Ninja_point, "gameplay/point2.png");
 	//‚±‚±‚Ü‚Å”EÒ
 
 	//‚±‚±‚©‚ç‹Ø“÷
@@ -64,7 +63,6 @@ void GameMain::LoadAssets()
 	renderer.LoadTexture(Assets::Texture::Kinniku_Icon_Cry, "gameplay/player1_cara1B.png");
 	renderer.LoadTexture(Assets::Texture::Kinniku_Icon2, "gameplay/player2_cara1A.png");
 	renderer.LoadTexture(Assets::Texture::Kinniku_Icon_Cry2, "gameplay/player2_cara1B.png");
-	renderer.LoadTexture(Assets::Texture::Kinniku_point, "gameplay/point.png");
 	//‚±‚±‚Ü‚Å‹Ø“÷
 
 	//‚±‚±‚©‚çŠZ
@@ -78,7 +76,6 @@ void GameMain::LoadAssets()
 	renderer.LoadTexture(Assets::Texture::Yoroi_Icon_Cry, "gameplay/player1_cara4B.png");
 	renderer.LoadTexture(Assets::Texture::Yoroi_Icon2, "gameplay/player2_cara4A.png");
 	renderer.LoadTexture(Assets::Texture::Yoroi_Icon_Cry2, "gameplay/player2_cara4B.png");
-	renderer.LoadTexture(Assets::Texture::Yoroi_point, "gameplay/point4.png");
 	//‚±‚±‚Ü‚ÅŠZ
 
 	//‚±‚±‚©‚çŠi“¬‰Æ
@@ -92,7 +89,6 @@ void GameMain::LoadAssets()
 	renderer.LoadTexture(Assets::Texture::Kakutouka_Icon_Cry, "gameplay/player1_cara2B.png");
 	renderer.LoadTexture(Assets::Texture::Kakutouka_Icon2, "gameplay/player2_cara2A.png");
 	renderer.LoadTexture(Assets::Texture::Kakutouka_Icon_Cry2, "gameplay/player2_cara2B.png");
-	renderer.LoadTexture(Assets::Texture::Kakutouka_point, "gameplay/point3.png");
 	//‚±‚±‚Ü‚ÅŠi“¬‰Æ
 
 	//renderer.LoadTexture(Assets::Texture::Player2, "player_atari.jpg");
@@ -161,6 +157,13 @@ void GameMain::Initialize() {
 			objNumber++;
 			++i;
 	}
+
+	volume = 150;
+
+	bgmSh = LoadSoundMem("asset/BGM&SE/gameplay_bgm.mp3");
+	ChangeVolumeSoundMem(volume, bgmSh);
+
+	PlaySoundMem(bgmSh, DX_PLAYTYPE_LOOP);
 
 	isEnd = false;
 
@@ -266,6 +269,7 @@ Scene GameMain::Next() const {
 void GameMain::Finalize() {
 	world->Finalize();
 	renderer.Clear();
+	StopSoundMem(bgmSh);
 }
 
 void GameMain::HandleMessage(EventMessage message, void * param)

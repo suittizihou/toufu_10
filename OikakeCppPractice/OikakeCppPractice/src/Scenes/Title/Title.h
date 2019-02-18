@@ -101,5 +101,7 @@ private:
 	int timeCount;
 
 	//サウンドハンドル
-	int sh;
+	int bgmSh;
+
+	int seSh;
 };

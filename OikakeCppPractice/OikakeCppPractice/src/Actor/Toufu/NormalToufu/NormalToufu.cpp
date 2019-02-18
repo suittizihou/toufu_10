@@ -10,8 +10,8 @@
 #include "../ToufuID.h"
 #include "Input/Input.h"
 
-NormalToufu::NormalToufu(IWorld * world, const Vector2 & position_, const int& _number)
-	: Actor2D(world, "SponeNormalToufu", position_, std::make_shared<Box>(Vector2(0, 57), Vector2(110, 120)), _number)//std::make_shared<Box>(Vector2(0, 57), Vector2(110, 120))
+NormalToufu::NormalToufu(IWorld* world, const Vector2& position_, const int& _number)
+	: Actor2D(world, "SponeNormalToufu", position_, std::make_shared<Box>(Vector2(0, 57), Vector2(110, 120)), _number)
 {
 	sponed_pos = position_;
 	actor_group = ActorGroup::NormalToufu;
@@ -29,6 +29,8 @@ NormalToufu::~NormalToufu()
 
 void NormalToufu::OnInitialize()
 {
+	dropSh = LoadSoundMem("asset/BGM&SE/gameplay_drop_se.mp3");
+	punchSh = LoadSoundMem("asset/BGM&SE/gameplay_punch_se.mp3");
 }
 
 void NormalToufu::OnFirstUpdate(float deltaTime)
@@ -43,6 +45,10 @@ void NormalToufu::OnFirstUpdate(float deltaTime)
 
 void NormalToufu::OnUpdate(float deltaTime)
 {
+	if (moveX != 0 || moveY != 0) {
+		target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, moveX, moveY) + Vector2(55, 30);
+	}
+
 	if (_move)
 	{
 		Move();
@@ -65,42 +71,38 @@ void NormalToufu::OnUpdate(float deltaTime)
 	if (spone_move == NormalToufuMove::SponeMoveStop && movement.Length() == 0.0f) {
 		name = "StopNormalToufu";
 	}
-	else if(spone_move == NormalToufuMove::SponeMoveStop) {
+	else if (spone_move == NormalToufuMove::SponeMoveStop) {
 		name = "NormalToufu";
 	}
+
 
 	//if (one_time_position.x == position.x && one_time_position.y == position.y) _move = false;
 
 	center_pos = Average_Position(position);
-
-	// 動いてるときはtrue
-	if (movement.x != 0 || movement.y != 0)
-	{
-		_move = true;
-	}
 }
 
 void NormalToufu::OnDraw(Renderer & renderer)
 {
 	renderer.DrawTexture(Assets::Texture::NormalToufu, position);
-	//DrawBox(position.x, position.y + 57, position.x + 110, position.y + 120, GetColor(0, 255, 0), TRUE);
+	DrawBox(position.x, position.y + 57, position.x + 110, position.y + 120, GetColor(0, 255, 0), TRUE);
 	//DrawPixel(target_pos.x, target_pos.y, GetColor(255, 0, 0));
 	DrawCircle(center_pos.x, center_pos.y, 5, GetColor(0, 0, 255));
-	if (name == "StopNormalToufu" || name == "NormalToutu") {
-		DrawFormatString(center_pos.x, center_pos.y, GetColor(255, 0, 0), name.c_str());
-	}
-	else {
+	if (name == "SponeNormalToufu") {
 		DrawFormatString(center_pos.x, center_pos.y, GetColor(255, 255, 0), name.c_str());
 	}
-	//DrawFormatString(0, 16, GetColor(255, 0, 0), "movement.x : %f, movement.y : %f", movement.x, movement.y);
-	//DrawFormatString(0, 32, GetColor(255, 0, 0), "move : %d", _move);
-	
+	else {
+		DrawFormatString(center_pos.x, center_pos.y, GetColor(0, 255, 255), name.c_str());
+	}
+	DrawCircle(target_pos.x, target_pos.y, 5, GetColor(255, 0, 0));
+	DrawFormatString(position.x, position.y, GetColor(255, 0, 0), "Length : %f", movement.Length());
+	DrawFormatString(0, 32, GetColor(255, 0, 0), "move : %d", _move);
+
 	//float test = GetDegree(MapGenerater::up_left_get_pos(5, 5), Average_Position());
 
 	//DrawFormatString(0, 96, GetColor(255, 0, 0), "agree : %f", test);
 }
 
-Vector2 NormalToufu::Average_Position(const Vector2& position) {
+Vector2 NormalToufu::Average_Position(const Vector2 & position) {
 	Vector2 pos{ position.x + position.x + 110, position.y + 57 + position.y + 120 };
 	return Vector2(pos.x / 2, pos.y / 2);
 }
@@ -109,19 +111,19 @@ void NormalToufu::OnFinalize()
 {
 }
 
-void NormalToufu::OnMessage(EventMessage message, void * param)
+void NormalToufu::OnMessage(EventMessage message, void* param)
 {
 }
 
 void NormalToufu::Move()
 {
-	if (toufu_hit) {
+	if (target_pos.Vector2::Distance(center_pos) <= 5.0f) {
 		movement = Vector2::Zero;
-		position = MapGenerater::get_near_pos(center_pos) - Vector2(-1, 56);
+		position = target_pos - Vector2(54, 87);
+		moveX = 0;
+		moveY = 0;
+		target_pos = Vector2::Zero;
 		_move = false;
-		kinniku_move = false;
-		name = "StopNormalToufu";
-		toufu_hit = false;
 	}
 	else {
 		position += movement;
@@ -133,12 +135,12 @@ bool NormalToufu::GetBoolMove()
 	return _move;
 }
 
-Vector2 Normalize(const Vector2& velocity) {
+Vector2 Normalize(const Vector2 & velocity) {
 	if (velocity.Length() == 0) { return velocity; }
 	return velocity / Math::SquareRoot(velocity.x * velocity.x + velocity.y * velocity.y);
 }
 
-void NormalToufu::Damage(const HitInfo& hitInfo) {
+void NormalToufu::Damage(const HitInfo & hitInfo) {
 	if (hitInfo.collideActor->GetCharacter() == Character::Kakutouka) {
 		hp -= 2;
 	}
@@ -149,11 +151,11 @@ void NormalToufu::Damage(const HitInfo& hitInfo) {
 	if (hp <= 0) {
 		MapGenerater::set_map_toufu(Average_Position(position), ToufuID::None);
 		status = Status::Dead;
-	}	
+	}
 }
 
 // 上に当たっているとき
-void NormalToufu::TopHitRiaction_1(const HitInfo& hitInfo)
+void NormalToufu::TopHitRiaction_1(const HitInfo & hitInfo)
 {
 	if (TopHit(hitInfo.collideActor->GetCenterPosition(), Average_Position(position))) {
 		// 鎧豆腐じゃない時
@@ -164,42 +166,40 @@ void NormalToufu::TopHitRiaction_1(const HitInfo& hitInfo)
 				if (Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_J)) {
 
 					// 行きたい座標				 -						// 自分の今の座標
-					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, 0, 1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
-					//target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, 0, 1) + Vector2(55, 30);
-
-					// 筋肉豆腐に押されたならtrue
-					if (hitInfo.collideActor->GetCharacter() == Character::Kinniku) {
-						
-						kinniku_move = true; 
-					}
+					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 0, 1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
+					moveX = 0;
+					moveY = 1;
 				}
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_K)) {
 					// 殴られ
 					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
 				}
 			}
 		}
 		else {
-			if ((Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::Dpad_Down) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_S)) || 
+			if ((Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::Dpad_Down) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_S)) ||
 				(Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_H))) {
 				// Aボタン || Jボタンで押す || Xボタン || Hボタンで押す(鎧豆腐の必殺技用)
-				if (Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_J) || 
+				if (Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_J) ||
 					Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_H)) {
 
 					// 行きたい座標				 -						// 自分の今の座標
-					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, 0, 1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
-					//target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, 0, 1) + Vector2(55, 30);
+					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 0, 1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
+					moveX = 0;
+					moveY = 1;
 				}
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_K)) {
 					// 殴られ
 					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
 				}
 			}
 		}
 	}
 }
 
-void NormalToufu::TopHitRiaction_2(const HitInfo& hitInfo)
+void NormalToufu::TopHitRiaction_2(const HitInfo & hitInfo)
 {
 	if (TopHit(hitInfo.collideActor->GetCenterPosition(), Average_Position(position))) {
 		// 鎧豆腐じゃない時
@@ -207,15 +207,14 @@ void NormalToufu::TopHitRiaction_2(const HitInfo& hitInfo)
 			if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::Dpad_Down) ||
 				Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_DOWN)) {
 				if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1)) {
-					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, 0, 1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
-					//target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, 0, 1) + Vector2(55, 30);
-				
-					// 筋肉豆腐に押されたならtrue
-					if (hitInfo.collideActor->GetCharacter() == Character::Kinniku) { kinniku_move = true; }
+					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 0, 1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
+					moveX = 0;
+					moveY = 1;
 				}
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown2(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_2)) {
 					// 殴られ
 					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
 				}
 			}
 		}
@@ -223,14 +222,16 @@ void NormalToufu::TopHitRiaction_2(const HitInfo& hitInfo)
 			if ((Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::Dpad_Down) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_DOWN) ||
 				(Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_3)))) {
 				// Aボタン || 1ボタンで押す || Xボタン || 3ボタンで押す(鎧豆腐の必殺技用)
-				if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1) || 
+				if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1) ||
 					Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_3)) {
-					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, 0, 1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
-					//target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, 0, 1) + Vector2(55, 30);
+					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 0, 1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
+					moveX = 0;
+					moveY = 1;
 				}
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown2(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_2)) {
 					// 殴られ
 					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
 				}
 			}
 		}
@@ -238,7 +239,7 @@ void NormalToufu::TopHitRiaction_2(const HitInfo& hitInfo)
 }
 
 // 下に当たっているとき
-void NormalToufu::BottomHitRiaction_1(const HitInfo& hitInfo)
+void NormalToufu::BottomHitRiaction_1(const HitInfo & hitInfo)
 {
 	if (BottomHit(hitInfo.collideActor->GetCenterPosition(), Average_Position(position))) {
 		// 鎧じゃない時
@@ -247,16 +248,15 @@ void NormalToufu::BottomHitRiaction_1(const HitInfo& hitInfo)
 				Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_W)) {
 				if (Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_J)) {
 
-					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, 0, -1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
-					//target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, 0, -1) + Vector2(55, 30);
-				
-					// 筋肉豆腐に押されたならtrue
-					if (hitInfo.collideActor->GetCharacter() == Character::Kinniku) { kinniku_move = true; }
+					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 0, -1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
+					moveX = 0;
+					moveY = -1;
 				}
 
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_K)) {
 					// 殴られ
 					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
 				}
 			}
 		}
@@ -264,22 +264,24 @@ void NormalToufu::BottomHitRiaction_1(const HitInfo& hitInfo)
 			if ((Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::Dpad_Up) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_W)) ||
 				(Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_H))) {
 				// Aボタン || Jボタンで押す || Xボタン || Hボタンで押す(鎧豆腐の必殺技用)
-				if (Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_J) || 
+				if (Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_J) ||
 					Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_H)) {
 
-					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, 0, -1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
-					//target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, 0, -1) + Vector2(55, 30);
+					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 0, -1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
+					moveX = 0;
+					moveY = -1;
 				}
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_K)) {
 					// 殴られ
 					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
 				}
 			}
 		}
 	}
 }
 
-void NormalToufu::BottomHitRiaction_2(const HitInfo& hitInfo)
+void NormalToufu::BottomHitRiaction_2(const HitInfo & hitInfo)
 {
 	// 下に当たっているとき
 	if (BottomHit(hitInfo.collideActor->GetCenterPosition(), Average_Position(position))) {
@@ -288,30 +290,32 @@ void NormalToufu::BottomHitRiaction_2(const HitInfo& hitInfo)
 			if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::Dpad_Up) ||
 				Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_UP)) {
 				if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1)) {
-					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, 0, -1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
-					//target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, 0, 1) + Vector2(55, 30);
-				
-					// 筋肉豆腐に押されたならtrue
-					if (hitInfo.collideActor->GetCharacter() == Character::Kinniku) { kinniku_move = true; }
+					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 0, -1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
+					moveX = 0;
+					moveY = -1;
 				}
-			}
-			else if (Input::GetInstance().GetXBoxController().IsButtonDown2(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_2)) {
-				// 殴られ
-				Damage(hitInfo);
+			
+				else if (Input::GetInstance().GetXBoxController().IsButtonDown2(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_2)) {
+					// 殴られ
+					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
+				}
 			}
 		}
 		else {
 			if ((Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::Dpad_Up) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_UP) ||
 				(Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_3)))) {
 				// Aボタン || 1ボタンで押す || Xボタン || 3ボタンで押す(鎧豆腐の必殺技用)
-				if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1) || 
+				if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1) ||
 					Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_3)) {
-					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, 0, -1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
-					//target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, 0, 1) + Vector2(55, 30);
+					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 0, -1) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
+					moveX = 0;
+					moveY = -1;
 				}
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown2(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_2)) {
 					// 殴られ
 					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
 				}
 			}
 		}
@@ -319,7 +323,7 @@ void NormalToufu::BottomHitRiaction_2(const HitInfo& hitInfo)
 }
 
 // 右に当たっているとき
-void NormalToufu::RightHitRiaction_1(const HitInfo& hitInfo)
+void NormalToufu::RightHitRiaction_1(const HitInfo & hitInfo)
 {
 	// 右に当たっているとき
 	if (RightHit(hitInfo.collideActor->GetCenterPosition(), Average_Position(position))) {
@@ -329,16 +333,15 @@ void NormalToufu::RightHitRiaction_1(const HitInfo& hitInfo)
 				Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_A)) {
 				if (Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_J)) {
 
-					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, -1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
-					//target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, -1, 0) + Vector2(55, 30);
-				
-					// 筋肉豆腐に押されたならtrue
-					if (hitInfo.collideActor->GetCharacter() == Character::Kinniku) { kinniku_move = true; }
+					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, -1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
+					moveX = -1;
+					moveY = 0;
 				}
 
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_K)) {
 					// 殴られ
 					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
 				}
 			}
 		}
@@ -346,22 +349,24 @@ void NormalToufu::RightHitRiaction_1(const HitInfo& hitInfo)
 			if ((Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::Dpad_Left) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_A)) ||
 				(Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_H))) {
 				// Aボタン || Jボタンで押す || Xボタン || Hボタンで押す(鎧豆腐の必殺技用)
-				if (Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_J) || 
+				if (Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_J) ||
 					Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_H)) {
 
-					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, -1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
-					//target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, -1, 0) + Vector2(55, 30);
+					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, -1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
+					moveX = -1;
+					moveY = 0;
 				}
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_K)) {
 					// 殴られ
 					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
 				}
 			}
 		}
 	}
 }
 
-void NormalToufu::RightHitRiaction_2(const HitInfo& hitInfo)
+void NormalToufu::RightHitRiaction_2(const HitInfo & hitInfo)
 {
 	// 右に当たっているとき
 	if (RightHit(hitInfo.collideActor->GetCenterPosition(), Average_Position(position))) {
@@ -370,30 +375,33 @@ void NormalToufu::RightHitRiaction_2(const HitInfo& hitInfo)
 			if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::Dpad_Left) ||
 				Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_LEFT)) {
 				if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1)) {
-					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, -1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
-					//target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, -1, 0) + Vector2(55, 30);
-
-					// 筋肉豆腐に押されたならtrue
-					if (hitInfo.collideActor->GetCharacter() == Character::Kinniku) { kinniku_move = true; }
+					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, -1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
+					moveX = -1;
+					moveY = 0;
 				}
-			}
-			else if (Input::GetInstance().GetXBoxController().IsButtonDown2(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_2)) {
-				// 殴られ
-				Damage(hitInfo);
+			
+				else if (Input::GetInstance().GetXBoxController().IsButtonDown2(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_2)) {
+					// 殴られ
+					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
+
+				}
 			}
 		}
 		else {
 			if ((Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::Dpad_Left) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_LEFT) ||
 				(Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_3)))) {
 				// Aボタン || 1ボタンで押す || Xボタン || 3ボタンで押す(鎧豆腐の必殺技用)
-				if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1) || 
+				if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1) ||
 					Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_3)) {
-					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, -1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
-					//target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, -1, 0) + Vector2(55, 30);
+					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, -1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
+					moveX = -1;
+					moveY = 0;
 				}
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown2(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_2)) {
 					// 殴られ
 					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
 				}
 			}
 		}
@@ -402,7 +410,7 @@ void NormalToufu::RightHitRiaction_2(const HitInfo& hitInfo)
 
 
 // 左に当たっているとき
-void NormalToufu::LeftHitRiaction_1(const HitInfo& hitInfo)
+void NormalToufu::LeftHitRiaction_1(const HitInfo & hitInfo)
 {
 	// 左に当たっているとき
 	if (LeftHit(hitInfo.collideActor->GetCenterPosition(), Average_Position(position))) {
@@ -412,15 +420,14 @@ void NormalToufu::LeftHitRiaction_1(const HitInfo& hitInfo)
 				Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_D)) {
 				if (Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_J)) {
 
-					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, 1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
-					//target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, 1, 0) + Vector2(55, 30);
-
-					// 筋肉豆腐に押されたならtrue
-					if (hitInfo.collideActor->GetCharacter() == Character::Kinniku) { kinniku_move = true; }
+					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
+					moveX = 1;
+					moveY = 0;
 				}
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_K)) {
 					// 殴られ
 					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
 				}
 			}
 		}
@@ -428,22 +435,24 @@ void NormalToufu::LeftHitRiaction_1(const HitInfo& hitInfo)
 			if ((Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::Dpad_Right) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_D)) ||
 				(Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_H))) {
 				// Aボタン || Jボタンで押す || Xボタン || Hボタンで押す(鎧豆腐の必殺技用)
-				if (Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_J) || 
+				if (Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_J) ||
 					Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_H)) {
 
-					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, 1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
-					//target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, 1, 0) + Vector2(55, 30);
+					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
+					moveX = 1;
+					moveY = 0;
 				}
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_K)) {
 					// 殴られ
 					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
 				}
 			}
 		}
 	}
 }
 
-void NormalToufu::LeftHitRiaction_2(const HitInfo& hitInfo)
+void NormalToufu::LeftHitRiaction_2(const HitInfo & hitInfo)
 {
 	// 左に当たっているとき
 	if (LeftHit(hitInfo.collideActor->GetCenterPosition(), Average_Position(position))) {
@@ -452,16 +461,16 @@ void NormalToufu::LeftHitRiaction_2(const HitInfo& hitInfo)
 			if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::Dpad_Right) ||
 				Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_RIGHT)) {
 				if (Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1)) {
-					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, 1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
-					//target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, 1, 0) + Vector2(55, 30);
+					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
+					moveX = 1;
+					moveY = 0;
 
-					// 筋肉豆腐に押されたならtrue
-					if (hitInfo.collideActor->GetCharacter() == Character::Kinniku) { kinniku_move = true; }
 				}
-			}
-			else if (Input::GetInstance().GetXBoxController().IsButtonDown2(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_2)) {
-				// 殴られ
-				Damage(hitInfo);
+				else if (Input::GetInstance().GetXBoxController().IsButtonDown2(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_2)) {
+					// 殴られ
+					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
+				}
 			}
 		}
 		else {
@@ -470,17 +479,20 @@ void NormalToufu::LeftHitRiaction_2(const HitInfo& hitInfo)
 				// Aボタン || 1ボタンで押す || Xボタン || 3ボタンで押す(鎧豆腐の必殺技用)
 				if ((Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::A) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_1) ||
 					(Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::X) || Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_3)))) {
-					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, 1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
-					//target_pos = Input::GetInstance().PlayerHitToufuMove(center_pos, hitInfo, 1, 0) + Vector2(55, 30);
+					movement = Normalize(Input::GetInstance().PlayerHitToufuMove(center_pos, 1, 0) - MapGenerater::up_left_get_pos(center_pos)) * hitInfo.collideActor->GetSpeed();
+					moveX = 1;
+					moveY = 0;
 				}
 				else if (Input::GetInstance().GetXBoxController().IsButtonDown2(XboxGamePad::B) || Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_2)) {
 					// 殴られ
 					Damage(hitInfo);
+					PlaySoundMem(punchSh, DX_PLAYTYPE_BACK);
 				}
 			}
 		}
 	}
 }
+
 
 void NormalToufu::OnCollide(const HitInfo & hitInfo)
 {
@@ -489,16 +501,13 @@ void NormalToufu::OnCollide(const HitInfo & hitInfo)
 		return;
 	}
 
-	// 筋肉豆腐に押されてない && 動いてない豆腐に当たった時
-	if (!kinniku_move && hitInfo.collideActor->GetName() == "StopNormalToufu") {
-		movement = Vector2::Zero;
-	}
-
-	// 豆腐ムーブがtrueになっているものに当たった時そのもののtarget_posを移し替える
-	if (hitInfo.collideActor->GetKinnikuMove()) {
-
-		// 相手の豆腐のムーブメントを自分に入れる
-		movement = hitInfo.collideActor->GetMovement();
+	// 豆腐と豆腐が衝突した関連
+	if (name != "SponeNormalToufu") {
+		if (hitInfo.collideActor->GetName() == "NormalToufu" || hitInfo.collideActor->GetName() == "StopNormalToufu")
+		{
+			//MapGenerater::set_map_toufu(Average_Position(position), ToufuID::None);
+			//status = Status::Dead;
+		}
 	}
 
 	// 押す処理関連
@@ -514,14 +523,19 @@ void NormalToufu::OnCollide(const HitInfo & hitInfo)
 
 			// 右に当たっているとき
 			RightHitRiaction_1(hitInfo);
-			
+
 			// 左に当たっているとき
 			LeftHitRiaction_1(hitInfo);
+
+			if (movement.x != 0 || movement.y != 0)
+			{
+				_move = true;
+			}
 		}
 		else if (/*hitInfo.collideActor->GetName() == "player" && */hitInfo.collideActor->GetControllerType() == DX_INPUT_PAD2 && !_move)
 		{// プレイヤー２用
 
-			// 上に当たっているとき
+						// 上に当たっているとき
 			TopHitRiaction_2(hitInfo);
 
 			// 下に当たっているとき
@@ -532,28 +546,10 @@ void NormalToufu::OnCollide(const HitInfo & hitInfo)
 
 			// 左に当たっているとき
 			LeftHitRiaction_2(hitInfo);
-		}
-	}
 
-	// 豆腐と豆腐が衝突した関連
-	if (name != "SponeNormalToufu" || hitInfo.collideActor->GetName() != "SponeNormalToufu") {
-		// 筋肉豆腐に押された豆腐の場合
-		if (kinniku_move) {
-			if (hitInfo.collideActor->GetName() == "NormalToufu" || hitInfo.collideActor->GetName() == "StopNormalToufu" || hitInfo.collideActor->GetName() == "MetalToufu")
+			if (movement.x != 0 || movement.y != 0)
 			{
-				float x = Math::Clamp(movement.x, -1.0f, 1.0f);
-				float y = Math::Clamp(movement.x, -1.0f, 1.0f);
-				// 豆腐に触れている間二マス先の場所をチェックして豆腐があったら止まる || 相手がMetal豆腐なら止まる
-				if (MapGenerater::check_toufu(center_pos, (x + x), (y + y)) || MapGenerater::get_toufu_id(center_pos, x, y) == ToufuID::Metal) {
-					toufu_hit = true;
-				}
-			}
-		} // そうじゃない場合
-		else {
-			float x = Math::Clamp(movement.x, -1.0f, 1.0f);
-			float y = Math::Clamp(movement.x, -1.0f, 1.0f);
-			if (MapGenerater::check_toufu(center_pos, x, y)) {
-				toufu_hit = true;
+				_move = true;
 			}
 		}
 	}
@@ -679,34 +675,34 @@ bool NormalToufu::T_B_Hit(Vector2 targetposition, Vector2 thisposition)
 {
 	return TopHit(targetposition, thisposition) || BottomHit(targetposition, thisposition);
 }
-float NormalToufu::LeftUpDegree(){
+float NormalToufu::LeftUpDegree() {
 
 	//左上
 		// 自身を基準としたターゲットオブジェクトが当たる可能性があるであろう一番左上の座標
-		Vector2 targetLeftUpPos = Vector2(position.x - (112 / 2 + 110 / 2), position.y + (74 / 2 + 63 / 2));
+	Vector2 targetLeftUpPos = Vector2(position.x - (112 / 2 + 110 / 2), position.y + (74 / 2 + 63 / 2));
 
-		Vector2 dif = targetLeftUpPos - Vector2(position.x, position.y);
+	Vector2 dif = targetLeftUpPos - Vector2(position.x, position.y);
 
-		// ラジアンを求める
-		float radian = Math::ArcTan(dif.y, dif.x);
+	// ラジアンを求める
+	float radian = Math::ArcTan(dif.y, dif.x);
 
-		// ラジアンを角度に変換
-		float degree = radian * Math::toDegree;
+	// ラジアンを角度に変換
+	float degree = radian * Math::toDegree;
 
-		// 角度を返す
-		return degree;
+	// 角度を返す
+	return degree;
 
 }
-float NormalToufu::RightUpDegree(){
+float NormalToufu::RightUpDegree() {
 	//右上
 		// 自身を基準としたターゲットオブジェクトが当たる可能性があるであろう一番右上の座標
-		Vector2 targetRightUpPos = Vector2(position.x + (112 / 2 + 110 / 2), position.y + (74 / 2 + 63 / 2));
+	Vector2 targetRightUpPos = Vector2(position.x + (112 / 2 + 110 / 2), position.y + (74 / 2 + 63 / 2));
 
-		Vector2 dif = targetRightUpPos - Vector2(position.x, position.y);
+	Vector2 dif = targetRightUpPos - Vector2(position.x, position.y);
 
-		float radian = Math::ArcTan(dif.y, dif.x);
+	float radian = Math::ArcTan(dif.y, dif.x);
 
-		float degree = radian * Math::toDegree;
+	float degree = radian * Math::toDegree;
 
-		return degree;
+	return degree;
 }

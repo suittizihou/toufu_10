@@ -44,8 +44,9 @@ void Title::Initialize()
 	alpha = 0;
 	timeCount = 0;
 	flashStart = true;
-	sh = LoadSoundMem("asset/BGM&SE/title_bgm.MP3");
-	PlaySoundMem(sh, DX_PLAYTYPE_LOOP, true);
+	bgmSh = LoadSoundMem("asset/BGM&SE/title_bgm.MP3");
+	seSh = LoadSoundMem("asset/BGM&SE/title_se.mp3");
+	PlaySoundMem(bgmSh, DX_PLAYTYPE_LOOP);
 	noneOperation = false;
 }
 
@@ -59,17 +60,20 @@ void Title::Update(float deltaTime)
 
 	if ((Input::GetInstance().GetKeyBoard().IsDown(KEY_INPUT_SPACE) || Input::GetInstance().GetXBoxController().IsButtonDown(XboxGamePad::Start)) && 
 		 animeCount == 5) {
- 		isEnd = true;
-		StopSoundMem(sh);
+		PlaySoundMem(seSh, DX_PLAYTYPE_BACK);
+		isEnd = true;
+		StopSoundMem(bgmSh);
 	}
 	
 	if (timeCount == 600) {
 		noneOperation = true;
 		isEnd = true;
-		StopSoundMem(sh);
 	}
 
 	if (animeCount == 5) {
+		if (timeCount < 1) {
+			
+		}
 		timeCount += 1;
 	}
 
@@ -110,6 +114,7 @@ Scene Title::Next() const
 
 void Title::Finalize()
 {
+	StopSoundMem(bgmSh);
 	renderer.Clear();
 }
 

@@ -21,6 +21,7 @@ void Player::OnInitialize()
 { 
 	target_position = Input::GetInstance().GetMapDistanceMove_WASD(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y);
 	//target_position = Input::GetInstance().GetMapDistanceMove_Pad1(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y);
+	target_position = Input::GetInstance().GetMapDistanceMove_WASD(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y);
 	position = target_position - Vector2(0.0f, 80.0f);
 	firstDraw = true;
 }
@@ -39,12 +40,14 @@ void Player::OnUpdate(float deltaTime)
 		//target_position = Input::GetInstance().GetMapDistanceMove_Pad1(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y) - Vector2(0.0f, 80.0f);	
 		if ((target_position.x != previous_target_position.x) || (target_position.y != previous_target_position.y)) {move_state = MoveState::Move;}
 	}
+
 	if (move_state == MoveState::Stop)
 	{
 		if (Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_S))
 		{
 			bool aa = MapGenerater::check_toufu(center_pos, 0, 1);
-			if (aa&&GetCharacter()== Character::Ninja) { direction = 0; }else { direction = 1; }
+			if (aa&&GetCharacter()== Character::Ninja) { direction = 0; }
+			else { direction = 1; }
 		}
 		if (Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_W))
 		{
@@ -59,9 +62,10 @@ void Player::OnUpdate(float deltaTime)
 			direction = 4;
 		}
 	}
-	velocity = target_position - position;
+
 
 	if (move_state == MoveState::Move) {
+		velocity = target_position - position;
 		if (velocity.Length() != 0) {
 			// 正規化(Normalizeにバグあり)
 			velocity = velocity / Math::SquareRoot(velocity.x * velocity.x + velocity.y * velocity.y);
@@ -211,7 +215,6 @@ void Player::OnDraw(Renderer & renderer)
 			}
 			break;
 
-
 		case Character::Kakutouka:
 			renderer.DrawTexture(Assets::Texture::Kakutouka_Icon, Vector2(0, 0));
 			for (int i = 0; i < hp; i++)
@@ -273,7 +276,7 @@ void Player::Damage() {
 	--hp;
 	// プレイヤーのhpをセット
 	PlayerManager::SetP1Hp(hp, GetCharacter());
-	
+
 	if (hp <= 0) {
 		world->SendEventMessage(EventMessage::PlayerDead);
 		status = Status::Dead;
@@ -283,9 +286,12 @@ void Player::Damage() {
 		int y = rand.Range(0, 7);
 		// 豆腐が無かったら生成
 		if (!MapGenerater::check_toufu(x, y)) {
-			position = MapGenerater::up_left_get_pos(x, y);
+			movement = Vector2::Zero;
+			Vector2 respawn_position{ MapGenerater::up_left_get_pos(x, y) };
+			target_position = respawn_position;
+			position = respawn_position;
+			speed = 5.0f;
 		}
-
 	}
 }
 
@@ -299,9 +305,18 @@ void Player::OnCollide(const HitInfo & hitInfo)
 	toufu_hit = false;
 
 	if ((hitInfo.collideActor->GetName() == "StopNormalToufu" || hitInfo.collideActor->GetName() == "NormalToufu" || hitInfo.collideActor->GetName() == "MetalToufu")
-		&& hitInfo.collideActor->GetCenterPosition().Distance(center_pos) <= 66.0f) {
+		&& (hitInfo.collideActor->GetCenterPosition().Distance(center_pos) <= 66.0f)) {
 
-		Damage();
+		target_position = hitInfo.collideActor->GetTargetPosition() - Vector2(60.0f, 95.0f);
+		//movement = hitInfo.collideActor->GetMovement();
+		speed = 5.1f;
+		move_state = MoveState::Move;
+
+		// 豆腐の中心点と自分の中心点が60ドット以下なら
+		if (hitInfo.collideActor->GetCenterPosition().Distance(center_pos) <= 60.0f) {
+			// damage
+			Damage();
+		}
 	}
 
 	//if (hitInfo.collideActor->GetName() == "NormalToufu")

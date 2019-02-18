@@ -36,6 +36,7 @@ void Player2::OnUpdate(float deltaTime)
 		target_position = Input::GetInstance().GetMapDistanceMove_Arrow(MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y) - Vector2(0.0f, 80.0f);
 		if ((target_position.x != previous_target_position.x) || (target_position.y != previous_target_position.y)) { move_state = MoveState::Move; }
 	}
+
 	if (move_state == MoveState::Stop)
 	{
 		if (Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_S))
@@ -57,9 +58,9 @@ void Player2::OnUpdate(float deltaTime)
 			direction = 4;
 		}
 	}
-	velocity = target_position - position;
 
 	if (move_state == MoveState::Move) {
+		velocity = target_position - position;
 		if (velocity.Length() != 0) {
 			// 正規化(Normalizeにバグあり)
 			velocity = velocity / Math::SquareRoot(velocity.x * velocity.x + velocity.y * velocity.y);
@@ -274,25 +275,32 @@ void Player2::Damage() {
 		int y = rand.Range(0, 7);
 		// 豆腐が無かったら生成
 		if (!MapGenerater::check_toufu(x, y)) {
-			position = MapGenerater::up_left_get_pos(x, y);
 			movement = Vector2::Zero;
-			move_state = MoveState::Stop;
+			Vector2 respawn_position{ MapGenerater::up_left_get_pos(x, y) };
+			target_position = respawn_position;
+			position = respawn_position;
+			speed = 5.0f;
 		}
 	}
 }
 
 void Player2::OnCollide(const HitInfo & hitInfo)
 {
-	if (hitInfo.collideActor->GetName() == "NormalToufu") {
-		move_state = MoveState::Move;
-		movement = hitInfo.collideActor->GetMovement();
-	}
-
-	// 当たった豆腐がStopしてる豆腐、動いてる普通豆腐、鉄豆腐のどれかであり、かつ豆腐と自キャラの中心点との距離が66.0f以下である時ダメージを受ける
+	// 当たった豆腐がStopしてる豆腐、動いてる普通豆腐、鉄豆腐のどれかであり、かつ豆腐と自キャラの中心点との距離が66.0f以下である
 	if ((hitInfo.collideActor->GetName() == "StopNormalToufu" || hitInfo.collideActor->GetName() == "NormalToufu" || hitInfo.collideActor->GetName() == "MetalToufu")
-		&& hitInfo.collideActor->GetCenterPosition().Distance(center_pos) <= 66.0f) {
+		&& (hitInfo.collideActor->GetCenterPosition().Distance(center_pos) <= 66.0f)) {
 
-		Damage();
+		target_position = hitInfo.collideActor->GetTargetPosition() - Vector2(60.0f, 110.0f);
+		//movement = hitInfo.collideActor->GetMovement();
+		//velocity = hitInfo.collideActor->GetMovement();
+		speed = 5.1f;
+		move_state = MoveState::Move;
+
+		// 豆腐の中心点と自分の中心点が60ドット以下なら
+		if (hitInfo.collideActor->GetCenterPosition().Distance(center_pos) <= 55.0f) {
+			// damage
+			Damage();
+		}
 	}
 
 	//if (hitInfo.collideActor->GetName() == "NormalToufu")
