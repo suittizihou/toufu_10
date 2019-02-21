@@ -21,9 +21,19 @@ private:
 private:
 	void Damage();
 
+	float GetDegree(Vector2 targetposition, Vector2 thisposition);
+	bool TopHit(Vector2 targetposition, Vector2 thisposition);
+	bool BottomHit(Vector2 targetposition, Vector2 thisposition);
+	bool LeftHit(Vector2 targetposition, Vector2 thisposition);
+	bool RightHit(Vector2 targetposition, Vector2 thisposition);
+	bool L_R_Hit(Vector2 targetposition, Vector2 thisposition);
+	bool T_B_Hit(Vector2 targetposition, Vector2 thisposition);
+
 private:
-	float speed;
+	float default_speed{};
+	float speed{};
 	bool collision = false;
+	bool damage{};
 
 	Vector2 target_position{};
 	Vector2 previous_target_position{};

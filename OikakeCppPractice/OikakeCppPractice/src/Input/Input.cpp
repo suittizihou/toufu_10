@@ -501,13 +501,6 @@ Vector2 Input::PlayerHitToufuMove(const Vector2& center_pos, int map_chipX, int 
 		}
 	}
 
-	//if (x <= 0) {
-	//	x -= map_chipX;
-	//}
-	//if (y <= 0) {
-	//	y -= map_chipY;
-	//}
-
 	x = Math::Clamp(x, 0, 7);
 	y = Math::Clamp(y, 0, 7);
 

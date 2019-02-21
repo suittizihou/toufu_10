@@ -8,10 +8,17 @@
 
 
 Player2::Player2(IWorld * world, const Vector2 & position, const int& _number, const float _speed, int input_pad, Character chara)
-	: Actor2D(world, "player", position, std::make_shared<Box>(Vector2(-5, 75), Vector2(117, 149)), _number, _speed, input_pad, chara)
+	: Actor2D(world, "player", position, std::make_shared<Box>(Vector2(-5, 75), Vector2(117, 149)), _number, 5.0f, input_pad, chara)
 	, speed(_speed)
 {
 	actor_group = ActorGroup::Player2;
+
+	if (chara == Character::Kinniku) { default_speed = 5.0f; }
+	if (chara == Character::Kakutouka) { default_speed = 5.0f; }
+	if (chara == Character::Ninja) { default_speed = 6.0f; }
+	if (chara == Character::Yoroi) { default_speed = 3.0f; }
+
+	speed = default_speed;
 }
 
 Player2::~Player2()
@@ -239,7 +246,7 @@ void Player2::OnDraw(Renderer & renderer)
 	//DrawFormatString(0, 80, GetColor(255, 0, 0), "centerX:%f　centerY:%f", Average_Position().x, Average_Position().y);
 
 	//DrawFormatString(0, 16, GetColor(255, 0, 0), "Player2HP : %d", hp);
-	//DrawCircle(target_position.x, target_position.y, 3, GetColor(255, 0, 0));
+	DrawCircle(target_position.x, target_position.y, 3, GetColor(255, 0, 0));
 
 	//DrawBox(position.x - 5, position.y + 75, position.x + 117, position.y + 149, GetColor(255, 0, 0), TRUE);
 	//DrawPixel(Average_Position().x, Average_Position().y, GetColor(0, 255, 0));
@@ -264,7 +271,7 @@ void Player2::OnMessage(EventMessage message, void * param)
 void Player2::Damage() {
 	--hp;
 	// プレイヤーのhpをセット
-	PlayerManager::SetP1Hp(hp, GetCharacter());
+	PlayerManager::SetP2Hp(hp, GetCharacter());
 
 	if (hp <= 0) {
 		world->SendEventMessage(EventMessage::PlayerDead);
@@ -279,7 +286,9 @@ void Player2::Damage() {
 			Vector2 respawn_position{ MapGenerater::up_left_get_pos(x, y) };
 			target_position = respawn_position;
 			position = respawn_position;
-			speed = 5.0f;
+
+			speed = default_speed;
+			PlayerManager::SetP2Hp(hp, GetCharacter());
 		}
 	}
 }
@@ -290,75 +299,131 @@ void Player2::OnCollide(const HitInfo & hitInfo)
 	if ((hitInfo.collideActor->GetName() == "StopNormalToufu" || hitInfo.collideActor->GetName() == "NormalToufu" || hitInfo.collideActor->GetName() == "MetalToufu")
 		&& (hitInfo.collideActor->GetCenterPosition().Distance(center_pos) <= 66.0f)) {
 
-		target_position = hitInfo.collideActor->GetTargetPosition() - Vector2(60.0f, 110.0f);
-		//movement = hitInfo.collideActor->GetMovement();
-		//velocity = hitInfo.collideActor->GetMovement();
-		speed = 5.1f;
-		move_state = MoveState::Move;
+		////movement = hitInfo.collideActor->GetMovement();
+		////velocity = hitInfo.collideActor->GetMovement();
 
-		// 豆腐の中心点と自分の中心点が60ドット以下なら
-		if (hitInfo.collideActor->GetCenterPosition().Distance(center_pos) <= 55.0f) {
-			// damage
+		if (!damage) {
+			Vector2 temp{};
+			//velocity = Vector2::Zero;
+			if (TopHit(hitInfo.collideActor->GetCenterPosition(), center_pos)) {
+				temp = Vector2(position.x, position.y + 1000.0f);
+			}
+			else if (BottomHit(hitInfo.collideActor->GetCenterPosition(), center_pos)) {
+				temp = Vector2(position.x, position.y - 1000.0);
+			}
+			else if (RightHit(hitInfo.collideActor->GetCenterPosition(), center_pos)) {
+				//temp = Vector2(position.x - 1000.0f, position.y);
+				temp = hitInfo.collideActor->GetTargetPosition() - Vector2(60.0f, 110.0f);
+			}
+			else if (LeftHit(hitInfo.collideActor->GetCenterPosition(), center_pos)) {
+				temp = Vector2(position.x + 1000.0f, position.y);
+			}
+
+			target_position = temp/* - Vector2(112 / 2, 144 / 2)*/;
+			damage = true;
+			speed = 5.1f;
+			move_state = MoveState::Move;
+		}
+
+		// 豆腐の中心点と自分の中心点が50ドット以下なら
+		if (hitInfo.collideActor->GetCenterPosition().Distance(center_pos) <= 40.0f) {
+			// ダメージ
 			Damage();
+			damage = false;
 		}
 	}
-
-	//if (hitInfo.collideActor->GetName() == "NormalToufu")
-	//{
-	//	// エネミーの座標を入れる
-	//	Vector2 NormalToufu_pos = hitInfo.collideActor->GetVec2Position();
-
-	//	// 自分の座標Xよりエネミーの座標Xが大きい かつ 動きが-1以下なら
-	//	if (position.x < NormalToufu_pos.x && hitInfo.collideActor->GetMovement().x <= -1)
-	//	{
-	//		// 自分の座標に敵の移動量を加算
-	//		position += hitInfo.collideActor->GetMovement();
-
-	//		if (NormalToufu_pos.x - 187 < 113) {
-	//			int x = rand.Range(0, 7);
-	//			int y = rand.Range(0, 7);
-	//			// 豆腐が無かったら生成
-	//			if (!MapGenerater::check_toufu(x, y)) {
-	//				position = MapGenerater::up_left_get_pos(x, y);
-	//			}l
-	//		}
-	//	}
-	//	if (position.x > NormalToufu_pos.x&& hitInfo.collideActor->GetMovement().x >= 1) {
-	//		position += hitInfo.collideActor->GetMovement();
-	//		if (1016 - (NormalToufu_pos.x + 110) < 40) {
-	//			int x = rand.Range(0, 7);
-	//			int y = rand.Range(0, 7);
-	//			// 豆腐が無かったら生成
-	//			if (!MapGenerater::check_toufu(x, y)) {
-	//				position = MapGenerater::up_left_get_pos(x, y);
-	//			}
-	//		}
-	//	}
-	//	if (position.y < NormalToufu_pos.y&& hitInfo.collideActor->GetMovement().y <= -1)
-	//	{
-	//		position += hitInfo.collideActor->GetMovement();
-	//		if (NormalToufu_pos.y - 3 < 45) {
-	//			int x = rand.Range(0, 7);
-	//			int y = rand.Range(0, 7);
-	//			// 豆腐が無かったら生成
-	//			if (!MapGenerater::check_toufu(x, y)) {
-	//				position = MapGenerater::up_left_get_pos(x, y);
-	//			}
-	//		}
-	//	}
-	//	if (position.y > NormalToufu_pos.y&& hitInfo.collideActor->GetMovement().y >= 1)
-	//	{
-	//		position += hitInfo.collideActor->GetMovement();
-	//		if (508 - (NormalToufu_pos.y + 40) < 22) {
-	//			int x = rand.Range(0, 7);
-	//			int y = rand.Range(0, 7);
-	//			// 豆腐が無かったら生成
-	//			if (!MapGenerater::check_toufu(x, y)) {
-	//				position = MapGenerater::up_left_get_pos(x, y);
-	//			}
-	//		}
-	//	}
-
-	//}
 	world->SendEventMessage(EventMessage::Hit);
+}
+
+/// <summary>
+/// 自身を基準としたターゲットの中心点との角度
+/// </summary>
+/// <param name="targetPos">ターゲットオブジェクト</param>
+/// <param name="thisObject">自身</param>
+/// <returns></returns>
+float Player2::GetDegree(Vector2 targetposition, Vector2 thisposition)
+{
+	Vector2 dif = thisposition - targetposition;
+
+	float radian = std::atan2(dif.y, dif.x);
+
+	float degree = radian * Math::toDegree;
+
+	return -degree;
+}
+
+// 上に当たったか
+bool Player2::TopHit(Vector2 targetposition, Vector2 thisposition)
+{
+	float radian = std::atan2(thisposition.y - targetposition.y, thisposition.x - targetposition.x);
+	float degree = radian * Math::toDegree;
+
+	return degree >= 89.0f && degree <= 91.0f;
+}
+
+/// <summary)
+/// 下に当たったか
+/// </summary>
+/// <param name="targetObject">ターゲットのオブジェクト</param>
+/// <param name="thisObject">自身</param>
+/// <param name="sub">角度を指定された度数狭める</param>
+/// <returns></returns>
+bool Player2::BottomHit(Vector2 targetposition, Vector2 thisposition)
+{
+	float radian = std::atan2(thisposition.y - targetposition.y, thisposition.x - targetposition.x);
+	float degree = radian * 180.0f / DX_PI;
+
+	return degree <= -89.0f && degree >= -91.0f;
+}
+
+/// <summary>
+/// 左に当たったか
+/// </summary>
+/// <param name="targetObject">ターゲットのオブジェクト</param>
+/// <param name="thisObject">自身</param>
+/// <returns></returns>
+bool Player2::LeftHit(Vector2 targetposition, Vector2 thisposition)
+{
+	float radian = std::atan2(thisposition.y - targetposition.y, thisposition.x - targetposition.x);
+	float degree = radian * 180.0f / DX_PI;
+
+	return degree >= -1.0f && degree <= 1.0f;
+}
+
+/// <summary>
+/// 右に当たったか
+/// </summary>
+/// <param name="targetObject">ターゲットのオブジェクト</param>
+/// <param name="thisObject">自身</param>
+/// <returns></returns>
+bool Player2::RightHit(Vector2 targetposition, Vector2 thisposition)
+{
+	float radian = std::atan2(thisposition.y - targetposition.y, thisposition.x - targetposition.x);
+	float degree = radian * 180.0f / DX_PI;
+
+	return degree <= -178.0f;
+}
+
+/// <summary>
+/// 左右のヒット判定をまとめたもの
+/// </summary>
+/// <param name="targetObject"></param>
+/// <param name="thisObject"></param>
+/// <param name="sub"></param>
+/// <returns></returns>
+bool Player2::L_R_Hit(Vector2 targetposition, Vector2 thisposition)
+{
+	return LeftHit(targetposition, thisposition) || RightHit(targetposition, thisposition);
+}
+
+/// <summary>
+/// 上下のヒット判定をまとめたもの
+/// </summary>
+/// <param name="targetObject"></param>
+/// <param name="thisObject"></param>
+/// <param name="sub"></param>
+/// <returns></returns>
+bool Player2::T_B_Hit(Vector2 targetposition, Vector2 thisposition)
+{
+	return TopHit(targetposition, thisposition) || BottomHit(targetposition, thisposition);
 }

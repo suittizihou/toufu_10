@@ -165,17 +165,17 @@ void ActorBase::AddChild_Back(ActorGroup group, const ActorPtr & actor)
 void ActorBase::sort()
 {
 	children.sort([](ActorPtr a, ActorPtr b) {
-		if (a->GetName() == "SponeNormalToufu"&&b->GetName() == "SponeNormalToufu")
+		if (a->GetName() == "SponeNormalToufu" && b->GetName() == "SponeNormalToufu")
 		{
-			return a->GetSponedPosition().y   < b->GetSponedPosition().y;
+			return a->GetSponedPosition().y < b->GetSponedPosition().y;
 		}
 		if (a->GetName() == "SponeNormalToufu")
 		{
-			return a->GetSponedPosition().y   < b->GetVec2Position().y;
+			return a->GetSponedPosition().y < b->GetVec2Position().y;
 		}
 		if (b->GetName() == "SponeNormalToufu")
 		{
-			return a->GetVec2Position().y   < b->GetSponedPosition().y;
+			return a->GetVec2Position().y < b->GetSponedPosition().y;
 		}
 		return a->GetVec2Position().y < b->GetVec2Position().y; 
 	}

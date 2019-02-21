@@ -22,6 +22,14 @@ private:
 	void Damage();
 	Vector2 Average_Position();
 
+	float GetDegree(Vector2 targetposition, Vector2 thisposition);
+	bool TopHit(Vector2 targetposition, Vector2 thisposition);
+	bool BottomHit(Vector2 targetposition, Vector2 thisposition);
+	bool LeftHit(Vector2 targetposition, Vector2 thisposition);
+	bool RightHit(Vector2 targetposition, Vector2 thisposition);
+	bool L_R_Hit(Vector2 targetposition, Vector2 thisposition);
+	bool T_B_Hit(Vector2 targetposition, Vector2 thisposition);
+
 private:
 
 	Random rand;
@@ -45,6 +53,7 @@ private:
 	int beforeMovementX{};
 
 	bool firstDraw{};
+	bool damage{};
 
 	int direction = 1;
 

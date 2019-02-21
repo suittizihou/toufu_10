@@ -112,12 +112,12 @@ void GameMain::Initialize() {
 	//// マップチップをアクターにまとめて登録
 	mapGenerater.AddMapChip();
 
-	world->AddActor_Back(ActorGroup::NormalToufu, std::make_shared<Player>(world.get(), Vector2::Zero, objNumber, 5.0f, DX_INPUT_PAD1, CharacterManager::GetCharacterP1()));
+	world->AddActor_Back(ActorGroup::NormalToufu, std::make_shared<Player>(world.get(), Vector2::Zero, objNumber, 0.0f, DX_INPUT_PAD1, CharacterManager::GetCharacterP1()));
 	objNumber++;
-	world->AddActor_Back(ActorGroup::NormalToufu, std::make_shared<Player2>(world.get(), mapGenerater.up_left_get_pos(7, 7) - Vector2(0, 58.0f), objNumber, 5.0f, DX_INPUT_PAD2, CharacterManager::GetCharacterP2()));
+	world->AddActor_Back(ActorGroup::NormalToufu, std::make_shared<Player2>(world.get(), mapGenerater.up_left_get_pos(7, 7) - Vector2(0, 58.0f), objNumber, 0.0f, DX_INPUT_PAD2, CharacterManager::GetCharacterP2()));
 	objNumber++;
 	//world->AddActor_Back(ActorGroup::UI, std::make_shared<Score>(world.get()));
-	world->AddActor_Back(ActorGroup::UI, std::make_shared<TimerUI>(world.get(),1 * 60000,0));
+	world->AddActor_Back(ActorGroup::UI, std::make_shared<TimerUI>(world.get(),1 * 60,0));
 	objNumber++;
 	Random rand;
 	for (int i = 0; i < 3;) {

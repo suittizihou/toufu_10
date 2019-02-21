@@ -39,7 +39,7 @@ void NormalToufu::OnFirstUpdate(float deltaTime)
 {
 	MapGenerater::set_map_toufu(Average_Position(position), ToufuID::Normal);
 	// そこが穴なら自分は死んでノーマル豆腐のタイルにする
-	if (MapGenerater::check_hole(center_pos)) {
+	if (MapGenerater::check_hole(center_pos) && name != "SponeNormalToufu") {
 		status = Status::Dead;
 		PlaySoundMem(dropSh,DX_PLAYTYPE_BACK);
 		MapGenerater::set_map_Texture(center_pos, Assets::Texture::NormalToufuTile);
@@ -64,7 +64,7 @@ void NormalToufu::OnUpdate(float deltaTime)
 	//one_time_position = position;
 
 	if (spone_move == NormalToufuMove::SponeMove) {
-		position.y += 6.0f;
+		position.y += 8.0f;
 	}
 	if (default_position.y <= position.y && spone_move == NormalToufuMove::SponeMove) {
 		spone_move = NormalToufuMove::SponeMoveStop;

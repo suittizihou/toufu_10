@@ -43,7 +43,7 @@ void MetalToufu::OnInitialize()
 void MetalToufu::OnFirstUpdate(float deltaTime)
 {
 	MapGenerater::set_map_toufu(Average_Position(), ToufuID::Metal);
-	if (MapGenerater::check_hole(center_pos)) {
+	if (MapGenerater::check_hole(center_pos) && name != "SponeMetalToufu") {
 		status = Status::Dead;
 		MapGenerater::set_map_Texture(center_pos, Assets::Texture::MetalToufuTile);
 	}
@@ -103,7 +103,7 @@ void MetalToufu::Move()
 void MetalToufu::SponeMove() {
 	// 生まれたらどんどん下に落ちていく
 	if (spone_move == MetalToufuMove::SponeMove) {
-		position.y += 8.0f;
+		position.y += 9.0f;
 	}
 	// 指定の落下箇所のy軸を今のポジションが上回ったら止める
 	if (default_position.y <= position.y) {
@@ -141,59 +141,6 @@ void MetalToufu::OnCollide(const HitInfo & hitInfo)
 	if (hitInfo.collideActor->GetNumber() == this->GetNumber()) { 
 		return; 
 	}
-
-	//if (name != "SponeMetalToufu") {
-	//	if (hitInfo.collideActor->GetName() == "MetalToufu")
-	//	{
-	//		MapGenerater::set_map_toufu(Average_Position(), ToufuID::None);
-	//		status = Status::Dead;
-	//	}
-	//}
-	//else if ((hitInfo.collideActor->GetName() == "player" || hitInfo.collideActor->GetName() == "player2") && !b_move)
-	//{
-	//	if ((GetJoypadInputState(DX_INPUT_PAD1) & PAD_INPUT_A) != 0 || (GetJoypadInputState(DX_INPUT_PAD2) & PAD_INPUT_A) != 0) {
-
-	//		// 上に当たっているとき
-	//		if ((GetJoypadInputState(DX_INPUT_PAD1) & PAD_INPUT_DOWN) != 0 || (GetJoypadInputState(DX_INPUT_PAD2) & PAD_INPUT_DOWN) != 0) {
-
-	//			if (TopHit(hitInfo.collideActor->GetCenterPosition(), Average_Position())) {
-	//				
-	//				movement = Vector2(0, hitInfo.collideActor->GetSpeed());
-	//			}
-	//		}
-
-	//		// 下に当たっているとき
-	//		if ((GetJoypadInputState(DX_INPUT_PAD1) & PAD_INPUT_UP) != 0 || (GetJoypadInputState(DX_INPUT_PAD2) & PAD_INPUT_UP) != 0) {
-
-	//			if (BottomHit(hitInfo.collideActor->GetCenterPosition(), Average_Position())) {
-	//				movement = Vector2(0, -hitInfo.collideActor->GetSpeed());
-	//			}
-	//		}
-
-	//		// 左に当たっているとき
-	//		if ((GetJoypadInputState(DX_INPUT_PAD1) & PAD_INPUT_RIGHT) != 0 || (GetJoypadInputState(DX_INPUT_PAD2) & PAD_INPUT_RIGHT) != 0) {
-
-	//			if (LeftHit(hitInfo.collideActor->GetCenterPosition(), Average_Position())) {
-	//				movement = Vector2(hitInfo.collideActor->GetSpeed(), 0);
-	//			}
-	//		}
-
-
-	//		// 右に当たっているとき
-	//		if ((GetJoypadInputState(DX_INPUT_PAD1) & PAD_INPUT_LEFT) != 0 || (GetJoypadInputState(DX_INPUT_PAD2) & PAD_INPUT_LEFT) != 0) {
-
-	//			if (RightHit(hitInfo.collideActor->GetCenterPosition(), Average_Position())) {
-	//				movement = Vector2(-hitInfo.collideActor->GetSpeed(), 0);
-	//			}
-	//		}
-	//	}
-
-	//	//position += movement;
-	//	if (movement.x != 0 || movement.y != 0)b_move = true;
-	//	//Vector2(103, 32) + Vector2(110, 40))
-
-	//	
-	//}
 
 	int score = 1;
 	world->SendEventMessage(EventMessage::AddScore, &score);
