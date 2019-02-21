@@ -45,6 +45,7 @@ public:
 	};
 	static Vector2 up_left_get_localpos(int x, int y);
 	static Vector2 down_right_get_pos(int x, int y);
+	static Vector2 down_right_get_pos(const Vector2& position);
 	static Vector2 down_right_get_localpos(int x, int y);
 	static Vector2 get_pos_vector(Vector2 & position);
 	static Vector2 get_pos_numver(const Vector2 & position);

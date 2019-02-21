@@ -87,8 +87,10 @@ void MetalToufu::OnDraw(Renderer & renderer)
 			value = 510 - sponed_pos.Distance(position);
 		}
 
+		float radius{ (255 / 10.0f) - (value / 20.0f) };
+
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, value / 2);
-		DrawBox(sponed_pos.x, sponed_pos.y + 57, sponed_pos.x + 110, sponed_pos.y + 120, GetColor(0, 0, 0), TRUE);
+		DrawBox((sponed_pos.x - 3) + radius, (sponed_pos.y + 57) + radius, (sponed_pos.x + 112) - radius, (sponed_pos.y + 122) - radius, GetColor(0, 0, 0), TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 }
@@ -101,7 +103,7 @@ void MetalToufu::Move()
 void MetalToufu::SponeMove() {
 	// 生まれたらどんどん下に落ちていく
 	if (spone_move == MetalToufuMove::SponeMove) {
-		position.y += 10.0f;
+		position.y += 5.0f;
 	}
 	// 指定の落下箇所のy軸を今のポジションが上回ったら止める
 	if (default_position.y <= position.y) {

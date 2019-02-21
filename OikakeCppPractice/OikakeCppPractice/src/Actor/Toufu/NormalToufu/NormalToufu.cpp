@@ -64,7 +64,7 @@ void NormalToufu::OnUpdate(float deltaTime)
 	//one_time_position = position;
 
 	if (spone_move == NormalToufuMove::SponeMove) {
-		position.y += 10.0f;
+		position.y += 5.0f;
 	}
 	if (default_position.y <= position.y && spone_move == NormalToufuMove::SponeMove) {
 		spone_move = NormalToufuMove::SponeMoveStop;
@@ -91,12 +91,12 @@ void NormalToufu::OnUpdate(float deltaTime)
 
 void NormalToufu::OnDraw(Renderer& renderer)
 {
+	//if (hp >= 5) {
+	//	renderer.DrawTexture(Assets::Texture::NormalToufu, position);
+	//}
 
 	if (previous_hp != hp) {
-		if (hp >= 5) {
-			renderer.DrawTexture(Assets::Texture::NormalToufu, position);
-		}
-		else if (hp >= 3) {
+		if (hp >= 3) {
 			renderer.DrawRectangle(Assets::Texture::NormalToufu_kake1, position, Rect(Vector2(110 * animeX, 0), Vector2(110, 120)));
 		}
 		else if (hp >= 1) {
@@ -114,9 +114,11 @@ void NormalToufu::OnDraw(Renderer& renderer)
 		if (sponed_pos.Distance(position) <= 510) {
 			value = 510 - sponed_pos.Distance(position);
 		}
+		
+		float radius{ (255 / 10.0f) - (value / 20.0f) };
 
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, value / 2);
-		DrawBox(sponed_pos.x, sponed_pos.y + 57, sponed_pos.x + 110, sponed_pos.y + 120, GetColor(0, 0, 0), TRUE);
+		DrawBox((sponed_pos.x - 3) + radius, (sponed_pos.y + 57) + radius, (sponed_pos.x + 112) - radius, (sponed_pos.y + 122) - radius, GetColor(0, 0, 0), TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 

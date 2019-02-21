@@ -126,6 +126,17 @@ Vector2 MapGenerater::down_right_get_pos(int x, int y)
 	return Vector2(tempX + 112.0f, tempY + 64.0f);
 }
 
+Vector2 MapGenerater::down_right_get_pos(const Vector2& position)
+{
+	float tempX = (112.0f + map_chip_space) * get_pos_numver(position).x;
+	float tempY = (64.0f + map_chip_space) * get_pos_numver(position).y;
+
+	tempX += map_spaceX;
+	tempY += map_spaceY;
+
+	return Vector2(tempX + 112.0f, tempY + 64.0f);
+}
+
 // âEè„ÇÃç¿ïW
 Vector2 MapGenerater::down_right_get_localpos(int x, int y)
 {
