@@ -99,6 +99,10 @@ void GameMain::LoadAssets()
 	renderer.LoadTexture(Assets::Texture::NormalToufu, "gameplay/tofu.png");
 	renderer.LoadTexture(Assets::Texture::MetalToufu, "gameplay/iron_tofu.png");
 	renderer.LoadTexture(Assets::Texture::Number, "number.png");
+
+	renderer.LoadTexture(Assets::Texture::NormalToufu_kake1, "gameplay/tofu_buster.png");
+	renderer.LoadTexture(Assets::Texture::NormalToufu_kake2, "gameplay/tofu_buster2.png");
+	renderer.LoadTexture(Assets::Texture::NormalToufu_kake3, "gameplay/tofu_buster3.png");
 }
 
 void GameMain::Initialize() {

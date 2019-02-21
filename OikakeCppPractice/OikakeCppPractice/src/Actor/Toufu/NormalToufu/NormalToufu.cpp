@@ -91,21 +91,27 @@ void NormalToufu::OnUpdate(float deltaTime)
 
 void NormalToufu::OnDraw(Renderer& renderer)
 {
-
-	if (previous_hp != hp) {
-		if (hp >= 5) {
-			renderer.DrawTexture(Assets::Texture::NormalToufu, position);
-		}
-		else if (hp >= 3) {
-			renderer.DrawRectangle(Assets::Texture::NormalToufu_kake1, position, Rect(Vector2(110 * animeX, 0), Vector2(110, 120)));
-		}
-		else if (hp >= 1) {
-			renderer.DrawRectangle(Assets::Texture::NormalToufu_kake2, position, Rect(Vector2(110 * animeX, 0), Vector2(110, 120)));
-		}
-		else {
-			renderer.DrawRectangle(Assets::Texture::NormalToufu_kake3, position, Rect(Vector2(110 * animeX, 0), Vector2(110, 120)));
-		}
+	if (hp >= 5)
+	{
+		renderer.DrawTexture(Assets::Texture::NormalToufu, position);
 	}
+	else if (hp >= 3)
+	{
+		renderer.DrawRectangle(Assets::Texture::NormalToufu_kake1, position, Rect(Vector2(/*110 * animeX*/36, 30), Vector2(110, 120)));
+	}
+	else if (hp >= 1)
+	{
+		renderer.DrawRectangle(Assets::Texture::NormalToufu_kake2, position, Rect(Vector2(/*110 * animeX*/36, 30), Vector2(110, 120)));
+	}
+	else
+	{
+		renderer.DrawRectangle(Assets::Texture::NormalToufu_kake3, position, Rect(Vector2(/*110 * animeX*/36, 30), Vector2(110, 120)));
+	}
+
+	//if (previous_hp != hp) {
+
+
+	//}
 	previous_hp = hp;
 
 	// —Ž‚¿‚Ä‚éŽž‚¾‚¯‰º‚É‰e‚ð•`‰æ
@@ -120,7 +126,7 @@ void NormalToufu::OnDraw(Renderer& renderer)
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 
-	DrawBox(position.x, position.y + 57, position.x + 110, position.y + 120, GetColor(0, 255, 0), TRUE);
+	//DrawBox(position.x, position.y + 57, position.x + 110, position.y + 120, GetColor(0, 255, 0), TRUE);
 
 
 	//DrawPixel(target_pos.x, target_pos.y, GetColor(255, 0, 0));
