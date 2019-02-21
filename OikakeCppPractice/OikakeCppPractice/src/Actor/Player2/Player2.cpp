@@ -39,21 +39,21 @@ void Player2::OnUpdate(float deltaTime)
 
 	if (move_state == MoveState::Stop)
 	{
-		if (Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_S) || Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::Dpad_Down))
+		if (Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_DOWN) || Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::Dpad_Down))
 		{
 			bool aa = MapGenerater::check_toufu(center_pos, 0, 1);
 			if (aa&&GetCharacter() == Character::Ninja) { direction = 0; }
 			else { direction = 1; }
 		}
-		if (Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_W) || Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::Dpad_Up))
+		if (Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_UP) || Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::Dpad_Up))
 		{
 			direction = 3;
 		}
-		if (Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_D) || Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::Dpad_Right))
+		if (Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_RIGHT) || Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::Dpad_Right))
 		{
 			direction = 2;
 		}
-		if (Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_A) || Input::GetInstance().GetXBoxController().IsButtonState(XboxGamePad::Dpad_Left))
+		if (Input::GetInstance().GetKeyBoard().IsState(KEY_INPUT_LEFT) || Input::GetInstance().GetXBoxController().IsButtonState2(XboxGamePad::Dpad_Left))
 		{
 			direction = 4;
 		}
