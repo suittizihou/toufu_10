@@ -20,23 +20,23 @@ std::string toufuName{};
 
 void MapChip::OnDraw(Renderer& renderer) {
 
-	switch (MapGenerater::get_toufu_id(position)) {
-		case ToufuID::None:
-			toufuName = "None";
-			break;
-		case ToufuID::Normal:
-			toufuName = "Normal";
-			break;
-		case ToufuID::Metal:
-			toufuName = "Metal";
-			break;
-		case ToufuID::HalfBreak:
-			toufuName = "HalfBreak";
-			break;
-	}
+	//switch (MapGenerater::get_toufu_id(position)) {
+	//	case ToufuID::None:
+	//		toufuName = "None";
+	//		break;
+	//	case ToufuID::Normal:
+	//		toufuName = "Normal";
+	//		break;
+	//	case ToufuID::Metal:
+	//		toufuName = "Metal";
+	//		break;
+	//	case ToufuID::HalfBreak:
+	//		toufuName = "HalfBreak";
+	//		break;
+	//}
 
 	renderer.DrawTexture(MapGenerater::get_mapChip(Average_Pos()), position, Vector2{ 0.0f, 0.0f }, Vector2{ 1.0f, 1.0f }, 0.0f, Color(255.0f, 255.0f, 255.0f, 1.0f));
-	DrawFormatString(position.x, position.y, GetColor(0, 255, 0), toufuName.c_str());
+	//DrawFormatString(position.x, position.y, GetColor(0, 255, 0), toufuName.c_str());
 }
 
 Vector2 MapChip::Average_Pos() {

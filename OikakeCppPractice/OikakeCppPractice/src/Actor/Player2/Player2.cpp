@@ -238,8 +238,8 @@ void Player2::OnDraw(Renderer & renderer)
 	//DrawFormatString(0, 64, GetColor(255, 0, 0), "numverX:%fÅ@numverY:%f", MapGenerater::get_pos_numver(Average_Position()).x, MapGenerater::get_pos_numver(Average_Position()).y);
 	//DrawFormatString(0, 80, GetColor(255, 0, 0), "centerX:%fÅ@centerY:%f", Average_Position().x, Average_Position().y);
 
-	DrawFormatString(0, 16, GetColor(255, 0, 0), "Player2HP : %d", hp);
-	DrawCircle(target_position.x, target_position.y, 3, GetColor(255, 0, 0));
+	//DrawFormatString(0, 16, GetColor(255, 0, 0), "Player2HP : %d", hp);
+	//DrawCircle(target_position.x, target_position.y, 3, GetColor(255, 0, 0));
 
 	//DrawBox(position.x - 5, position.y + 75, position.x + 117, position.y + 149, GetColor(255, 0, 0), TRUE);
 	//DrawPixel(Average_Position().x, Average_Position().y, GetColor(0, 255, 0));

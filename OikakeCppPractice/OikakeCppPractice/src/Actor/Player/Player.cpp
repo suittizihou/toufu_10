@@ -250,8 +250,8 @@ void Player::OnDraw(Renderer & renderer)
 	//DrawFormatString(0, 80, GetColor(255, 0, 0), "movementX:%fÅ@movementY:%f", movement.x, movement.y);
 	 
 
-	DrawCircle(target_position.x, target_position.y, 3, GetColor(0, 0, 255));
-	DrawFormatString(0, 32, GetColor(255, 0, 0), "Player1HP : %d", hp);
+	//DrawCircle(target_position.x, target_position.y, 3, GetColor(0, 0, 255));
+	//DrawFormatString(0, 32, GetColor(255, 0, 0), "Player1HP : %d", hp);
 
 	//DrawBox(position.x - 5, position.y + 75, position.x + 117, position.y + 149, GetColor(255, 0, 0), TRUE);
 	//DrawBox(position.x, position.y, position.x + 117, position.y + 149, GetColor(255, 0, 0), TRUE);

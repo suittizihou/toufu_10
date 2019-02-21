@@ -64,7 +64,7 @@ void NormalToufu::OnUpdate(float deltaTime)
 	//one_time_position = position;
 
 	if (spone_move == NormalToufuMove::SponeMove) {
-		position.y += 10.0f;
+		position.y += 6.0f;
 	}
 	if (default_position.y <= position.y && spone_move == NormalToufuMove::SponeMove) {
 		spone_move = NormalToufuMove::SponeMoveStop;
@@ -91,6 +91,22 @@ void NormalToufu::OnUpdate(float deltaTime)
 
 void NormalToufu::OnDraw(Renderer& renderer)
 {
+	previous_hp = hp;
+
+	// —Ž‚¿‚Ä‚éŽž‚¾‚¯‰º‚É‰e‚ð•`‰æ
+	if (name == "SponeNormalToufu") {
+		int value{};
+		if (sponed_pos.Distance(position) <= 510) {
+			value = 510 - sponed_pos.Distance(position);
+		}
+
+		float radius{ (255 / 10.0f) - (value / 20.0f) };
+
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, value / 2);
+		DrawBox((sponed_pos.x - 3) + radius, (sponed_pos.y + 57) + radius, (sponed_pos.x + 112) - radius, (sponed_pos.y + 122) - radius, GetColor(0, 0, 0), TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+
 	if (hp >= 5)
 	{
 		renderer.DrawTexture(Assets::Texture::NormalToufu, position);
@@ -108,38 +124,20 @@ void NormalToufu::OnDraw(Renderer& renderer)
 		renderer.DrawRectangle(Assets::Texture::NormalToufu_kake3, position, Rect(Vector2(/*110 * animeX*/36, 30), Vector2(110, 120)));
 	}
 
-	//if (previous_hp != hp) {
-
-
-	//}
-	previous_hp = hp;
-
-	// —Ž‚¿‚Ä‚éŽž‚¾‚¯‰º‚É‰e‚ð•`‰æ
-	if (name == "SponeNormalToufu") {
-		int value{};
-		if (sponed_pos.Distance(position) <= 510) {
-			value = 510 - sponed_pos.Distance(position);
-		}
-
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, value / 2);
-		DrawBox(sponed_pos.x, sponed_pos.y + 57, sponed_pos.x + 110, sponed_pos.y + 120, GetColor(0, 0, 0), TRUE);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	}
-
 	//DrawBox(position.x, position.y + 57, position.x + 110, position.y + 120, GetColor(0, 255, 0), TRUE);
 
 
 	//DrawPixel(target_pos.x, target_pos.y, GetColor(255, 0, 0));
-	DrawCircle(center_pos.x, center_pos.y, 5, GetColor(0, 0, 255));
-	if (name == "SponeNormalToufu") {
-		DrawFormatString(center_pos.x, center_pos.y, GetColor(255, 255, 0), name.c_str());
-	}
-	else {
-		DrawFormatString(center_pos.x, center_pos.y, GetColor(0, 255, 255), name.c_str());
-	}
-	DrawCircle(target_pos.x, target_pos.y, 5, GetColor(255, 0, 0));
-	DrawFormatString(position.x, position.y, GetColor(255, 0, 0), "Length : %f", movement.Length());
-	DrawFormatString(0, 32, GetColor(255, 0, 0), "move : %d", _move);
+	//DrawCircle(center_pos.x, center_pos.y, 5, GetColor(0, 0, 255));
+	//if (name == "SponeNormalToufu") {
+	//	DrawFormatString(center_pos.x, center_pos.y, GetColor(255, 255, 0), name.c_str());
+	//}
+	//else {
+	//	DrawFormatString(center_pos.x, center_pos.y, GetColor(0, 255, 255), name.c_str());
+	//}
+	//DrawCircle(target_pos.x, target_pos.y, 5, GetColor(255, 0, 0));
+	//DrawFormatString(position.x, position.y, GetColor(255, 0, 0), "Length : %f", movement.Length());
+	//DrawFormatString(0, 32, GetColor(255, 0, 0), "move : %d", _move);
 
 	//float test = GetDegree(MapGenerater::up_left_get_pos(5, 5), Average_Position());
 

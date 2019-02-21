@@ -78,7 +78,6 @@ void MetalToufu::OnUpdate(float deltaTime)
 
 void MetalToufu::OnDraw(Renderer & renderer)
 {
-	renderer.DrawTexture(Assets::Texture::MetalToufu, position);
 	
 	// 落ちてる時だけ下に影を描画
 	if (name == "SponeMetalToufu") {
@@ -93,6 +92,7 @@ void MetalToufu::OnDraw(Renderer & renderer)
 		DrawBox((sponed_pos.x - 3) + radius, (sponed_pos.y + 57) + radius, (sponed_pos.x + 112) - radius, (sponed_pos.y + 122) - radius, GetColor(0, 0, 0), TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
+	renderer.DrawTexture(Assets::Texture::MetalToufu, position);
 }
 
 void MetalToufu::Move()
@@ -103,7 +103,7 @@ void MetalToufu::Move()
 void MetalToufu::SponeMove() {
 	// 生まれたらどんどん下に落ちていく
 	if (spone_move == MetalToufuMove::SponeMove) {
-		position.y += 5.0f;
+		position.y += 8.0f;
 	}
 	// 指定の落下箇所のy軸を今のポジションが上回ったら止める
 	if (default_position.y <= position.y) {
